@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--DTD d'un system   -->
+<!ELEMENT System (nameSys, idSys, typeSys, FlowId*)>
+<!ATTLIST System
+	nameSys CDATA #REQUIRED
+	idSys ID #REQUIRED
+	typeSys CDATA #REQUIRED 
+	Flowid IDREF> 
+
+<!--DTD Flow-->
+<!ELEMENT Flow (nameFlow, idFlow,)>
+<!ATTLIST Flow
+	nameFlow CDATA #REQUIRED
+	idFlow ID #REQUIRED > 
+
+
+<!--DTD Connectible-->
+<!ELEMENT connectible EMPTY>
+<!ATTLIST connectible
+	typeCon CDATA #REQUIRED
+	nameCon CDATA #REQUIRED
+	idCon ID #REQUIRED
+	volume CDATA #IMPLIED
+	length CDATA #IMPLIED
+	startRadius CDATA #IMPLIED
+	endRadius CDATA #IMPLIED>
+
+<!--DTD Connections-->
+<!ELEMENT connection Empty>
+<!ATTLIST connection
+	connectionId IDREF #REQUIRED 
+	toId ENTITIES >
+       
+<!--Dtd organ-->
+<!ELEMENT organ Empty>
+<!ATTLIST organ
+	organName CDATA #REQUIRED
+	roganId ID #REQUIRED
+	systemID IDREF #REQUIRED>
