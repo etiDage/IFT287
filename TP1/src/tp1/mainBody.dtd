@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--DTD d'un system   -->
+
+<!ELEMENT Systems (System)*>
+
 <!ELEMENT System (Flow)*>
 <!ATTLIST System
-	nameSys CDATA #REQUIRED
-	idSys ID #REQUIRED
-	typeSys CDATA #REQUIRED> 
+	name CDATA #REQUIRED
+	id CDATA #REQUIRED
+	type CDATA #REQUIRED> 
 
 <!--DTD Flow-->
-<!ELEMENT Flow (connectible, connection)*>
+<!ELEMENT Flow (Connectible, Connections)>
 <!ATTLIST Flow
-	nameFlow CDATA #REQUIRED
-	idFlow ID #REQUIRED > 
+	name CDATA #REQUIRED
+	id CDATA #REQUIRED > 
 
 
 <!--DTD Connectible-->
-<!ELEMENT connectible (Atrium | Ventricle | Artery | Vein | Capillaries | DigestiveTract | StomachTract | DuodenumTract | RectumTract | BiDuct | Duct | DeversingDuct | InnerGallbladder |SalivaryDuct |AirConnectible | Alveoli)*>
+<!ELEMENT Connectible (Atrium | Ventricle | Artery | Vein | Capillaries | DigestiveTract | StomachTract | DuodenumTract | RectumTract | BiDuct | Duct | DeversingDuct | InnerGallbladder |SalivaryDuct |AirConnectible | Alveoli | Nose | DuctOverflowableJunction)*>
 
 <!--Dtd Atrium-->
 <!ELEMENT Atrium EMPTY>
 <!ATTLIST Atrium
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -30,7 +33,7 @@
 <!ELEMENT Ventricle EMPTY>
 <!ATTLIST Ventricle
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -40,7 +43,7 @@
 <!ELEMENT Artery EMPTY>
 <!ATTLIST Artery
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -50,7 +53,7 @@
 <!ELEMENT Vein EMPTY>
 <!ATTLIST Vein
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -60,7 +63,7 @@
 <!ELEMENT Capillaries EMPTY>
 <!ATTLIST Capillaries
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -70,7 +73,7 @@
 <!ELEMENT DigestiveTract EMPTY>
 <!ATTLIST DigestiveTract
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -80,7 +83,7 @@
 <!ELEMENT StomachTract EMPTY>
 <!ATTLIST StomachTract
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -90,7 +93,7 @@
 <!ELEMENT DuodenumTract EMPTY>
 <!ATTLIST DuodenumTract
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -100,7 +103,7 @@
 <!ELEMENT RectumTract EMPTY>
 <!ATTLIST RectumTract
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -110,7 +113,7 @@
 <!ELEMENT BiDuct EMPTY>
 <!ATTLIST BiDuct
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -120,17 +123,28 @@
 <!ELEMENT Duct EMPTY>
 <!ATTLIST Duct
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
 	length CDATA #IMPLIED>
 
 <!--Dtd DeversingDuct-->
+<!ELEMENT DuctOverflowableJunction EMPTY>
+<!ATTLIST DuctOverflowableJunction
+  name CDATA #REQUIRED
+	id CDATA #REQUIRED
+	volume CDATA #IMPLIED
+	startRadius CDATA #IMPLIED
+	endRadius CDATA #IMPLIED
+	length CDATA #IMPLIED>
+
+
+<!--Dtd DeversingDuct-->
 <!ELEMENT DeversingDuct EMPTY>
 <!ATTLIST DeversingDuct
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -140,7 +154,7 @@
 <!ELEMENT InnerGallbladder EMPTY>
 <!ATTLIST InnerGallbladder
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -150,7 +164,7 @@
 <!ELEMENT SalivaryDuct EMPTY>
 <!ATTLIST SalivaryDuct
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -160,7 +174,7 @@
 <!ELEMENT AirConnectible EMPTY>
 <!ATTLIST AirConnectible
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -170,7 +184,17 @@
 <!ELEMENT Alveoli EMPTY>
 <!ATTLIST Alveoli
   name CDATA #REQUIRED
-	id ID #REQUIRED
+	id CDATA #REQUIRED
+	volume CDATA #IMPLIED
+	startRadius CDATA #IMPLIED
+	endRadius CDATA #IMPLIED
+	length CDATA #IMPLIED>
+
+<!--Dtd DeversingDuct-->
+<!ELEMENT Nose EMPTY>
+<!ATTLIST Nose
+  name CDATA #REQUIRED
+	id CDATA #REQUIRED
 	volume CDATA #IMPLIED
 	startRadius CDATA #IMPLIED
 	endRadius CDATA #IMPLIED
@@ -178,18 +202,20 @@
 
 
 <!--DTD Connections-->
-<!ELEMENT connection (to)*>
-<!ATTLIST connection
-	connectionId IDREF #REQUIRED>
+<!ELEMENT Connections (Connection)*>
+
+<!ELEMENT Connection (to)*>
+<!ATTLIST Connection
+	id CDATA #REQUIRED>
 
 <!--DTD to-->
 <!ELEMENT to EMPTY>
 <!ATTLIST to
-	toId IDREF #REQUIRED>
+	id CDATA #REQUIRED>
        
 <!--Dtd organ-->
 <!ELEMENT organ EMPTY>
 <!ATTLIST organ
-	organName CDATA #REQUIRED
-	roganId ID #REQUIRED
-	systemID IDREF #REQUIRED>
+	name CDATA #REQUIRED
+	id CDATA #REQUIRED
+	systemID CDATA #REQUIRED>
