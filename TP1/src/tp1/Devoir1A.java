@@ -2,6 +2,14 @@
 //   NomEquipier1 - Matricule
 //   NomEquipier2 - Matricule
 
+import java.io.File;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+
 package tp1;
 
 /**
@@ -39,6 +47,11 @@ public class Devoir1A
         System.out.println("Debut de la conversion du fichier " + nomFichierXML + " vers le fichier " + nomFichierJSON);
 
         // Votre code de conversion devrait aller ici
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setValidating(true);
+        SAXParser parser = factory.newSAXParser();
+        DefaultHandler handler= new MonParser();
+        parser.parse(new File(nomFichierXML), handler);
         
         System.out.println("Conversion terminee.");
     }
