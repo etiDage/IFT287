@@ -2,6 +2,14 @@
 //   NomEquipier1 - Matricule
 //   NomEquipier2 - Matricule
 
+import java.io.File;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+
 package tp1;
 
 import java.io.File;
@@ -54,9 +62,7 @@ public class Devoir1A
         SAXParser parser = factory.newSAXParser();
         DefaultHandler handler = new MonParser();
         parser.parse(new File(nomFichierXML), handler);
-        
-        
-        
+       
         
         System.out.println("Conversion terminee.");
     }
