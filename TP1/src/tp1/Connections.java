@@ -3,27 +3,27 @@ import java.util.*;
 
 public class Connections
 {
-    private int id;
-    private ArrayList<Integer> toId;
+    private String id;
+    private ArrayList<String> toId;
     
-Connections (int id){
+Connections (String id){
     this.id = id;
     toId= new ArrayList<>();
 }
 
-    public int getId()
+    public String getId()
     {
         return id;
     }
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
-    public List<Integer> getToId()
+    public List<String> getToId()
     {
         return toId;
     }
-    public void addToId(int id)
+    public void addToId(String id)
     {
         toId.add(id);
     }

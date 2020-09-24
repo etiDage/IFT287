@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class MainBody
 {
     private String bodyName;
-    private int bodyID;
+    private String bodyID;
     
     private ArrayList<BodySystem> systems;
     private ArrayList<Organ> organs;
     
     
-    public MainBody(String bodyName, int bodyID)
+    public MainBody(String bodyName, String bodyID)
     {
         this.setBodyName(bodyName);
         this.setBodyID(bodyID);
@@ -32,13 +32,13 @@ public class MainBody
     }
 
 
-    public int getBodyID()
+    public String getBodyID()
     {
         return bodyID;
     }
 
 
-    public void setBodyID(int bodyID)
+    public void setBodyID(String bodyID)
     {
         this.bodyID = bodyID;
     }

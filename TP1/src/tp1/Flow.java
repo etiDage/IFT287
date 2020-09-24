@@ -4,21 +4,23 @@ import java.util.ArrayList;
 
 public class Flow
 {
-    private int id;
+    private String id;
     private String name;
     private ArrayList<Connectible> connectibles;
+    private ArrayList<Connections>  connections; 
     
-    Flow(int id, String name){
+    Flow(String id, String name){
         this.id= id;
         this.name = name;
         connectibles= new ArrayList<>();
+        connections = new ArrayList<>();
     }
     
-    public int getId()
+    public String getId()
     {
         return id;
     }
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
@@ -37,5 +39,13 @@ public class Flow
     public void addConnectible(Connectible connectible )
     {
         connectibles.add(connectible);
+    }
+    public ArrayList<Connections> getConnections()
+    {
+        return connections;
+    }
+    public void addConnections(Connections connect )
+    {
+    		connections.add(connect);
     }
 }

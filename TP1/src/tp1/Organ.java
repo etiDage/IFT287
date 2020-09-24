@@ -3,10 +3,10 @@ package tp1;
 public class Organ
 {
     private String name;
-    private int id;
-    private int systemID;
+    private String id;
+    private String systemID;
     
-    public Organ(String name, int id, int systemID)
+    public Organ(String name, String id, String systemID)
     {
         this.setName(name);
         this.setId(id);
@@ -23,22 +23,22 @@ public class Organ
         this.name = name;
     }
 
-    public int getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
 
-    public int getSystemID()
+    public String getSystemID()
     {
         return systemID;
     }
 
-    public void setSystemID(int systemID)
+    public void setSystemID(String systemID)
     {
         this.systemID = systemID;
     }

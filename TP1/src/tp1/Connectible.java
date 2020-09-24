@@ -2,15 +2,15 @@ package tp1;
 
 public class Connectible
 {   
-   private int id;
+   private String id;
    private String type;
    private  String name;
    private float volume;
    private float length;
-   private float startRadius;
-   private float endRadius;
+   private double startRadius;
+   private double endRadius;
    
-Connectible (int id, String type, String name){
+Connectible (String name, String id, String type){
     
     this.id = id;
     this.type = type;
@@ -22,11 +22,11 @@ Connectible (int id, String type, String name){
 }
 
    
-public int getId()
+public String getId()
 {
     return id;
 }
-public void setId(int id)
+public void setId(String id)
 {
     this.id = id;
 }
@@ -62,19 +62,19 @@ public void setLength(float length)
 {
     this.length = length;
 }
-public float getStartRadius()
+public double getStartRadius()
 {
     return startRadius;
 }
-public void setStartRadius(float startRadius)
+public void setStartRadius(double startRadius)
 {
     this.startRadius = startRadius;
 }
-public float getEndRadius()
+public double getEndRadius()
 {
     return endRadius;
 }
-public void setEndRadius(float endRadius)
+public void setEndRadius(double endRadius)
 {
     this.endRadius = endRadius;
 }
