@@ -1,11 +1,25 @@
 // Travail fait par :
 //   NomEquipier1 - Matricule
 //   NomEquipier2 - Matricule
-
 package tp1;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileWriter;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
@@ -32,7 +46,7 @@ import javax.json.stream.JsonGeneratorFactory;
 public class Devoir1A
 {
 
-    public static void main(String[] args) throws IOException 
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException
     {
         if (args.length < 2)
         {
@@ -45,32 +59,31 @@ public class Devoir1A
         
         System.out.println("Debut de la conversion du fichier " + nomFichierXML + " vers le fichier " + nomFichierJSON);
         
-        MainBody patient= new MainBody("Charlot", "1");
-
         // Votre code de conversion devrait aller ici
-			@SuppressWarnings("resource")
-			FileWriter writer = new FileWriter(nomFichierJSON);
-			JsonGenerator gen = Json.createGenerator(writer);
-			
-			//Map<String, Object> config = new HashMap<String, Object>(1);
-			//config.put(JsonGenerator.PRETTY_PRINTING,true);
-			//StringWriter w = new StringWriter();
-			//JsonGeneratorFactory f = Json.createGeneratorFactory(config);
-			//JsonGenerator jsonGenerator = f.createGenerator(w);
-			
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setValidating(true);
+        SAXParser parser = factory.newSAXParser();
+        DefaultHandler handler = new MonParser();
+        parser.parse(new File(nomFichierXML), handler);
+        
+        MainBody patient = ((MonParser) handler).getMainBody();
+        
+        FileWriter writer = new FileWriter(nomFichierJSON);
+		JsonGenerator gen = Json.createGenerator(writer);
+		
 		gen.writeStartObject();
-			gen.write("Name", patient.getBodyName());
-			gen.write("ID", patient.getBodyID());
-			gen.writeStartArray("Organs");
-				patient.jsonOrgans(gen);
-			gen.writeEnd();
-			gen.writeStartArray("Systems");
-				patient.jsonBodySystem(gen);
-			gen.writeEnd();
-			
+		gen.write("Name", patient.getBodyName());
+		gen.write("ID", patient.getBodyID());
+		gen.writeStartArray("Organs");
+			patient.jsonOrgans(gen);
 		gen.writeEnd();
-		gen.close();
-
+		gen.writeStartArray("Systems");
+			patient.jsonBodySystem(gen);
+		gen.writeEnd();
+		
+	gen.writeEnd();
+	gen.close();
+       
         
         System.out.println("Conversion terminee.");
     }
