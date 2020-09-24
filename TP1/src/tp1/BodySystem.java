@@ -6,11 +6,11 @@ public class BodySystem
 {
     private String name;
     private String id;
-    private int type;
+    private String type;
     
     private ArrayList<Flow> flows;
     
-    public BodySystem(String name, String id, int type)
+    public BodySystem(String name, String id, String type)
     {
         this.name = name;
         this.id = id;
@@ -39,12 +39,12 @@ public class BodySystem
         this.id = id;
     }
     
-    public int getType()
+    public String getType()
     {
         return type;
     }
     
-    public void setType(int type)
+    public void setType(String type)
     {
         this.type = type;
     }

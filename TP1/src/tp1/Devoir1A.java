@@ -4,6 +4,16 @@
 
 package tp1;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 /**
  * Fichier de base pour le Devoir1A du cours IFT287
  *
@@ -25,7 +35,7 @@ package tp1;
 public class Devoir1A
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException
     {
         if (args.length < 2)
         {
@@ -37,8 +47,16 @@ public class Devoir1A
         String nomFichierJSON = args[1];
         
         System.out.println("Debut de la conversion du fichier " + nomFichierXML + " vers le fichier " + nomFichierJSON);
-
+        
         // Votre code de conversion devrait aller ici
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setValidating(true);
+        SAXParser parser = factory.newSAXParser();
+        DefaultHandler handler = new MonParser();
+        parser.parse(new File(nomFichierXML), handler);
+        
+        
+        
         
         System.out.println("Conversion terminee.");
     }
