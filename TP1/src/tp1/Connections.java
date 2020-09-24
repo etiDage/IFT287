@@ -1,6 +1,8 @@
 package tp1;
 import java.util.*;
 
+import javax.json.stream.JsonGenerator;
+
 public class Connections
 {
     private String id;
@@ -10,6 +12,14 @@ Connections (String id){
     this.id = id;
     toId= new ArrayList<>();
 }
+
+	public void jsonToId(JsonGenerator gen) {
+		for(int i = 0 ; i< toId.size(); i++) {
+    		gen.writeStartObject();
+    		gen.write(toId.get(i));
+    		gen.writeEnd();
+    	}
+	}
 
     public String getId()
     {

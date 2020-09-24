@@ -2,6 +2,8 @@ package tp1;
 
 import java.util.ArrayList;
 
+import javax.json.stream.JsonGenerator;
+
 public class MainBody
 {
     private String bodyName;
@@ -19,6 +21,33 @@ public class MainBody
         systems = new ArrayList<BodySystem>();
         organs = new ArrayList<Organ>();
     }
+    
+    public void jsonOrgans (JsonGenerator gen) {
+    	
+    	for(int i = 0 ; i< organs.size(); i++) {
+    		gen.writeStartObject();
+    		gen.write("name", organs.get(i).getName());
+    		gen.write("ID", organs.get(i).getId());
+    		gen.write("systemId", organs.get(i).getSystemID());
+    		gen.writeEnd();
+    	}
+    	
+    }
+    public void jsonBodySystem (JsonGenerator gen) {
+    	
+    	for(int i = 0 ; i< systems.size(); i++) {
+    		gen.writeStartObject();
+    		gen.write("name", systems.get(i).getName());
+    		gen.write("ID", systems.get(i).getId());
+    		gen.write("type", systems.get(i).getType());
+    		gen.writeStartArray("Flows");
+    			systems.get(i).jsonFlow(gen);
+    		gen.writeEnd();
+    		gen.writeEnd();
+    	}
+    	
+    }
+    
 
     public String getBodyName()
     {

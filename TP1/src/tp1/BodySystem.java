@@ -2,6 +2,8 @@ package tp1;
 
 import java.util.ArrayList;
 
+import javax.json.stream.JsonGenerator;
+
 public class BodySystem
 {
     private String name;
@@ -17,6 +19,25 @@ public class BodySystem
         this.type = type;
         
         flows = new ArrayList<Flow>();
+    }
+    
+    public void jsonFlow (JsonGenerator gen) {
+    	
+    	for(int i = 0 ; i< flows.size(); i++) {
+    		gen.writeStartObject();
+    			gen.write("name", flows.get(i).getName());
+    			gen.write("ID", flows.get(i).getId());
+    			gen.writeStartArray("Connectibles");
+    				flows.get(i).jsonConnectibles(gen);
+    			gen.writeEnd();
+    		
+    			gen.writeStartArray("Connections");
+    				flows.get(i).jsonConnections(gen);
+    			gen.writeEnd();
+    		
+    		gen.writeEnd();
+    	}
+    	
     }
     
     public String getName()
