@@ -2,7 +2,7 @@ package tp1;
 
 public class Connectible
 {   
-   private int id;
+   private String id;
    private String type;
    private  String name;
    private float volume;
@@ -10,7 +10,7 @@ public class Connectible
    private float startRadius;
    private float endRadius;
    
-Connectible (int id, String type, String name){
+Connectible (String id, String type, String name){
     
     this.id = id;
     this.type = type;
@@ -22,11 +22,11 @@ Connectible (int id, String type, String name){
 }
 
    
-public int getId()
+public String getId()
 {
     return id;
 }
-public void setId(int id)
+public void setId(String id)
 {
     this.id = id;
 }

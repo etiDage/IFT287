@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class BodySystem
 {
     private String name;
-    private int id;
+    private String id;
     private int type;
     
     private ArrayList<Flow> flows;
     
-    public BodySystem(String name, int id, int type)
+    public BodySystem(String name, String id, int type)
     {
         this.name = name;
         this.id = id;
@@ -29,12 +29,12 @@ public class BodySystem
         this.name = name;
     }
     
-    public int getId()
+    public String getId()
     {
         return id;
     }
     
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
