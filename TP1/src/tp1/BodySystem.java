@@ -70,7 +70,7 @@ public class BodySystem
 		gen.write("name", name);
 		gen.write("id", id);
 		gen.write("type", type);
-		gen.writeStartArray("Flows");
+		gen.writeStartArray("Flow");
 		for(Flow flow : flows)
 		{
 			flow.jsonFlow(gen);
@@ -87,7 +87,7 @@ public class BodySystem
         n.setAttribute("type",Integer.toString(type));
         for(Flow flow : flows)
 		{
-        	Element flo =document.createElement("Flows");
+        	Element flo =document.createElement("Flow");
             n.appendChild(flo);
             flow.xmlFlow(document, flo);
 		}

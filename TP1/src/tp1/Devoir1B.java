@@ -89,7 +89,6 @@ public class Devoir1B
         StreamResult result = new StreamResult(out);
         transformer.transform(source, result);
         
-        System.out.println(mainBody.getBodyName());
         
         System.out.println("Conversion terminee.");
 

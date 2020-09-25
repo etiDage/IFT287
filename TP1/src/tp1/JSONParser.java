@@ -41,7 +41,7 @@ public class JSONParser {
 	private BodySystem parseBodySystem(JsonObject systemParser)
 	{
 		BodySystem bodySystem = new BodySystem(systemParser.getString("name"), systemParser.getInt("id"), systemParser.getInt("type"));
-		JsonArray flows = (JsonArray) systemParser.get("Flows");
+		JsonArray flows = (JsonArray) systemParser.get("Flow");
 		flows.forEach(flowParser -> {
 			JsonObject flow = (JsonObject) flowParser;
 			bodySystem.addFlow(parseFlow(flow));
@@ -90,6 +90,7 @@ public class JSONParser {
 		{
 			JsonNumber jsonNum = connectibleParser.getJsonNumber("volume");
 			double volume = jsonNum.doubleValue();
+			System.out.println(volume);
 			connectible.setVolume(volume);
 		}
 		
@@ -104,14 +105,14 @@ public class JSONParser {
 		{
 			JsonNumber jsonNum = connectibleParser.getJsonNumber("startRadius");
 			double startRadius = jsonNum.doubleValue();
-			connectible.setVolume(startRadius);
+			connectible.setStartRadius(startRadius);
 		}
 		
 		if(connectibleParser.getJsonNumber("endRadius") != null)
 		{
 			JsonNumber jsonNum = connectibleParser.getJsonNumber("endRadius");
 			double endRadius = jsonNum.doubleValue();
-			connectible.setVolume(endRadius);
+			connectible.setEndRadius(endRadius);
 		}
 
 		return connectible;
