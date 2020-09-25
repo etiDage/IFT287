@@ -13,6 +13,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -68,21 +70,19 @@ public class Devoir1A
         
         MainBody patient = ((MonParser) handler).getMainBody();
         
+        
+        Map<String, Object> config = new HashMap<String, Object>(1);
+        config.put(JsonGenerator.PRETTY_PRINTING, true);
         FileWriter writer = new FileWriter(nomFichierJSON);
-		JsonGenerator gen = Json.createGenerator(writer);
+        JsonGeneratorFactory f = Json.createGeneratorFactory(config);
+		JsonGenerator gen = f.createGenerator(writer);
 		
 		gen.writeStartObject();
-		gen.write("Name", patient.getBodyName());
-		gen.write("ID", patient.getBodyID());
-		gen.writeStartArray("Organs");
-			patient.jsonOrgans(gen);
-		gen.writeEnd();
-		gen.writeStartArray("Systems");
-			patient.jsonBodySystem(gen);
-		gen.writeEnd();
 		
-	gen.writeEnd();
-	gen.close();
+		patient.jsonMainBody(gen);
+		
+		gen.writeEnd();
+		gen.close();
        
         
         System.out.println("Conversion terminee.");

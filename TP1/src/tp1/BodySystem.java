@@ -7,12 +7,12 @@ import javax.json.stream.JsonGenerator;
 public class BodySystem
 {
     private String name;
-    private String id;
-    private String type;
+    private int id;
+    private int type;
     
     private ArrayList<Flow> flows;
     
-    public BodySystem(String name, String id, String type)
+    public BodySystem(String name, int id, int type)
     {
         this.name = name;
         this.id = id;
@@ -20,26 +20,7 @@ public class BodySystem
         
         flows = new ArrayList<Flow>();
     }
-    
-    public void jsonFlow (JsonGenerator gen) {
-    	
-    	for(int i = 0 ; i< flows.size(); i++) {
-    		gen.writeStartObject();
-    			gen.write("name", flows.get(i).getName());
-    			gen.write("ID", flows.get(i).getId());
-    			gen.writeStartArray("Connectibles");
-    				flows.get(i).jsonConnectibles(gen);
-    			gen.writeEnd();
-    		
-    			gen.writeStartArray("Connections");
-    				flows.get(i).jsonConnections(gen);
-    			gen.writeEnd();
-    		
-    		gen.writeEnd();
-    	}
-    	
-    }
-    
+        
     public String getName()
     {
         return name;
@@ -50,22 +31,22 @@ public class BodySystem
         this.name = name;
     }
     
-    public String getId()
+    public int getId()
     {
         return id;
     }
     
-    public void setId(String id)
+    public void setId(int id)
     {
         this.id = id;
     }
     
-    public String getType()
+    public int getType()
     {
         return type;
     }
     
-    public void setType(String type)
+    public void setType(int type)
     {
         this.type = type;
     }
@@ -79,4 +60,21 @@ public class BodySystem
     {
         flows.add(flow);
     }
+
+	public void jsonSystem(JsonGenerator gen) 
+	{
+		gen.writeStartObject();
+		gen.write("name", name);
+		gen.write("ID", id);
+		gen.write("type", type);
+		gen.writeStartArray("Flows");
+		for(Flow flow : flows)
+		{
+			flow.jsonFlow(gen);
+		}
+		gen.writeEnd();
+		gen.writeEnd();
+
+		
+	}
 }

@@ -1,16 +1,18 @@
 package tp1;
 
+import javax.json.stream.JsonGenerator;
+
 public class Connectible
 {   
-   private String id;
+   private int id;
    private String type;
    private  String name;
-   private float volume;
+   private double volume;
    private float length;
    private double startRadius;
    private double endRadius;
    
-Connectible (String name, String id, String type){
+Connectible (String name, int id, String type){
     
     this.id = id;
     this.type = type;
@@ -22,11 +24,11 @@ Connectible (String name, String id, String type){
 }
 
    
-public String getId()
+public int getId()
 {
     return id;
 }
-public void setId(String id)
+public void setId(int id)
 {
     this.id = id;
 }
@@ -46,11 +48,11 @@ public void setName(String name)
 {
     this.name = name;
 }
-public float getVolume()
+public double getVolume()
 {
     return volume;
 }
-public void setVolume(float volume)
+public void setVolume(double volume)
 {
     this.volume = volume;
 }
@@ -77,5 +79,27 @@ public double getEndRadius()
 public void setEndRadius(double endRadius)
 {
     this.endRadius = endRadius;
+}
+
+public void jsonConnectible(JsonGenerator gen)
+{
+	gen.writeStartObject();
+	gen.write("type", type);
+	gen.write("name", name);
+	gen.write("id", id);
+	if(volume>=0) {
+		gen.write("volume", volume);
+	}
+	if(length>=0) {
+		gen.write("length", length);
+	}
+	if(startRadius>=0) {
+		gen.write("startRadius", startRadius);
+	}
+	if(endRadius>=0) {
+		gen.write("endRadius", endRadius);
+	}
+	gen.writeEnd();
+
 }
 }

@@ -6,59 +6,25 @@ import javax.json.stream.JsonGenerator;
 
 public class Flow
 {
-    private String id;
+    private int id;
     private String name;
     private ArrayList<Connectible> connectibles;
     private ArrayList<Connections>  connections; 
     
-    Flow(String id, String name){
+    Flow(int id, String name){
         this.id= id;
         this.name = name;
         connectibles= new ArrayList<>();
         connections = new ArrayList<>();
     }
     
-	public void jsonConnectibles(JsonGenerator gen) {
-		for(int i = 0 ; i< connectibles.size(); i++) {
-    		gen.writeStartObject();
-    		gen.write("toId", connectibles.get(i).getId());
-    		gen.write("name", connectibles.get(i).getName());
-    		gen.write("type", connectibles.get(i).getType());
-    		if(connectibles.get(i).getVolume()>=0) {
-    			gen.write("Volume", connectibles.get(i).getVolume());
-    		}
-    		if(connectibles.get(i).getLength()>=0) {
-    			gen.write("Volume",connectibles.get(i).getLength());
-    		}
-    		if(connectibles.get(i).getStartRadius()>=0) {
-    			gen.write("Volume",connectibles.get(i).getStartRadius());
-    		}
-    		if(connectibles.get(i).getEndRadius()>=0) {
-    			gen.write("Volume",connectibles.get(i).getEndRadius());
-    		}
-    		gen.writeEnd();
-    	}
-	} 
 	
-public void jsonConnections (JsonGenerator gen) {
-    	
-    	for(int i = 0 ; i< connections.size(); i++) {
-    		gen.writeStartObject();
-    			gen.write("ID", connections.get(i).getId());
-    			gen.writeStartArray("toId");
-    				connections.get(i).jsonToId(gen);
-    			gen.writeEnd();
-    		
-    		gen.writeEnd();
-    	}
-    	
-    }
 	
-    public String getId()
+    public int getId()
     {
         return id;
     }
-    public void setId(String id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -85,5 +51,28 @@ public void jsonConnections (JsonGenerator gen) {
     public void addConnections(Connections connect )
     {
     		connections.add(connect);
+    }
+    
+    public void jsonFlow(JsonGenerator gen)
+    {
+		gen.writeStartObject();
+		gen.write("name", name);
+		gen.write("ID", id);
+		gen.writeStartArray("Connectibles");
+		for(Connectible connectible : connectibles)
+		{
+			connectible.jsonConnectible(gen);
+		}
+		gen.writeEnd();
+	
+		gen.writeStartArray("Connections");
+		for(Connections connection : connections)
+		{
+			connection.jsonConnection(gen);
+		}
+		gen.writeEnd();
+	
+		gen.writeEnd();
+
     }
 }

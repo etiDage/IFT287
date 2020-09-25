@@ -1,5 +1,7 @@
 package tp1;
 
+import javax.json.stream.JsonGenerator;
+
 public class Organ
 {
     private String name;
@@ -42,6 +44,16 @@ public class Organ
     {
         this.systemID = systemID;
     }
+
+	public void jsonOrgan(JsonGenerator gen) 
+	{
+		gen.writeStartObject();
+		gen.write("name", name);
+		gen.write("ID", id);
+		gen.write("systemId", systemID);
+		gen.writeEnd();
+
+	}
     
     
 }

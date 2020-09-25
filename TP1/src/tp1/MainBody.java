@@ -7,13 +7,13 @@ import javax.json.stream.JsonGenerator;
 public class MainBody
 {
     private String bodyName;
-    private String bodyID;
+    private int bodyID;
     
     private ArrayList<BodySystem> systems;
     private ArrayList<Organ> organs;
     
     
-    public MainBody(String bodyName, String bodyID)
+    public MainBody(String bodyName, int bodyID)
     {
         this.setBodyName(bodyName);
         this.setBodyID(bodyID);
@@ -21,33 +21,24 @@ public class MainBody
         systems = new ArrayList<BodySystem>();
         organs = new ArrayList<Organ>();
     }
-    
-    public void jsonOrgans (JsonGenerator gen) {
-    	
-    	for(int i = 0 ; i< organs.size(); i++) {
-    		gen.writeStartObject();
-    		gen.write("name", organs.get(i).getName());
-    		gen.write("ID", organs.get(i).getId());
-    		gen.write("systemId", organs.get(i).getSystemID());
-    		gen.writeEnd();
-    	}
-    	
+        
+    public void jsonMainBody (JsonGenerator gen)
+    {
+		gen.write("Name", bodyName);
+		gen.write("ID", bodyID);
+		gen.writeStartArray("Systems");
+		for(BodySystem bodySystem : systems)
+		{
+			bodySystem.jsonSystem(gen);
+		}
+		gen.writeEnd();
+		gen.writeStartArray("Organs");
+		for(Organ organ : organs)
+		{
+			organ.jsonOrgan(gen);
+		}
+		gen.writeEnd();
     }
-    public void jsonBodySystem (JsonGenerator gen) {
-    	
-    	for(int i = 0 ; i< systems.size(); i++) {
-    		gen.writeStartObject();
-    		gen.write("name", systems.get(i).getName());
-    		gen.write("ID", systems.get(i).getId());
-    		gen.write("type", systems.get(i).getType());
-    		gen.writeStartArray("Flows");
-    			systems.get(i).jsonFlow(gen);
-    		gen.writeEnd();
-    		gen.writeEnd();
-    	}
-    	
-    }
-    
 
     public String getBodyName()
     {
@@ -61,13 +52,13 @@ public class MainBody
     }
 
 
-    public String getBodyID()
+    public int getBodyID()
     {
         return bodyID;
     }
 
 
-    public void setBodyID(String bodyID)
+    public void setBodyID(int bodyID)
     {
         this.bodyID = bodyID;
     }
