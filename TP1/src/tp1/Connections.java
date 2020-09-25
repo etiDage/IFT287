@@ -3,6 +3,9 @@ import java.util.*;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class Connections
 {
     private int id;
@@ -57,14 +60,14 @@ public class Connections
 
     }
     
-	public void xmlConnection(Document document, Node n) 
+	public void xmlConnection(Document document, Element n) 
 	{
-        n.setAttribute("ID",id);
+        n.setAttribute("id",Integer.toString(id));
         for(int toID : toId)
 		{
-        	Node toId =document.createElement("ToId");
+        	Element toId =document.createElement("to");
             n.appendChild(toId);
-            toId.setAttribute("id", toID);
+            toId.setAttribute("id", Integer.toString(toID));
 		}
         
 	}

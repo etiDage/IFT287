@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 public class MainBody
 {
     private String bodyName;
@@ -24,8 +28,8 @@ public class MainBody
         
     public void jsonMainBody (JsonGenerator gen)
     {
-		gen.write("Name", bodyName);
-		gen.write("ID", bodyID);
+		gen.write("name", bodyName);
+		gen.write("id", bodyID);
 		gen.writeStartArray("Systems");
 		for(BodySystem bodySystem : systems)
 		{
@@ -39,25 +43,28 @@ public class MainBody
 		}
 		gen.writeEnd();
     }
-    public void xmlMainBody(Document document, Node n) {
-        n.setAttribute("Name",bodyName);
-        n.setAttribute("ID",bodyID);
-        for(Organ organ : organs)
-		{
-        	Node org =document.createElement("Organ");
-            n.appendChild(org);
-            organ.xmlOrgan(document, org);
-		}
+    public void xmlMainBody(Document document, Element n) {
+        n.setAttribute("bodyName",bodyName);
+        n.setAttribute("bodyID",Integer.toString(bodyID));
+        
+        Element systemsElement = document.createElement("Systems");
+        n.appendChild(systemsElement);
         for(BodySystem bodySystem : systems)
 		{
-        	Node sys =document.createElement("System");
-            n.appendChild(sys);
+        	Element sys =document.createElement("System");
+            systemsElement.appendChild(sys);
             bodySystem.xmlSystem(document, sys);
 		}
         
+        Element organsElement = document.createElement("Organs");
+        n.appendChild(organsElement);
+        for(Organ organ : organs)
+		{
+        	Element org =document.createElement("Organ");
+        	organsElement.appendChild(org);
+            organ.xmlOrgan(document, org);
+		}
         
-        
-    	
     }
 
     public String getBodyName()

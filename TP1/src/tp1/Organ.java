@@ -2,13 +2,16 @@ package tp1;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class Organ
 {
     private String name;
-    private String id;
-    private String systemID;
+    private int id;
+    private int systemID;
     
-    public Organ(String name, String id, String systemID)
+    public Organ(String name, int id, int systemID)
     {
         this.setName(name);
         this.setId(id);
@@ -25,22 +28,22 @@ public class Organ
         this.name = name;
     }
 
-    public String getId()
+    public int getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(int id)
     {
         this.id = id;
     }
 
-    public String getSystemID()
+    public int getSystemID()
     {
         return systemID;
     }
 
-    public void setSystemID(String systemID)
+    public void setSystemID(int systemID)
     {
         this.systemID = systemID;
     }
@@ -49,16 +52,16 @@ public class Organ
 	{
 		gen.writeStartObject();
 		gen.write("name", name);
-		gen.write("ID", id);
-		gen.write("systemId", systemID);
+		gen.write("id", id);
+		gen.write("systemID", systemID);
 		gen.writeEnd();
 
 	}
-	public void xmlOrgan(Document document, Node n) 
+	public void xmlOrgan(Document document, Element n) 
 	{
 		n.setAttribute("name",name);
-        n.setAttribute("ID",id);
-        n.setAttribute("systemId",systemID);
+        n.setAttribute("id",Integer.toString(id));
+        n.setAttribute("systemID",Integer.toString(systemID));
        
         
 	}
