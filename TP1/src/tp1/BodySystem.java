@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class BodySystem
 {
     private String name;
@@ -76,5 +79,19 @@ public class BodySystem
 		gen.writeEnd();
 
 		
+	}
+	public void xmlSystem(Document document, Element n) 
+	{
+		n.setAttribute("name",name);
+        n.setAttribute("id",Integer.toString(id));
+        n.setAttribute("type",Integer.toString(type));
+        for(Flow flow : flows)
+		{
+        	Element flo =document.createElement("Flows");
+            n.appendChild(flo);
+            flow.xmlFlow(document, flo);
+		}
+       
+        
 	}
 }

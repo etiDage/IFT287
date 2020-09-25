@@ -2,6 +2,9 @@ package tp1;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class Organ
 {
     private String name;
@@ -54,6 +57,15 @@ public class Organ
 		gen.writeEnd();
 
 	}
+	public void xmlOrgan(Document document, Element n) 
+	{
+		n.setAttribute("name",name);
+        n.setAttribute("id",Integer.toString(id));
+        n.setAttribute("systemID",Integer.toString(systemID));
+       
+        
+	}
+	
     
     
 }

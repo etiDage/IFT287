@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.json.stream.JsonGenerator;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class Flow
 {
     private int id;
@@ -75,4 +78,25 @@ public class Flow
 		gen.writeEnd();
 
     }
+    
+    public void xmlFlow(Document document, Element n) 
+	{
+		n.setAttribute("id",Integer.toString(id));
+		n.setAttribute("name",name);
+		Element con =document.createElement("Connectible");
+		n.appendChild(con);
+        for(Connectible connectible : connectibles)
+		{
+            connectible.xmlConnectible(document, con);
+		}
+        Element connectionsElement =document.createElement("Connections");
+		n.appendChild(connectionsElement);
+        for(Connections connection : connections)
+		{
+        	Element connectio =document.createElement("Connection");
+            connectionsElement.appendChild(connectio);
+            connection.xmlConnection(document, connectio);
+		}
+        
+	}
 }
