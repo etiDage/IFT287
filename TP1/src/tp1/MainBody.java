@@ -24,8 +24,8 @@ public class MainBody
         
     public void jsonMainBody (JsonGenerator gen)
     {
-		gen.write("Name", bodyName);
-		gen.write("ID", bodyID);
+		gen.write("name", bodyName);
+		gen.write("id", bodyID);
 		gen.writeStartArray("Systems");
 		for(BodySystem bodySystem : systems)
 		{

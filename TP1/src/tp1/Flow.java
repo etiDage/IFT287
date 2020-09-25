@@ -57,7 +57,7 @@ public class Flow
     {
 		gen.writeStartObject();
 		gen.write("name", name);
-		gen.write("ID", id);
+		gen.write("id", id);
 		gen.writeStartArray("Connectibles");
 		for(Connectible connectible : connectibles)
 		{

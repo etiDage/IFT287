@@ -171,7 +171,7 @@ public class MonParser extends DefaultHandler {
 			break;
 			
 		case "Organ":
-			organ = new Organ(attrs.getValue(0), attrs.getValue(1), attrs.getValue(2));
+			organ = new Organ(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), Integer.parseInt(attrs.getValue(2)));
 			break;
 			
 		}

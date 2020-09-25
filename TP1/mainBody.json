@@ -1,16 +1,16 @@
 
 {
-    "Name":"DrHouse",
-    "ID":1,
+    "name":"DrHouse",
+    "id":1,
     "Systems":[
         {
             "name":"Circulatory",
-            "ID":0,
+            "id":0,
             "type":0,
             "Flows":[
                 {
                     "name":"Heart",
-                    "ID":0,
+                    "id":0,
                     "Connectibles":[
                         {
                             "type":"Atrium",
@@ -58,7 +58,7 @@
                 },
                 {
                     "name":"Aorta connection",
-                    "ID":1,
+                    "id":1,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -90,7 +90,7 @@
                 },
                 {
                     "name":"Coronary",
-                    "ID":2,
+                    "id":2,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -230,7 +230,7 @@
                 },
                 {
                     "name":"Pulmonary",
-                    "ID":3,
+                    "id":3,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -349,7 +349,7 @@
                 },
                 {
                     "name":"Head and thoracic",
-                    "ID":4,
+                    "id":4,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -1496,7 +1496,7 @@
                 },
                 {
                     "name":"Left arm",
-                    "ID":5,
+                    "id":5,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -1772,7 +1772,7 @@
                 },
                 {
                     "name":"Right arm",
-                    "ID":6,
+                    "id":6,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -2048,7 +2048,7 @@
                 },
                 {
                     "name":"Abdominal",
-                    "ID":7,
+                    "id":7,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -2887,7 +2887,7 @@
                 },
                 {
                     "name":"Right leg",
-                    "ID":8,
+                    "id":8,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -3361,7 +3361,7 @@
                 },
                 {
                     "name":"Left leg",
-                    "ID":9,
+                    "id":9,
                     "Connectibles":[
                         {
                             "type":"Artery",
@@ -3835,7 +3835,7 @@
                 },
                 {
                     "name":"Vena cava drain",
-                    "ID":10,
+                    "id":10,
                     "Connectibles":[
                         {
                             "type":"Vein",
@@ -3859,12 +3859,12 @@
         },
         {
             "name":"Respiratory",
-            "ID":1,
+            "id":1,
             "type":1,
             "Flows":[
                 {
                     "name":"Air",
-                    "ID":0,
+                    "id":0,
                     "Connectibles":[
                         {
                             "type":"Nose",
@@ -4089,12 +4089,12 @@
         },
         {
             "name":"Digestive",
-            "ID":2,
+            "id":2,
             "type":2,
             "Flows":[
                 {
                     "name":"Food",
-                    "ID":0,
+                    "id":0,
                     "Connectibles":[
                         {
                             "type":"DigestiveTract",
@@ -4335,7 +4335,7 @@
                 },
                 {
                     "name":"Salivary",
-                    "ID":1,
+                    "id":1,
                     "Connectibles":[
                         {
                             "type":"SalivaryDuct",
@@ -4389,63 +4389,63 @@
     "Organs":[
         {
             "name":"Heart",
-            "ID":"0",
-            "systemId":"0"
+            "id":0,
+            "systemID":0
         },
         {
             "name":"Left lung",
-            "ID":"0",
-            "systemId":"1"
+            "id":0,
+            "systemID":1
         },
         {
             "name":"Right lung",
-            "ID":"1",
-            "systemId":"1"
+            "id":1,
+            "systemID":1
         },
         {
             "name":"Mouth",
-            "ID":"0",
-            "systemId":"2"
+            "id":0,
+            "systemID":2
         },
         {
             "name":"Esophagus",
-            "ID":"1",
-            "systemId":"2"
+            "id":1,
+            "systemID":2
         },
         {
             "name":"Stomach",
-            "ID":"2",
-            "systemId":"2"
+            "id":2,
+            "systemID":2
         },
         {
             "name":"Small intestine",
-            "ID":"3",
-            "systemId":"2"
+            "id":3,
+            "systemID":2
         },
         {
             "name":"Liver",
-            "ID":"4",
-            "systemId":"2"
+            "id":4,
+            "systemID":2
         },
         {
             "name":"Pancreas",
-            "ID":"5",
-            "systemId":"2"
+            "id":5,
+            "systemID":2
         },
         {
             "name":"Gallbladder",
-            "ID":"6",
-            "systemId":"2"
+            "id":6,
+            "systemID":2
         },
         {
             "name":"Large intestine",
-            "ID":"7",
-            "systemId":"2"
+            "id":7,
+            "systemID":2
         },
         {
             "name":"Rectum",
-            "ID":"8",
-            "systemId":"2"
+            "id":8,
+            "systemID":2
         }
     ]
 }

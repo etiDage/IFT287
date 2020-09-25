@@ -65,7 +65,7 @@ public class BodySystem
 	{
 		gen.writeStartObject();
 		gen.write("name", name);
-		gen.write("ID", id);
+		gen.write("id", id);
 		gen.write("type", type);
 		gen.writeStartArray("Flows");
 		for(Flow flow : flows)

@@ -54,9 +54,11 @@ public class Devoir1B
         
         JsonObject parser = (JsonObject) json_struct;
         
-        System.out.println(parser.get("Name"));
+        JSONParser jsonParser = new JSONParser(parser);
         
+        MainBody mainBody = jsonParser.parseMainBody();
         
+        System.out.println(mainBody.getBodyName());
         
         System.out.println("Conversion terminee.");
 
