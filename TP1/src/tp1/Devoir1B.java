@@ -4,6 +4,14 @@
 
 package tp1;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonStructure;
+
 /**
  * Fichier de base pour le Devoir1B du cours IFT287
  *
@@ -25,7 +33,7 @@ package tp1;
 public class Devoir1B
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         if (args.length < 2)
         {
@@ -39,6 +47,16 @@ public class Devoir1B
         System.out.println("Debut de la conversion du fichier " + nomFichierJSON + " vers le fichier " + nomFichierXML);
 
         // Votre code de conversion devrait aller ici
+        
+        JsonReader reader = Json.createReader(new FileReader(nomFichierJSON));
+        JsonStructure json_struct = reader.read();
+        
+        
+        JsonObject parser = (JsonObject) json_struct;
+        
+        System.out.println(parser.get("Name"));
+        
+        
         
         System.out.println("Conversion terminee.");
 

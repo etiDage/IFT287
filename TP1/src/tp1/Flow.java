@@ -2,25 +2,29 @@ package tp1;
 
 import java.util.ArrayList;
 
+import javax.json.stream.JsonGenerator;
+
 public class Flow
 {
-    private String id;
+    private int id;
     private String name;
     private ArrayList<Connectible> connectibles;
     private ArrayList<Connections>  connections; 
     
-    Flow(String id, String name){
+    Flow(int id, String name){
         this.id= id;
         this.name = name;
         connectibles= new ArrayList<>();
         connections = new ArrayList<>();
     }
     
-    public String getId()
+	
+	
+    public int getId()
     {
         return id;
     }
-    public void setId(String id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -47,5 +51,28 @@ public class Flow
     public void addConnections(Connections connect )
     {
     		connections.add(connect);
+    }
+    
+    public void jsonFlow(JsonGenerator gen)
+    {
+		gen.writeStartObject();
+		gen.write("name", name);
+		gen.write("ID", id);
+		gen.writeStartArray("Connectibles");
+		for(Connectible connectible : connectibles)
+		{
+			connectible.jsonConnectible(gen);
+		}
+		gen.writeEnd();
+	
+		gen.writeStartArray("Connections");
+		for(Connections connection : connections)
+		{
+			connection.jsonConnection(gen);
+		}
+		gen.writeEnd();
+	
+		gen.writeEnd();
+
     }
 }

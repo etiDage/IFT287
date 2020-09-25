@@ -1,8 +1,9 @@
 // Travail fait par :
 //   NomEquipier1 - Matricule
 //   NomEquipier2 - Matricule
-
+package tp1;
 import java.io.File;
+import java.io.FileWriter;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -10,10 +11,10 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
-package tp1;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -21,6 +22,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import javax.json.Json;
+import javax.json.stream.JsonGenerator;
+import javax.json.stream.JsonGeneratorFactory;
 
 /**
  * Fichier de base pour le Devoir1A du cours IFT287
@@ -62,6 +67,22 @@ public class Devoir1A
         SAXParser parser = factory.newSAXParser();
         DefaultHandler handler = new MonParser();
         parser.parse(new File(nomFichierXML), handler);
+        
+        MainBody patient = ((MonParser) handler).getMainBody();
+        
+        
+        Map<String, Object> config = new HashMap<String, Object>(1);
+        config.put(JsonGenerator.PRETTY_PRINTING, true);
+        FileWriter writer = new FileWriter(nomFichierJSON);
+        JsonGeneratorFactory f = Json.createGeneratorFactory(config);
+		JsonGenerator gen = f.createGenerator(writer);
+		
+		gen.writeStartObject();
+		
+		patient.jsonMainBody(gen);
+		
+		gen.writeEnd();
+		gen.close();
        
         
         System.out.println("Conversion terminee.");

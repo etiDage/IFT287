@@ -12,7 +12,7 @@ public class MonParser extends DefaultHandler {
 	private Flow flow;
 	private Connectible connectible;
 	private Connections connection;
-	private String toId;
+	private int toId;
 	private Organ organ;
 	
 	
@@ -34,55 +34,55 @@ public class MonParser extends DefaultHandler {
 		switch(qName)
 		{
 		case "MainBody":
-			mainBody = new MainBody(attrs.getValue(0), attrs.getValue(1));
+			mainBody = new MainBody(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)));
 			break;
 			
-		case "BodySystem":
-			bodySystem = new BodySystem(attrs.getValue(0), attrs.getValue(1), attrs.getValue(2));
+		case "System":
+			bodySystem = new BodySystem(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), Integer.parseInt(attrs.getValue(2)));
 			break;
 			
 		case "Flow":
-			flow = new Flow(attrs.getValue(0), attrs.getValue(1));
+			flow = new Flow(Integer.parseInt(attrs.getValue("id")), attrs.getValue("name"));
 			break;
 		
 		case "Connectible":
 			break;
 			
 		case "Atrium":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 			
 		case "Ventricle":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 		
 		case "Artery":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			connectible.setStartRadius(Double.parseDouble(attrs.getValue("startRadius")));
 			if(attrs.getValue("endRadius") != null)
 			{
 				connectible.setEndRadius(Double.parseDouble(attrs.getValue("endRadius")));
 			}
-			connectible.setLength(Float.parseFloat(attrs.getValue("Length")));
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
 			
 			break;
 			
 		case "Vein":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			connectible.setStartRadius(Double.parseDouble(attrs.getValue("startRadius")));
 			if(attrs.getValue("endRadius") != null)
 			{
 				connectible.setEndRadius(Double.parseDouble(attrs.getValue("endRadius")));
 			}
-			connectible.setLength(Float.parseFloat(attrs.getValue("Length")));
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
 			
 			break;
 			
 		case "Capillaries":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			if(attrs.getValue("length") != null)
 			{
 				connectible.setLength(Float.parseFloat(attrs.getValue("length")));
@@ -91,80 +91,80 @@ public class MonParser extends DefaultHandler {
 			break;
 			
 		case "Nose":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 
 		case "AirConnectible":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setStartRadius(Double.parseDouble("startRadius"));
-			connectible.setEndRadius(Double.parseDouble("endRadius"));
-			connectible.setLength(Float.parseFloat("length"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setStartRadius(Double.parseDouble(attrs.getValue("startRadius")));
+			connectible.setEndRadius(Double.parseDouble(attrs.getValue("endRadius")));
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
 			break;
 
 		case "Alveoli":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 			
 		case "DigestiveTract":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setLength(Float.parseFloat("length"));
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 			
 		case "StomachTract":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setLength(Float.parseFloat("length"));
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 
 		case "DuodenumTract":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setLength(Float.parseFloat("length"));
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 
 		case "RectumTract":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setLength(Float.parseFloat("length"));
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 			
 		case "BiDuct":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 			
 		case "Duct":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 
 		case "DuctOverflowableJunction":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 
 		case "DeversingDuct":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 
 		case "InnerGallbladder":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
 			break;
 
 		case "SalivaryDuct":
-			connectible = new Connectible(attrs.getValue(0), attrs.getValue(1), qName);
-			connectible.setLength(Float.parseFloat("length"));
-			connectible.setVolume(Float.parseFloat("volume"));
+			connectible = new Connectible(attrs.getValue(0), Integer.parseInt(attrs.getValue(1)), qName);
+			connectible.setLength(Float.parseFloat(attrs.getValue("length")));
+			connectible.setVolume(Double.parseDouble(attrs.getValue("volume")));
 			break;
 
 		case "Connections":
 			break;
 			
 		case "Connection":
-			connection = new Connections(attrs.getValue(0));
+			connection = new Connections(Integer.parseInt(attrs.getValue(0)));
 			break;
 			
 		case "to":
-			toId = attrs.getType(0);
+			toId = Integer.parseInt(attrs.getValue("id"));
 			break;
 			
 		case "Organs":
@@ -177,18 +177,19 @@ public class MonParser extends DefaultHandler {
 		}
 	}
 	
-	public void endElement(String namespace, String lname, String qName)
+	public void endElement(String nidamespace, String lname, String qName)
 	{
 		switch(qName)
 		{
 		case "MainBody":
 			break;
 			
-		case "BodySystem":
+		case "System":
 			mainBody.addSystem(bodySystem);
 			break;
 			
 		case "Flow":
+			System.out.println(flow.getName());
 			bodySystem.addFlow(flow);
 			break;
 		
