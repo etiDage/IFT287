@@ -38,7 +38,7 @@ public class JSONParser {
 	}
 
 
-	public BodySystem parseBodySystem(JsonObject systemParser)
+	private BodySystem parseBodySystem(JsonObject systemParser)
 	{
 		BodySystem bodySystem = new BodySystem(systemParser.getString("name"), systemParser.getInt("id"), systemParser.getInt("type"));
 		JsonArray flows = (JsonArray) systemParser.get("Flows");
@@ -50,7 +50,7 @@ public class JSONParser {
 		return bodySystem;
 	}
 	
-	public Flow parseFlow(JsonObject flowParser)
+	private Flow parseFlow(JsonObject flowParser)
 	{
 		Flow flow = new Flow(flowParser.getInt("id"), flowParser.getString("name"));
 		JsonArray connectibles = (JsonArray) flowParser.get("Connectibles");
