@@ -56,4 +56,16 @@ public class Connections
 		gen.writeEnd();
 
     }
+    
+	public void xmlConnection(Document document, Node n) 
+	{
+        n.setAttribute("ID",id);
+        for(int toID : toId)
+		{
+        	Node toId =document.createElement("ToId");
+            n.appendChild(toId);
+            toId.setAttribute("id", toID);
+		}
+        
+	}
 }

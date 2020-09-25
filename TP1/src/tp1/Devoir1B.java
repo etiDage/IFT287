@@ -5,12 +5,24 @@
 package tp1;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.PrintStream;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonStructure;
+
+import javax.xml.transform;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
 
 /**
  * Fichier de base pour le Devoir1B du cours IFT287
@@ -56,6 +68,24 @@ public class Devoir1B
         
         System.out.println(parser.get("Name"));
         
+        MainBody patient= new MainBody("charlot", 1);
+        
+        FileOutputStream output = new FileOutputStream(nomFichierXML);
+        PrintStream out =new PrintStream(output);
+        
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        Document document = f.newDocumentBuilder().newDocument();
+        
+        Node body =document.createElement("MainBody");
+        document.appendChild(body);
+        patient.xmlMainBody(document, body);
+        
+        TransformerFactory fact= TransformerFactory.newInstance();
+        Transformer transformer = fact.newTransformer();
+        transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "mainBody.dtd");
+        DOMSource source = new DOMSource(document);
+        StreamResult result = new StreamResult(out);
+        transformer.transform(source, result);
         
         
         System.out.println("Conversion terminee.");

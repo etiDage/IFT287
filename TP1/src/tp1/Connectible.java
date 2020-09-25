@@ -102,4 +102,24 @@ public void jsonConnectible(JsonGenerator gen)
 	gen.writeEnd();
 
 }
+
+public void xmlConnectible(Document document, Node n) 
+{
+	n.setAttribute("type",type);
+    n.setAttribute("name",name);
+    n.setAttribute("ID",id);
+    if(volume>=0) {
+    	n.setAttribute("Volume",volume);
+	}
+	if(length>=0) {
+		n.setAttribute("length",length);
+	}
+	if(startRadius>=0) {
+		n.setAttribute("startRadius",startRadius);
+	}
+	if(endRadius>=0) {
+		n.setAttribute("endRadius",endRadius);
+	}
+    
+}
 }

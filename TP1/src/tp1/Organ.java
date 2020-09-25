@@ -54,6 +54,15 @@ public class Organ
 		gen.writeEnd();
 
 	}
+	public void xmlOrgan(Document document, Node n) 
+	{
+		n.setAttribute("name",name);
+        n.setAttribute("ID",id);
+        n.setAttribute("systemId",systemID);
+       
+        
+	}
+	
     
     
 }

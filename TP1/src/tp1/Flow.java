@@ -75,4 +75,23 @@ public class Flow
 		gen.writeEnd();
 
     }
+    
+    public void xmlFlow(Document document, Node n) 
+	{
+		n.setAttribute("name",name);
+        n.setAttribute("ID",id);
+        for(Connectible connectible : connectibles)
+		{
+        	Node con =document.createElement("Connectible");
+            n.appendChild(con);
+            connectible.xmlConnectible(document, con);
+		}
+        for(Connections connection : connections)
+		{
+        	Node connectio =document.createElement("Connection");
+            n.appendChild(connectio);
+            connection.xmlconnection(document, connectio);
+		}
+        
+	}
 }

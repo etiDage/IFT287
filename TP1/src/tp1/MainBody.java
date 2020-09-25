@@ -39,6 +39,26 @@ public class MainBody
 		}
 		gen.writeEnd();
     }
+    public void xmlMainBody(Document document, Node n) {
+        n.setAttribute("Name",bodyName);
+        n.setAttribute("ID",bodyID);
+        for(Organ organ : organs)
+		{
+        	Node org =document.createElement("Organ");
+            n.appendChild(org);
+            organ.xmlOrgan(document, org);
+		}
+        for(BodySystem bodySystem : systems)
+		{
+        	Node sys =document.createElement("System");
+            n.appendChild(sys);
+            bodySystem.xmlSystem(document, sys);
+		}
+        
+        
+        
+    	
+    }
 
     public String getBodyName()
     {

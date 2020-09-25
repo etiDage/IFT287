@@ -77,4 +77,18 @@ public class BodySystem
 
 		
 	}
+	public void xmlSystem(Document document, Node n) 
+	{
+		n.setAttribute("name",name);
+        n.setAttribute("ID",id);
+        n.setAttribute("type",type);
+        for(Flow flow : flows)
+		{
+        	Node flo =document.createElement("Flows");
+            n.appendChild(flo);
+            flow.xmlFlow(document, flo);
+		}
+       
+        
+	}
 }
