@@ -41,6 +41,7 @@ import java.sql.*;
 public class JardinCollectif
 {
     private static Connexion cx;
+    private GestionJardin gestionJardin;
 
     /**
      * @param args
@@ -75,6 +76,10 @@ public class JardinCollectif
         }
     }
 
+    public JardinCollectif(String serveur, String bd, String user, String pass)
+    {
+    	GestionJardin gestionJardin()
+    }
     /**
      * Decodage et traitement d'une transaction
      */
