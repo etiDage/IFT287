@@ -20,18 +20,18 @@ public class GestionJardin {
 	public GestionJardin(String serveur, String bd, String user, String pass) throws IFT287Exception, SQLException 
 	{
 		cx = new Connexion(serveur, bd, user, pass);
-		tableAssignations = new TableAssignations(cx);
-		tableDemandes = new TableDemandes(cx);
-		tableLots = new TableLots(cx);
-		tableMembres = new TableMembres(cx);
-		tablePlantes = new TablePlantes(cx);
-		tablePlants = new TablePlants(cx);
-		setGestionLot(new GestionLot());
-		setGestionInterrogation(new GestionInterrogation());
-		setGestionMembre(new GestionMembre());
-		setGestionPlante(new GestionPlante());
-		setGestionDemandeAssignation(new GestionDemandeAssignation());
-		setGestionPlants(new GestionPlants());
+//		tableAssignations = new TableAssignations(cx);
+//		tableDemandes = new TableDemandes(cx);
+//		tableLots = new TableLots(cx);
+//		tableMembres = new TableMembres(cx);
+//		tablePlantes = new TablePlantes(cx);
+//		tablePlants = new TablePlants(cx);
+//		setGestionLot(new GestionLot());
+//		setGestionInterrogation(new GestionInterrogation());
+//		setGestionMembre(new GestionMembre());
+//		setGestionPlante(new GestionPlante());
+//		setGestionDemandeAssignation(new GestionDemandeAssignation());
+//		setGestionPlants(new GestionPlants());
 	}
 	
     public void fermer() throws SQLException

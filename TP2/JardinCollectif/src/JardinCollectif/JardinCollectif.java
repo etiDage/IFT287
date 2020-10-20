@@ -54,14 +54,20 @@ public class JardinCollectif
             return;
         }
         
-        cx = null;
-        
+        JardinCollectif jardinInstance = null;
         try
         {
-            // Il est possible que vous ayez à déplacer la connexion ailleurs.
-            // N'hésitez pas à le faire!
-            cx = new Connexion(args[0], args[1], args[2], args[3]);
-            BufferedReader reader = ouvrirFichier(args);
+            // Ouverture du fichier de transactions
+            // s'il est spécifié comme argument
+            boolean lectureAuClavier = true;
+            InputStream sourceTransaction = System.in;
+            if (args.length > 4)
+            {
+                sourceTransaction = new FileInputStream(args[4]);
+                lectureAuClavier = false;
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
+            jardinInstance = new JardinCollectif(args[0], args[1], args[2], args[3]);
             String transaction = lireTransaction(reader);
             while (!finTransaction(transaction))
             {
@@ -71,18 +77,25 @@ public class JardinCollectif
         }
         finally
         {
-            if (cx != null)
-                cx.fermer();
+            if (jardinInstance != null)
+                jardinInstance.fermer();
         }
     }
 
-    public JardinCollectif(String serveur, String bd, String user, String pass)
+    public JardinCollectif(String serveur, String bd, String user, String pass) throws IFT287Exception, SQLException
     {
-    	GestionJardin gestionJardin()
+    	gestionJardin = new GestionJardin(serveur, bd, user, pass);
     }
     /**
      * Decodage et traitement d'une transaction
+     * @throws SQLException 
      */
+    
+    public void fermer() throws SQLException
+    {
+    	gestionJardin.fermer();
+    }
+    
     static void executerTransaction(String transaction) throws Exception, IFT287Exception
     {
         try
@@ -108,6 +121,8 @@ public class JardinCollectif
                     String nom = readString(tokenizer);
                     String motDePasse = readString(tokenizer);
                     int noMembre = readInt(tokenizer);
+                    
+                    System.out.println(prenom);
                     // Appel de la methode des gestionnaires qui traite la transaction specifique
                 }
                 else if (command.equals("supprimerMembre"))
