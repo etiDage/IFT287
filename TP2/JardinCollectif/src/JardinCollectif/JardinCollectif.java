@@ -92,18 +92,96 @@ public class JardinCollectif
                 // les commandes de votre programme. Vous pouvez ajouter autant
                 // de else if que necessaire. Vous n'avez pas a traiter la
                 // commande "quitter".
-                if (command.equals("commande1"))
+                if(command.equals("help"))
+                {
+                	afficherAide();
+                }
+                else if (command.equals("inscrireMembre"))
                 {
                     // Lecture des parametres
-                    String param1 = readString(tokenizer);
-                    Date param2 = readDate(tokenizer);
-                    int param3 = readInt(tokenizer);
+                    String prenom = readString(tokenizer);
+                    String nom = readString(tokenizer);
+                    String motDePasse = readString(tokenizer);
+                    int noMembre = readInt(tokenizer);
                     // Appel de la methode des gestionnaires qui traite la transaction specifique
                 }
-                else if (command.equals("commande2"))
+                else if (command.equals("supprimerMembre"))
                 {
-                    // Lire les parametres ici et appeler la bonne methode
-                    // de traitement pour la transaction
+                	//Lecture des parametres
+                	int noMembre = readInt(tokenizer);
+                 
+                }
+                else if (command.equals("promouvoirAdministrateur"))
+                {
+                	int noMembre = readInt(tokenizer);
+                }
+                else if (command.equals("ajouterLot"))
+                {
+                	String nomLot = readString(tokenizer);
+                	int nbMaxMembre = readInt(tokenizer);
+                }
+                else if (command.equals("supprimerLot"))
+                {
+                	String nomLot = readString(tokenizer);
+                }
+                else if (command.equals("rejoindreLot"))
+                {
+                	String nomLot = readString(tokenizer);
+                	int noMembre = readInt(tokenizer);
+                }
+                else if (command.equals("accepterDemande"))
+                {
+                	String nomLot = readString(tokenizer);
+                	int noMembre = readInt(tokenizer);
+                }
+                else if (command.equals("refuserDemande"))
+                {
+                	String nomLot = readString(tokenizer);
+                	int noMembre = readInt(tokenizer);
+                }
+                else if (command.equals("ajouterPlante"))
+                {
+                	String nomPlante = readString(tokenizer);
+                	int tempsDeCulture = readInt(tokenizer);
+                }
+                else if (command.equals("retirerPlante"))
+                {
+                	String nomPlante = readString(tokenizer);
+                	int tempsDeCulture = readInt(tokenizer);
+                }
+                else if (command.equals("planterPlante"))
+                {
+                	String nomPlante = readString(tokenizer);
+                	String nomLot = readString(tokenizer);
+                	int noMembre = readInt(tokenizer);
+                	int nbExemplaires = readInt(tokenizer);
+                	Date datePlantation = readDate(tokenizer);
+                }
+                else if (command.equals("recolterPlante"))
+                {
+                	String nomPlante = readString(tokenizer);
+                	String nomLot = readString(tokenizer);
+                	int noMembre = readInt(tokenizer);
+                }
+                else if (command.equals("afficherMembres"))
+                {
+                	
+                }
+                else if (command.equals("afficherPlantes"))
+                {
+                	
+                }
+                else if (command.equals("afficherLots"))
+                {
+                	
+                }
+                else if (command.equals("afficherPlantesLot"))
+                {
+                	String nomLot = readString(tokenizer);
+                }
+                else if (command.equals("quitter"))
+                {
+                	
                 }
                 else
                 {
@@ -119,6 +197,33 @@ public class JardinCollectif
             // fini et fonctionnel sans bogues.
             cx.rollback();
         }
+    }
+    
+    private static void afficherAide()
+    {
+        System.out.println();
+        System.out.println("Chaque transaction comporte un nom et une liste d'arguments");
+        System.out.println("separes par des espaces. La liste peut etre vide.");
+        System.out.println(" Les dates sont en format yyyy-mm-dd.");
+        System.out.println("");
+        System.out.println("Les transactions sont:");
+        System.out.println("inscrireMembre <prenom> <nom> <motDePasse> <noMembre>");
+        System.out.println("supprimerMembre <noMembre>");
+        System.out.println("promouvoirAdministrateur <noMembre>");
+        System.out.println("ajouterLot <nomLot> <nbMaxMembre>");
+        System.out.println("supprimerLot <nomLot>");
+        System.out.println("rejoindreLot <nomLot <noMembre>");
+        System.out.println("accepterDemande <nomLot> <noMembre>");
+        System.out.println("refuserDemande <nomLot> <noMembre>");
+        System.out.println("ajouterPlante <nomPlante> <tempsDeCulture>");
+        System.out.println("retirerPlante <nomPlante>");
+        System.out.println("planterPlante <nomPlante> <nomLot> <noMembre> <nbExemplaires> <datePlantation>");
+        System.out.println("recolterPlante <nomPlante> <nomLot> <noMembre>");
+        System.out.println("aficherMembres");
+        System.out.println("afficherPlantes");
+        System.out.println("afficherLots");
+        System.out.println("afficherPlantesLot <lot>");
+        System.out.println("quitter");
     }
 
     
