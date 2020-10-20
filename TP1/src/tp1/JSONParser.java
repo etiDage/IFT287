@@ -90,7 +90,6 @@ public class JSONParser {
 		{
 			JsonNumber jsonNum = connectibleParser.getJsonNumber("volume");
 			double volume = jsonNum.doubleValue();
-			System.out.println(volume);
 			connectible.setVolume(volume);
 		}
 		

@@ -189,7 +189,6 @@ public class MonParser extends DefaultHandler {
 			break;
 			
 		case "Flow":
-			System.out.println(flow.getName());
 			bodySystem.addFlow(flow);
 			break;
 		
