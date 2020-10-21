@@ -2,7 +2,6 @@ package JardinCollectif;
 
 import java.sql.*;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class TupleLot {
 

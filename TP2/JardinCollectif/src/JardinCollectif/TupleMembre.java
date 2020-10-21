@@ -2,20 +2,18 @@ package JardinCollectif;
 
 import java.sql.*;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 public class TupleMembre {
 	private int noMembre;
 	private String prenom;
 	private String nom;
 	private String motDePasse;
-	private Bool admin;
+	private boolean admin;
 	
 	public TupleMembre()
     {
     }
 	
-	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, Bool admin)
+	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, boolean admin)
     {
         this.setNoMembre(noMembre);
         this.setPrenom(prenom);
@@ -24,11 +22,11 @@ public class TupleMembre {
         this.setAdmin(admin);
     }
 
-	private void setAdmin(Bool admin) {
+	private void setAdmin(boolean admin) {
 		this.admin = admin;
 		
 	}
-    public Bool getAdmin()
+    public boolean getAdmin()
     {
         return admin;
     }

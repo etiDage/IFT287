@@ -27,7 +27,7 @@ public class GestionJardin {
 //		tablePlantes = new TablePlantes(cx);
 //		tablePlants = new TablePlants(cx);
 //		setGestionLot(new GestionLot());
-//		setGestionInterrogation(new GestionInterrogation());
+		setGestionInterrogation(new GestionInterrogation(cx));
 //		setGestionMembre(new GestionMembre());
 //		setGestionPlante(new GestionPlante());
 //		setGestionDemandeAssignation(new GestionDemandeAssignation());

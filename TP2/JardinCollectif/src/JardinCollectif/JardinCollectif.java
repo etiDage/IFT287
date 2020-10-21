@@ -41,7 +41,7 @@ import java.sql.*;
 public class JardinCollectif
 {
     private static Connexion cx;
-    private GestionJardin gestionJardin;
+    private static GestionJardin gestionJardin;
 
     /**
      * @param args
@@ -185,19 +185,20 @@ public class JardinCollectif
                 }
                 else if (command.equals("afficherMembres"))
                 {
-                	
+                	gestionJardin.getGestionInterrogation().afficherMembres();
                 }
                 else if (command.equals("afficherPlantes"))
                 {
-                	
+                	gestionJardin.getGestionInterrogation().afficherPlantes();
                 }
                 else if (command.equals("afficherLots"))
                 {
-                	
+                	gestionJardin.getGestionInterrogation().afficherLots();
                 }
                 else if (command.equals("afficherPlantesLot"))
                 {
                 	String nomLot = readString(tokenizer);
+                	gestionJardin.getGestionInterrogation().afficherPlantsLot(nomLot);
                 }
                 else if (command.equals("quitter"))
                 {
