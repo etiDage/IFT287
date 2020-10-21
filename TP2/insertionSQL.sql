@@ -49,3 +49,13 @@ WHERE l1.nomlots = 'Lot4';
 
 
 SELECT noMembre, prenom, nom FROM membres
+
+SELECT min(sub.nb)
+FROM (SELECT count(a.nomlots) AS nb
+FROM assignation a
+WHERE a.nomlots IN (SELECT nomlots FROM assignation WHERE nomembre = 1)
+GROUP BY a.nomlots) sub;
+
+UPDATE membres SET admin = FALSE WHERE nomembre = 1
+
+SELECT * FROM membres

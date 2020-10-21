@@ -122,18 +122,22 @@ public class JardinCollectif
                     String motDePasse = readString(tokenizer);
                     int noMembre = readInt(tokenizer);
                     
-                    System.out.println(prenom);
                     // Appel de la methode des gestionnaires qui traite la transaction specifique
+                    gestionJardin.getGestionMembre().inscrireMembre(noMembre, prenom, nom, motDePasse);
+                    
                 }
                 else if (command.equals("supprimerMembre"))
                 {
                 	//Lecture des parametres
                 	int noMembre = readInt(tokenizer);
-                 
+                	
+                	gestionJardin.getGestionMembre().supprimerMembre(noMembre);
                 }
                 else if (command.equals("promouvoirAdministrateur"))
                 {
                 	int noMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionMembre().promouvoirMembre(noMembre);
                 }
                 else if (command.equals("ajouterLot"))
                 {
