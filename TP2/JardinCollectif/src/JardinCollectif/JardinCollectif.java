@@ -244,7 +244,7 @@ public class JardinCollectif
         System.out.println("retirerPlante <nomPlante>");
         System.out.println("planterPlante <nomPlante> <nomLot> <noMembre> <nbExemplaires> <datePlantation>");
         System.out.println("recolterPlante <nomPlante> <nomLot> <noMembre>");
-        System.out.println("aficherMembres");
+        System.out.println("afficherMembres");
         System.out.println("afficherPlantes");
         System.out.println("afficherLots");
         System.out.println("afficherPlantesLot <lot>");
