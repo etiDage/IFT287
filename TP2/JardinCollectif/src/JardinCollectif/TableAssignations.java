@@ -8,6 +8,9 @@ public class TableAssignations {
 
 	private Connexion cx;
 	private PreparedStatement stmtNbMembreLots;
+	private PreparedStatement stmtInsert;
+	private PreparedStatement stmtExist;
+	private PreparedStatement stmtDelete;
 
 	
 	public TableAssignations(Connexion cx) throws SQLException
@@ -18,6 +21,10 @@ public class TableAssignations {
 				"		FROM jardincollectif.assignation a " + 
 				"		WHERE a.nomlots IN (SELECT nomlots FROM jardincollectif.assignation WHERE nomembre = ?) " + 
 				"		GROUP BY a.nomlots) sub;");
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.assignation(noMembre, nomLots) VALUES " + 
+				"(?, ?);");
+		stmtExist = cx.getConnection().prepareStatement("SELECT noMembre FROM jardincollectif.assignation WHERE noMembre = ? AND nomLots = ?");
+		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.assignation WHERE noMembre = ? AND nomLots = ?");
 
 	}
 	
@@ -42,5 +49,29 @@ public class TableAssignations {
 		}
 		rs.close();
 		return res;
+	}
+	
+	public boolean exist(int noMembre,String nomLots) throws SQLException
+	{
+		stmtExist.setInt(1, noMembre);
+		stmtExist.setString(2, nomLots);
+		ResultSet rs = stmtExist.executeQuery();
+		boolean existe = rs.next();
+		rs.close();
+		return existe;
+	}
+	
+	public void ajouterAssignations(int noMembre,String nomLots) throws SQLException
+	{
+		stmtInsert.setInt(1, noMembre);
+		stmtInsert.setString(2, nomLots);
+		stmtInsert.executeUpdate();
+	}
+	
+	public void supprimer(int noMembre,String nomLots) throws SQLException
+	{
+		stmtDelete.setInt(1, noMembre);
+		stmtDelete.setString(2, nomLots);
+		stmtDelete.executeUpdate();
 	}
 }
