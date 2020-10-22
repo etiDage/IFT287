@@ -16,7 +16,7 @@ public class TableLots {
 		this.cx = cx;
 		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.lots(nomLots, nbMaxMembre) VALUES " + 
 				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.lots WHERE nomLots = ?");
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomLots FROM jardincollectif.lots WHERE nomLots = ?");
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.lots WHERE nomLots = ?");
 	}
 	
