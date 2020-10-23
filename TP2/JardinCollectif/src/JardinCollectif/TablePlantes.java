@@ -13,10 +13,10 @@ public class TablePlantes {
 	public TablePlantes(Connexion cx) throws SQLException
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plante(nomPlante, tempsCulture) VALUES " + 
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plante(nomplante, tempsculture) VALUES " + 
 				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomPlante FROM jardincollectif.plante WHERE nomPlante = ?");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plante WHERE nomPlante = ?");
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomplante FROM jardincollectif.plante WHERE nomplante = ?");
+		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plante WHERE nomplante = ?");
 	}
 	
 	public Connexion getConnexion()

@@ -21,17 +21,17 @@ public class GestionJardin {
 	{
 		cx = new Connexion(serveur, bd, user, pass);
 		tableAssignations = new TableAssignations(cx);
-//		tableDemandes = new TableDemandes(cx);
-//		tableLots = new TableLots(cx);
+		tableDemandes = new TableDemandes(cx);
+		tableLots = new TableLots(cx);
 		tableMembres = new TableMembres(cx);
-//		tablePlantes = new TablePlantes(cx);
-//		tablePlants = new TablePlants(cx);
-//		setGestionLot(new GestionLot());
+		tablePlantes = new TablePlantes(cx);
+		tablePlants = new TablePlants(cx);
+		setGestionLot(new GestionLot(cx, tableLots, tableAssignations, tablePlants, tableDemandes));
 		setGestionInterrogation(new GestionInterrogation(cx));
-		setGestionMembre(new GestionMembre(cx, tableMembres, tableAssignations));
-//		setGestionPlante(new GestionPlante());
-//		setGestionDemandeAssignation(new GestionDemandeAssignation());
-//		setGestionPlants(new GestionPlants());
+		setGestionMembre(new GestionMembre(cx, tableMembres, tableAssignations, tableDemandes));
+		setGestionPlante(new GestionPlante(cx, tablePlantes, tablePlants));
+		setGestionDemandeAssignation(new GestionDemandeAssignation(cx, tableDemandes, tableAssignations, tableMembres, tableLots));
+//		setGestionPlants(new GestionPlants(cx, ));
 	}
 	
     public void fermer() throws SQLException

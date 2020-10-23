@@ -9,16 +9,20 @@ public class TableDemandes {
 
 	private PreparedStatement stmtInsert;
 	private PreparedStatement stmtExist;
+	private PreparedStatement stmtDeleteParNoMembre;
+	private PreparedStatement stmtDeleteParNomLots;
 	private PreparedStatement stmtDelete;
 	private Connexion cx;
 	
 	public TableDemandes(Connexion cx) throws SQLException
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.demandes(noMembre, nomLots) VALUES " + 
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.demandes(nomembre, nomlots) VALUES " + 
 				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT noMembre FROM jardincollectif.demandes WHERE noMembre = ? AND nomLots = ?");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.demandes WHERE noMembre = ? AND nomLots = ?");
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.demandes WHERE nomembre = ? AND nomlots = ?");
+		stmtDeleteParNoMembre = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.demandes WHERE nomembre = ?");
+		stmtDeleteParNomLots = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.demandes WHERE nomlots = ?");
+		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.demandes WHERE nomlots = ? AND nomembre = ?");
 	}
 	
 	public Connexion getConnexion()
@@ -43,10 +47,23 @@ public class TableDemandes {
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimer(int noMembre,String nomLots) throws SQLException
+	public void supprimerParNoMembre(int noMembre) throws SQLException
 	{
-		stmtDelete.setInt(1, noMembre);
-		stmtDelete.setString(2, nomLots);
+		stmtDeleteParNoMembre.setInt(1, noMembre);
+		stmtDeleteParNoMembre.executeUpdate();
+	}
+	
+	public void supprimerParNomLots(String nomLots) throws SQLException
+	{
+		stmtDeleteParNoMembre.setString(1, nomLots);
+		stmtDeleteParNoMembre.executeUpdate();
+	}
+	
+	public void supprimerDemande(int noMembre, String nomLot) throws SQLException
+	{
+		stmtDelete.setString(1, nomLot);
+		stmtDelete.setInt(2, noMembre);
 		stmtDelete.executeUpdate();
 	}
+
 }

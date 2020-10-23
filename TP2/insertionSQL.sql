@@ -48,7 +48,7 @@ FROM lots l1 LEFT JOIN plants p ON l1.nomlots = p.nomlots
 WHERE l1.nomlots = 'Lot4';
 
 
-SELECT noMembre, prenom, nom FROM membres
+SELECT noMembre, prenom, nom FROM membres;
 
 SELECT min(sub.nb)
 FROM (SELECT count(a.nomlots) AS nb
@@ -56,6 +56,28 @@ FROM assignation a
 WHERE a.nomlots IN (SELECT nomlots FROM assignation WHERE nomembre = 1)
 GROUP BY a.nomlots) sub;
 
-UPDATE membres SET admin = FALSE WHERE nomembre = 1
+UPDATE membres SET admin = FALSE WHERE nomembre = 1;
 
-SELECT * FROM membres
+SELECT nomlots FROM plants WHERE nomlots = ?;
+SELECT * FROM plante;
+
+SELECT * FROM lots;
+
+SELECT * FROM assignation;
+
+SELECT assign.nomlots, COALESCE(m1.nomembre, ' '), COALESCE(m1.prenom, ' '), COALESCE(m1.nom, ' ')
+FROM jardincollectif.assignation assign LEFT JOIN jardincollectif.membres m1 ON assign.nomembre = m1.nomembre
+ORDER BY assign.nomlots;
+
+
+DELETE FROM demandes WHERE nomlots = 'Lot1';
+
+
+SELECT count(nomlots) FROM assignation WHERE nomlots = 'Lot3';
+
+SELECT nbmaxmembre FROM lots WHERE nomlots = 'Lot3';
+
+
+SELECT lots.nomlots, a.nomembre, m1.prenom, m1.nom FROM lots LEFT JOIN assignation a on lots.nomlots = a.nomlots LEFT JOIN jardincollectif.membres m1 ON a.nomembre = m1.nomembre;
+
+

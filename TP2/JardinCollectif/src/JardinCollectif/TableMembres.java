@@ -9,7 +9,6 @@ public class TableMembres {
 	private PreparedStatement stmtInsert;
 	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
-	private PreparedStatement stmtNbMembreLots;
 	private PreparedStatement stmtSetAdmin;
 	private Connexion cx;
 	

@@ -9,15 +9,17 @@ public class TableLots {
 	private PreparedStatement stmtInsert;
 	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
+	private PreparedStatement stmtGetNbMaxMembre;
 	private Connexion cx;
 	
 	public TableLots(Connexion cx) throws SQLException
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.lots(nomLots, nbMaxMembre) VALUES " + 
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.lots(nomlots, nbmaxmembre) VALUES " + 
 				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomLots FROM jardincollectif.lots WHERE nomLots = ?");
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.lots WHERE nomlots = ?");
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.lots WHERE nomLots = ?");
+		stmtGetNbMaxMembre = cx.getConnection().prepareStatement("SELECT nbmaxmembre FROM jardincollectif.lots WHERE nomlots = ?;");
 	}
 	
 	public Connexion getConnexion()
@@ -44,6 +46,16 @@ public class TableLots {
 	{
 		stmtDelete.setString(1, nomLots);
 		stmtDelete.executeUpdate();
+	}
+	
+	public int getNbMaxMembre(String nomLot) throws SQLException
+	{
+		stmtGetNbMaxMembre.setString(1, nomLot);
+		ResultSet rs = stmtGetNbMaxMembre.executeQuery();
+		rs.next();
+		int nbMaxMembre = rs.getInt(1);
+		rs.close();
+		return nbMaxMembre;
 	}
 
 }

@@ -143,35 +143,48 @@ public class JardinCollectif
                 {
                 	String nomLot = readString(tokenizer);
                 	int nbMaxMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionLot().ajouterLot(nomLot, nbMaxMembre);
                 }
                 else if (command.equals("supprimerLot"))
                 {
                 	String nomLot = readString(tokenizer);
+                	
+                	gestionJardin.getGestionLot().supprimerLot(nomLot);
                 }
                 else if (command.equals("rejoindreLot"))
                 {
                 	String nomLot = readString(tokenizer);
                 	int noMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionDemandeAssignation().rejoindreLot(noMembre, nomLot);
                 }
                 else if (command.equals("accepterDemande"))
                 {
                 	String nomLot = readString(tokenizer);
                 	int noMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionDemandeAssignation().accepterDemande(noMembre, nomLot);
                 }
                 else if (command.equals("refuserDemande"))
                 {
                 	String nomLot = readString(tokenizer);
                 	int noMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionDemandeAssignation().refuserDemande(noMembre, nomLot);
                 }
                 else if (command.equals("ajouterPlante"))
                 {
                 	String nomPlante = readString(tokenizer);
                 	int tempsDeCulture = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionPlante().ajouterPlante(nomPlante, tempsDeCulture);
                 }
                 else if (command.equals("retirerPlante"))
                 {
                 	String nomPlante = readString(tokenizer);
-                	int tempsDeCulture = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionPlante().supprimerPlante(nomPlante);
                 }
                 else if (command.equals("planterPlante"))
                 {

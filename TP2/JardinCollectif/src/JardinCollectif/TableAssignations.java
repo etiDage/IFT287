@@ -10,7 +10,10 @@ public class TableAssignations {
 	private PreparedStatement stmtNbMembreLots;
 	private PreparedStatement stmtInsert;
 	private PreparedStatement stmtExist;
-	private PreparedStatement stmtDelete;
+	private PreparedStatement stmtDeleteParNoMembre;
+	private PreparedStatement stmtDeleteParNomLots;
+	private PreparedStatement stmtGetNbMembreLot;
+	private PreparedStatement stmtEstAssigner;
 
 	
 	public TableAssignations(Connexion cx) throws SQLException
@@ -21,11 +24,12 @@ public class TableAssignations {
 				"		FROM jardincollectif.assignation a " + 
 				"		WHERE a.nomlots IN (SELECT nomlots FROM jardincollectif.assignation WHERE nomembre = ?) " + 
 				"		GROUP BY a.nomlots) sub;");
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.assignation(noMembre, nomLots) VALUES " + 
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.assignation(nomembre, nomlots) VALUES " + 
 				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT noMembre FROM jardincollectif.assignation WHERE noMembre = ? AND nomLots = ?");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.assignation WHERE noMembre = ? AND nomLots = ?");
-
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.assignation WHERE nomembre = ? AND nomlots = ?");
+		stmtDeleteParNoMembre = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.assignation WHERE nomembre = ?");
+		stmtDeleteParNomLots = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.assignation WHERE nomlots = ?");
+		stmtGetNbMembreLot = cx.getConnection().prepareStatement("SELECT count(nomlots) FROM jardincollectif.assignation WHERE nomlots = ?");
 	}
 	
 	public Connexion getConnexion()
@@ -68,10 +72,26 @@ public class TableAssignations {
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimer(int noMembre,String nomLots) throws SQLException
+	public void supprimerParNoMembre(int noMembre) throws SQLException
 	{
-		stmtDelete.setInt(1, noMembre);
-		stmtDelete.setString(2, nomLots);
-		stmtDelete.executeUpdate();
+		stmtDeleteParNoMembre.setInt(1, noMembre);
+		stmtDeleteParNoMembre.executeUpdate();
 	}
+	
+	public void supprimerParNomLots(String nomLots) throws SQLException
+	{
+		stmtDeleteParNomLots.setString(1, nomLots);
+		stmtDeleteParNomLots.executeUpdate();
+	}
+	
+	public int getNbMembreLot(String nomLot) throws SQLException
+	{
+		stmtGetNbMembreLot.setString(1, nomLot);
+		ResultSet rs = stmtGetNbMembreLot.executeQuery();
+		rs.next();
+		int nbMembre = rs.getInt(1);
+		rs.close();
+		return nbMembre;
+	}
+
 }

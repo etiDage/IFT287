@@ -10,15 +10,19 @@ public class TablePlants {
 	private PreparedStatement stmtInsert;
 	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
+	private PreparedStatement stmtPlanteCultiver;
+	private PreparedStatement stmtLotCultiver;
 	private Connexion cx;
 	
 	public TablePlants(Connexion cx) throws SQLException
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plants(nomLots, nomPlante, datePlantaison, nbPlants, noMembre) VALUES " + 
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plants(nomlots, nomplante, dateplantaison, nbplants, nomembre) VALUES " + 
 				"(?, ?, ?, ?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomPlante, nomLots, noMembre FROM jardincollectif.plants WHERE nomLots = ? AND nomPlante= ? AND noMembre= ? ");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomLots = ? AND nomPlante= ? AND noMembre= ? ");
+		stmtExist = cx.getConnection().prepareStatement("SELECT nomplante, nomlots, nomembre FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ? AND nomembre= ? ");
+		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ? AND nomembre= ? ");
+		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT nomplante FROM plants WHERE nomplante = ?;");
+		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM plants WHERE nomlots = ?;");
 	}
 	
 	public Connexion getConnexion()
@@ -55,4 +59,21 @@ public class TablePlants {
 		stmtDelete.executeUpdate();
 	}
 
+	public boolean planteEstCultiver(String nomPlante) throws SQLException
+	{
+		stmtPlanteCultiver.setString(1, nomPlante);
+		ResultSet rs = stmtPlanteCultiver.executeQuery();
+		boolean estCultiver = rs.next();
+		rs.close();
+		return estCultiver;
+	}
+	
+	public boolean LotEstEnCulture(String nomLot) throws SQLException
+	{
+		stmtLotCultiver.setString(1, nomLot);
+		ResultSet rs = stmtLotCultiver.executeQuery();
+		boolean estEnCulture = rs.next();
+		rs.close();
+		return estEnCulture;
+	}
 }
