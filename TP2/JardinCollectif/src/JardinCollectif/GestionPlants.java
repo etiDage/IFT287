@@ -24,16 +24,29 @@ public class GestionPlants {
         this.tableAssignations = tableAssignations;
 	}
 	
-	public void planterPlante(String nomPlante, String nomLot, int noMembre, int nbExemplaires, Date datePlantaison)
+	public void planterPlante(String nomPlante, String nomLot, int noMembre, int nbExemplaires, Date datePlantaison) throws Exception
 	{
 		try
 		{
-			if(tableAssignations.exist(nomembre))
+			if(!tableLots.exist(nomLot))
 			{
-				throw new IFT287Exception("Le membres " + nomembre + " est deja dans la liste de membres.");
+				throw new IFT287Exception("Lot " +nomLot+" est inexistant");
 			}
+			if(!tablePlantes.exist(nomPlante))
+			{
+				throw new IFT287Exception("Plante " +nomPlante+" est inexistante");
+			}
+			if(!tableAssignations.exist(noMembre, nomLot))
+			{
+				throw new IFT287Exception("Le membre " + noMembre + " est pas assigné au lot " + nomLot);
+			}
+			if(tablePlants.exist(nomLot, nomPlante, noMembre)) 
+			{
+				throw new IFT287Exception("il y a déjà des " +nomPlante +"planté dans le lot "+ nomLot+"Planté par "+ noMembre);
+			}
+			
 			// Ajout du membre a la table
-			tableMembres.inscrire(nomembre, prenom, nom, motDePasse);
+			tablePlants.ajouterPlants(nomLot, nomPlante, datePlantaison, nbExemplaires, noMembre);
 			
 			cx.commit();
 		}
@@ -44,4 +57,35 @@ public class GestionPlants {
 		}
 
 	}
+	
+	public void recolterPlante(String nomPlante, String nomLot, int noMembre) throws Exception
+	{
+		try
+		{
+			if(!tableLots.exist(nomLot))
+			{
+				throw new IFT287Exception("Lot " +nomLot+" est inexistant");
+			}
+			if(!tablePlantes.exist(nomPlante))
+			{
+				throw new IFT287Exception("Plante " +nomPlante+" est inexistante");
+			}
+			if(!tableAssignations.exist(noMembre, nomLot))
+			{
+				throw new IFT287Exception("Ce membre("+noMembre+") ne travaille pas dans ce lot "+ nomLot);
+			}
+			if(!tablePlants.RecolteReady(nomLot, nomPlante, noMembre))
+			{
+				throw new IFT287Exception("Plante "+nomPlante +" Pas prêt pour la récolte");
+			}
+			tablePlants.supprimer(nomPlante, nomLot, noMembre);
+			cx.commit();
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
+		}
+	}
+	
 }

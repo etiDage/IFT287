@@ -193,12 +193,16 @@ public class JardinCollectif
                 	int noMembre = readInt(tokenizer);
                 	int nbExemplaires = readInt(tokenizer);
                 	Date datePlantation = readDate(tokenizer);
+                	
+                	gestionJardin.getGestionPlants().planterPlante(nomPlante, nomLot, noMembre, nbExemplaires, datePlantation);
                 }
                 else if (command.equals("recolterPlante"))
                 {
                 	String nomPlante = readString(tokenizer);
                 	String nomLot = readString(tokenizer);
                 	int noMembre = readInt(tokenizer);
+                	
+                	gestionJardin.getGestionPlants().recolterPlante(nomPlante, nomLot, noMembre);
                 }
                 else if (command.equals("afficherMembres"))
                 {

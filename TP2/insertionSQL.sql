@@ -80,4 +80,4 @@ SELECT nbmaxmembre FROM lots WHERE nomlots = 'Lot3';
 
 SELECT lots.nomlots, a.nomembre, m1.prenom, m1.nom FROM lots LEFT JOIN assignation a on lots.nomlots = a.nomlots LEFT JOIN jardincollectif.membres m1 ON a.nomembre = m1.nomembre;
 
-
+SELECT ((datePlantaison- CURRENT_DATE)>= p.tempsCulture) FROM JardinCollectif.plants pl JOIN JardinCollectif.plante p on pl.nomPlante = p.nomPlante where nomLots ='Lot2' AND pl.nomPlante ='pissenlit' AND noMembre= 2;

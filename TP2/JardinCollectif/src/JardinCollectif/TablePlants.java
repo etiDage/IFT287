@@ -12,6 +12,7 @@ public class TablePlants {
 	private PreparedStatement stmtDelete;
 	private PreparedStatement stmtPlanteCultiver;
 	private PreparedStatement stmtLotCultiver;
+	private PreparedStatement stmtPretRecolte;
 	private Connexion cx;
 	
 	public TablePlants(Connexion cx) throws SQLException
@@ -23,6 +24,10 @@ public class TablePlants {
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ? AND nomembre= ? ");
 		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT nomplante FROM plants WHERE nomplante = ?;");
 		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM plants WHERE nomlots = ?;");
+		stmtPretRecolte = cx.getConnection().prepareStatement("SELECT ((CURRENT_DATE - datePlantaison)>= p.tempsCulture)"+
+		" FROM JardinCollectif.plants pl JOIN JardinCollectif.plante p on pl.nomPlante = p.nomPlante "+
+		"where nomLots =? AND pl.nomPlante =? AND noMembre= ?;");
+		
 	}
 	
 	public Connexion getConnexion()
@@ -75,5 +80,17 @@ public class TablePlants {
 		boolean estEnCulture = rs.next();
 		rs.close();
 		return estEnCulture;
+	}
+	
+	public boolean RecolteReady(String nomLots, String nomPlante, int noMembre) throws SQLException
+	{
+		stmtPretRecolte.setString(1,nomLots);
+		stmtPretRecolte.setString(2,nomPlante);
+		stmtPretRecolte.setInt(3,noMembre);
+		ResultSet rs = stmtPretRecolte.executeQuery();
+		rs.next();
+		boolean ready = rs.getBoolean(1);
+		rs.close();
+		return ready;
 	}
 }
