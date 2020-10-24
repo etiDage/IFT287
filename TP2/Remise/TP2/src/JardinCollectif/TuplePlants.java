@@ -6,19 +6,17 @@ public class TuplePlants {
 		private String nomLot;
 		private String nomPlante;
 		private Date datePlantation;
-		private int noMembre;
 		private int nbPlants;
 		
 		public TuplePlants()
 	    {
 	    }
 		
-		public TuplePlants(String nomLot, String nomPlante, Date datePlantation, int noMembre, int nbPlants)
+		public TuplePlants(String nomLot, String nomPlante, Date datePlantation, int nbPlants)
 	    {
 	        this.setNomLot(nomLot);
 	        this.setNomPlante(nomPlante);
 	        this.setDatePlantation(datePlantation);
-	        this.setNoMembre(noMembre);
 	        this.setNbPlants(nbPlants);
 	    }
 
@@ -47,15 +45,6 @@ public class TuplePlants {
 		public Date getDatePlantation()
 	    {
 	        return datePlantation;
-	    }
-
-		private void setNoMembre(int noMembre) {
-			this.noMembre= noMembre;
-			
-		}
-		public int getNoMembre()
-	    {
-	        return noMembre;
 	    }
 
 		private void setNbPlants(int nbPlants) {

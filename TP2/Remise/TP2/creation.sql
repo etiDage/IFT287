@@ -63,11 +63,9 @@ CREATE TABLE plants(
     nomPlante VARCHAR(255) NOT NULL,
     datePlantaison date NOT NULL,
     nbPlants INTEGER NOT NULL,
-    noMembre INTEGER NOT NULL,
 
-    CONSTRAINT plants_cc0 PRIMARY KEY (nomLots, nomPlante, datePlantaison, noMembre),
+    CONSTRAINT plants_cc0 PRIMARY KEY (nomLots, nomPlante, datePlantaison),
     CONSTRAINT plants_cr0 FOREIGN KEY (nomLots) REFERENCES lots (nomLots),
     CONSTRAINT plants_cr1 FOREIGN KEY (nomPlante) REFERENCES plante (nomPlante),
-    CONSTRAINT plants_cr2 FOREIGN KEY (noMembre) REFERENCES membres (noMembre),
     CONSTRAINT plants_nbPlants CHECK ( nbPlants >= 1 )
 );

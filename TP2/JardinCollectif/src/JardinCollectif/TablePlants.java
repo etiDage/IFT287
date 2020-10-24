@@ -8,26 +8,26 @@ import java.sql.SQLException;
 public class TablePlants {
 	
 	private PreparedStatement stmtInsert;
-	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
 	private PreparedStatement stmtPlanteCultiver;
 	private PreparedStatement stmtLotCultiver;
 	private PreparedStatement stmtPretRecolte;
+	private PreparedStatement stmtExistLotPlantes;
 	private Connexion cx;
 	
 	public TablePlants(Connexion cx) throws SQLException
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plants(nomlots, nomplante, dateplantaison, nbplants, nomembre) VALUES " + 
-				"(?, ?, ?, ?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomplante, nomlots, nomembre FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ? AND nomembre= ? ");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ? AND nomembre= ? ");
+		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plants(nomlots, nomplante, dateplantaison, nbplants) VALUES " + 
+				"(?, ?, ?, ?);");
+		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
 		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT nomplante FROM jardincollectif.plants WHERE nomplante = ?;");
 		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.plants WHERE nomlots = ?;");
 		stmtPretRecolte = cx.getConnection().prepareStatement("SELECT ((CURRENT_DATE - dateplantaison)>= p.tempsculture)"+
 		" FROM jardincollectif.plants pl JOIN jardincollectif.plante p on pl.nomplante = p.nomplante "+
-		"where nomlots =? AND pl.nomplante =? AND nomembre= ?;");
-		
+		"where nomlots =? AND pl.nomplante =?;");
+		stmtExistLotPlantes = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
+
 	}
 	
 	public Connexion getConnexion()
@@ -35,32 +35,19 @@ public class TablePlants {
 		return cx;
 	}
 	
-	public boolean exist(String nomLots, String nomPlante, int noMembre) throws SQLException
-	{
-		stmtExist.setString(1, nomLots);
-		stmtExist.setString(2, nomPlante);
-		stmtExist.setInt(3, noMembre);
-		ResultSet rs = stmtExist.executeQuery();
-		boolean existe = rs.next();
-		rs.close();
-		return existe;
-	}
-	
-	public void ajouterPlants(String nomLots, String nomPlante, Date datePlantaison ,int nbPlants , int noMembre) throws SQLException
+	public void ajouterPlants(String nomLots, String nomPlante, Date datePlantaison ,int nbPlants) throws SQLException
 	{
 		stmtInsert.setString(1, nomLots);
 		stmtInsert.setString(2, nomPlante);
 		stmtInsert.setDate(3, datePlantaison);
 		stmtInsert.setInt(4, nbPlants);
-		stmtInsert.setInt(5, noMembre);
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimer(String nomLots, String nomPlante, int noMembre) throws SQLException
+	public void supprimer(String nomLots, String nomPlante) throws SQLException
 	{
 		stmtDelete.setString(1, nomLots);
 		stmtDelete.setString(2, nomPlante);
-		stmtDelete.setInt(3, noMembre);
 		stmtDelete.executeUpdate();
 	}
 
@@ -82,15 +69,24 @@ public class TablePlants {
 		return estEnCulture;
 	}
 	
-	public boolean RecolteReady(String nomLots, String nomPlante, int noMembre) throws SQLException
+	public boolean RecolteReady(String nomLots, String nomPlante) throws SQLException
 	{
 		stmtPretRecolte.setString(1,nomLots);
 		stmtPretRecolte.setString(2,nomPlante);
-		stmtPretRecolte.setInt(3,noMembre);
 		ResultSet rs = stmtPretRecolte.executeQuery();
 		rs.next();
 		boolean ready = rs.getBoolean(1);
 		rs.close();
 		return ready;
+	}
+	
+	public boolean existLotPlante(String nomLot, String nomPlante) throws SQLException
+	{
+		stmtExistLotPlantes.setString(1, nomLot);
+		stmtExistLotPlantes.setString(2, nomPlante);
+		ResultSet rs = stmtExistLotPlantes.executeQuery();
+		boolean existe = rs.next();
+		rs.close();
+		return existe;
 	}
 }

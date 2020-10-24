@@ -51,9 +51,9 @@ public class GestionMembre {
 			{
 				throw new IFT287Exception("Le membre que vous tentez de supprimer est seul sur un lot, donc impossible de le supprimer");
 			}
-			tableMembres.supprimer(nomembre);
-			tableAssignations.supprimerParNoMembre(nomembre);
 			tableDemandes.supprimerParNoMembre(nomembre);
+			tableAssignations.supprimerParNoMembre(nomembre);
+			tableMembres.supprimer(nomembre);
 			cx.commit();
 		}
 		catch(Exception e)

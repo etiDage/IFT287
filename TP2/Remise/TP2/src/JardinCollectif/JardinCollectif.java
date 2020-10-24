@@ -75,6 +75,10 @@ public class JardinCollectif
                 transaction = lireTransaction(reader);
             }
         }
+        catch (Exception e)
+        {
+            e.printStackTrace(System.out);
+        }
         finally
         {
             if (jardinInstance != null)
@@ -231,13 +235,13 @@ public class JardinCollectif
                 }
             }
         }
-        catch (Exception e)
+        catch (IFT287Exception e)
         {
             System.out.println(" " + e.toString());
             // Ce rollback est ici seulement pour vous aider et éviter des problèmes lors de la correction
             // automatique. En théorie, il ne sert à rien et ne devrait pas apparaître ici dans un programme
             // fini et fonctionnel sans bogues.
-            cx.rollback();
+            //cx.rollback();
         }
     }
     

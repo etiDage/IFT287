@@ -40,13 +40,13 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Le membre " + noMembre + " est pas assign� au lot " + nomLot);
 			}
-			if(tablePlants.exist(nomLot, nomPlante, noMembre)) 
+			if(tablePlants.existLotPlante(nomLot, nomPlante)) 
 			{
 				throw new IFT287Exception("il y a d�j� des " + nomPlante +"plant� dans le lot "+ nomLot +"Plant� par "+ noMembre);
 			}
 			
 			// Ajout du membre a la table
-			tablePlants.ajouterPlants(nomLot, nomPlante, datePlantaison, nbExemplaires, noMembre);
+			tablePlants.ajouterPlants(nomLot, nomPlante, datePlantaison, nbExemplaires);
 			
 			cx.commit();
 		}
@@ -74,11 +74,16 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Ce membre("+noMembre+") ne travaille pas dans ce lot "+ nomLot);
 			}
-			if(!tablePlants.RecolteReady(nomLot, nomPlante, noMembre))
+			if(!tablePlants.existLotPlante(nomLot, nomPlante))
+			{
+				throw new IFT287Exception("Ce lot("+nomLot+") n'a pas de "+ nomPlante);
+			}
+			if(!tablePlants.RecolteReady(nomLot, nomPlante))
 			{
 				throw new IFT287Exception("Plante "+nomPlante +" Pas pr�t pour la r�colte");
 			}
-			tablePlants.supprimer(nomPlante, nomLot, noMembre);
+			
+			tablePlants.supprimer(nomPlante, nomLot);
 			cx.commit();
 		}
 		catch(Exception e)
