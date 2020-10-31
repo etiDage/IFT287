@@ -23,8 +23,9 @@ public class TupleMembre {
 	
 	@Id
 	@GeneratedValue
-	private int m_noMembre;
+	private long m_id;
 	
+	private int m_noMembre;
 	private String m_prenom;
 	private String m_nom;
 	private String m_motDePasse;
