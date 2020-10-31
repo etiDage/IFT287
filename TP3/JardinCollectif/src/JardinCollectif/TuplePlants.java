@@ -1,12 +1,21 @@
 package JardinCollectif;
 
 import java.sql.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class TuplePlants {
-		private String nomLot;
-		private String nomPlante;
-		private Date datePlantation;
-		private int nbPlants;
+	
+    	@Id
+    	@GeneratedValue
+    	private long m_id;
+	
+		private String m_nomLot;
+		private String m_nomPlante;
+		private Date m_datePlantation;
+		private int m_nbPlants;
 		
 		public TuplePlants()
 	    {
@@ -14,45 +23,29 @@ public class TuplePlants {
 		
 		public TuplePlants(String nomLot, String nomPlante, Date datePlantation, int nbPlants)
 	    {
-	        this.setNomLot(nomLot);
-	        this.setNomPlante(nomPlante);
-	        this.setDatePlantation(datePlantation);
-	        this.setNbPlants(nbPlants);
+			m_nomLot= nomLot;
+			m_nomPlante= nomPlante;
+			m_datePlantation= datePlantation;
+			m_nbPlants= nbPlants;
 	    }
-
-		private void setNomLot(String nomLot) {
-			this.nomLot= nomLot;
-			
-		}
+		
 		public String getNomLot()
 	    {
-	        return nomLot;
+	        return m_nomLot;
 	    }
 
-		private void setNomPlante(String nomPlante) {
-			this.nomPlante= nomPlante;
-			
-		}
 		public String getNomPlante()
 	    {
-	        return nomPlante;
+	        return m_nomPlante;
 	    }
 
-		private void setDatePlantation(Date datePlantation) {
-			this.datePlantation= datePlantation;
-			
-		}
 		public Date getDatePlantation()
 	    {
-	        return datePlantation;
+	        return m_datePlantation;
 	    }
 
-		private void setNbPlants(int nbPlants) {
-			this.nbPlants= nbPlants;
-			
-		}
 		public int getNbPlants()
 	    {
-	        return nbPlants;
+	        return m_nbPlants;
 	    }
 }
