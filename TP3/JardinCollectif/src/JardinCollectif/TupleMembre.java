@@ -2,12 +2,33 @@ package JardinCollectif;
 
 import java.sql.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+/**
+ * Permet de représenter un membre.
+ * 
+ * <pre>
+ * Vincent Ducharme
+ * Université de Sherbrooke
+ * Version 1.0 - 18 juin 2016
+ * IFT287 - Exploitation de BD relationnelles et OO
+ *
+ * </pre>
+ */
+
+@Entity
 public class TupleMembre {
-	private int noMembre;
-	private String prenom;
-	private String nom;
-	private String motDePasse;
-	private boolean admin;
+	
+	@Id
+	@GeneratedValue
+	private int m_noMembre;
+	
+	private String m_prenom;
+	private String m_nom;
+	private String m_motDePasse;
+	private boolean m_admin;
 	
 	public TupleMembre()
     {
@@ -15,56 +36,31 @@ public class TupleMembre {
 	
 	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, boolean admin)
     {
-        this.setNoMembre(noMembre);
-        this.setPrenom(prenom);
-        this.setNom(nom);
-        this.setMotDePasse(motDePasse);
-        this.setAdmin(admin);
+		m_noMembre= noMembre;
+		m_prenom= prenom;
+		m_nom= nom;
+		m_motDePasse= motDePasse;
+		m_admin= admin;
     }
-
-	private void setAdmin(boolean admin) {
-		this.admin = admin;
-		
-	}
     public boolean getAdmin()
     {
-        return admin;
+        return m_admin;
     }
-
-	private void setMotDePasse(String motDePasse) {
-		this.motDePasse= motDePasse;
-		
-	}
     public String getMotDePasse()
     {
-        return motDePasse;
+        return m_motDePasse;
     }
-
-	private void setNom(String nom) {
-		this.nom = nom;
-		
-	}
     public String getNom()
     {
-        return nom;
+        return m_nom;
     }
-
-	private void setPrenom(String prenom) {
-		this.prenom= prenom;
-		
-	}
     public String getPrenom()
     {
-        return prenom;
+        return m_prenom;
     }
-
-	private void setNoMembre(int noMembre) {
-		this.noMembre= noMembre;
-		
-	}
     public int getNoMembre()
     {
-        return noMembre;
+        return m_noMembre;
     }
 
 }
