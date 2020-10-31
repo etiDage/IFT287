@@ -1,9 +1,19 @@
 package JardinCollectif;
 import java.sql.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class TupleAssignation {
-	private int noMembre;
-	private String nomLot;
+	
+    @Id
+    @GeneratedValue
+    private long m_id;
+    
+	private int m_noMembre;
+	private String m_nomLot;
 	
 	public TupleAssignation()
     {
@@ -11,26 +21,16 @@ public class TupleAssignation {
 	
 	public TupleAssignation(int noMembre,String nomLot)
     {
-        this.setNoMembre(noMembre);
-        this.setNomLot(nomLot);
+		m_nomLot= nomLot;
+		m_noMembre= noMembre;
     }
-	
-	private void setNomLot(String nomLot) {
-		this.nomLot= nomLot;
-		
-	}
 	public String getNomLot()
     {
-        return nomLot;
+        return m_nomLot;
     }
-	
-	private void setNoMembre(int noMembre) {
-		this.noMembre= noMembre;
-		
-	}
 	public int getNoMembre()
     {
-        return noMembre;
+        return m_noMembre;
     }
 
 }
