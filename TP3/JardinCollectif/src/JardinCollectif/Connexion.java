@@ -35,7 +35,7 @@ public class Connexion
      * @param user : userid sur le serveur SQL
      * @param pass : mot de passe sur le serveur SQL
      */
-    public Connexion(String serveur, String bd, String user, String pass) throws BiblioException
+    public Connexion(String serveur, String bd, String user, String pass) throws IFT287Exception
     {
         if (serveur.equals("local"))
         {
@@ -50,7 +50,7 @@ public class Connexion
         }
         else
         {
-            throw new BiblioException("Serveur inconnu");
+            throw new IFT287Exception("Serveur inconnu");
         }
     	
     	em = emf.createEntityManager();
