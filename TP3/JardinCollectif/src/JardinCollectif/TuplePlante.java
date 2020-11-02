@@ -15,6 +15,7 @@ public class TuplePlante {
 		
 	public TuplePlante()
     {
+		
     }
 	
 	public TuplePlante(String nomPlante, int tempCulture)
