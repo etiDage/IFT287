@@ -1,9 +1,11 @@
 package JardinCollectif;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+
+import java.sql.Date;
 
 public class TablePlants {
 	
@@ -63,14 +65,7 @@ public class TablePlants {
 		stmtLotCultiver.setParameter("nomLot", nomLot);
 		return !stmtLotCultiver.getResultList().isEmpty();
 	}
-	
-	public boolean RecolteReady(String nomLot, String nomPlante) throws SQLException
-	{
-		TuplePlants plants = getPlants(nomLot, nomPlante);
 		
-		
-	}
-	
 	public boolean existLotPlante(String nomLot, String nomPlante)
 	{
 		stmtExist.setParameter("nomLot", nomLot);

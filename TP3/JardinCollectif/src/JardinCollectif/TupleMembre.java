@@ -1,10 +1,6 @@
 package JardinCollectif;
 
-import java.sql.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Permet de représenter un membre.
@@ -25,6 +21,7 @@ public class TupleMembre {
 	@GeneratedValue
 	private long m_id;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
 	private int m_noMembre;
 	private String m_prenom;
 	private String m_nom;
