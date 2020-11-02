@@ -7,12 +7,14 @@ import javax.persistence.TypedQuery;
 public class TableLots {
 
 	private TypedQuery<TupleLot> stmtExist;
+	private TypedQuery<TupleLot> stmtSelectAll;
 	private Connexion cx;
 	
 	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
 		stmtExist = cx.getConnection().createQuery("select l from TupleLot l where l.nom = :nomLot", TupleLot.class);
+		stmtSelectAll = cx.getConnection().createQuery("select l from TupleLot l" , TupleLot.class);
 	}
 	
 	public Connexion getConnexion()
@@ -67,11 +69,54 @@ public class TableLots {
 		}
 	}
 	
-	public boolean estAssigner(int noMembre)
+	public boolean seulSurUnLot(int noMembre)
 	{
-		
+		List<TupleLot> lots = stmtSelectAll.getResultList();
+		for(TupleLot lot : lots)
+		{
+			if(lot.estAssigner(noMembre) && lot.nbAssignations() == 1)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
+	public void ajouterDemande(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		lot.ajouterDemande(noMembre);
+	}
 	
+	public void supprimerDemande(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		lot.retirerDemande(noMembre);
+	}
+	
+	public void accepterDemande(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		lot.retirerDemande(noMembre);
+		lot.assigner(noMembre);
+	}
+	
+	public void retirerAssignation(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		lot.retirer(noMembre);
+	}
+	
+	public boolean existeDemande(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		return lot.existeDemande(noMembre);
+	}
+	
+	public boolean estAssigner(int noMembre, String nomLot)
+	{
+		TupleLot lot = getLot(nomLot);
+		return lot.estAssigner(noMembre);
+	}
 
 }

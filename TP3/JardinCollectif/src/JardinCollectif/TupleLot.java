@@ -83,4 +83,9 @@ public class TupleLot {
     {
     	return assignations.size();
     }
+    
+    public boolean existeDemande(int noMembre)
+    {
+    	return demandes.contains(noMembre);
+    }
 }
