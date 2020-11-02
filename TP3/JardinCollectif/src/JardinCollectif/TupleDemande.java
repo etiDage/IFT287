@@ -1,5 +1,4 @@
 package JardinCollectif;
-import java.sql.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

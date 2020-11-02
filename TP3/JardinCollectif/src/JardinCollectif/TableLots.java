@@ -1,25 +1,18 @@
 package JardinCollectif;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.TypedQuery;
 
 public class TableLots {
 
-	private PreparedStatement stmtInsert;
-	private PreparedStatement stmtExist;
-	private PreparedStatement stmtDelete;
-	private PreparedStatement stmtGetNbMaxMembre;
+	private TypedQuery<TupleLot> stmtExist;
 	private Connexion cx;
 	
-	public TableLots(Connexion cx) throws SQLException
+	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.lots(nomlots, nbmaxmembre) VALUES " + 
-				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.lots WHERE nomlots = ?");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.lots WHERE nomLots = ?");
-		stmtGetNbMaxMembre = cx.getConnection().prepareStatement("SELECT nbmaxmembre FROM jardincollectif.lots WHERE nomlots = ?;");
+		stmtExist = cx.getConnection().createQuery("select l from TupleLot l where l.nom = :nomLot", TupleLot.class);
 	}
 	
 	public Connexion getConnexion()
@@ -27,35 +20,51 @@ public class TableLots {
 		return cx;
 	}
 	
-	public boolean exist(String nomLots) throws SQLException
+	public boolean exist(String nomLot)
 	{
-		stmtExist.setString(1, nomLots);
-		ResultSet rs = stmtExist.executeQuery();
-		boolean existe = rs.next();
-		rs.close();
-		return existe;
+		stmtExist.setParameter("nomLot", nomLot);
+		return !stmtExist.getResultList().isEmpty();
 	}
-	public void ajouterLot(String nomLots, int nbMaxMembre) throws SQLException
+	public void ajouterLot(String nomLot, int nbMaxMembre)
 	{
-		stmtInsert.setString(1, nomLots);
-		stmtInsert.setInt(2, nbMaxMembre);
-		stmtInsert.executeUpdate();
+		TupleLot l = new TupleLot(nomLot, nbMaxMembre);
+		cx.getConnection().persist(l);
 	}
 	
-	public void supprimer(String nomLots) throws SQLException
+	public void supprimer(String nomLot)
 	{
-		stmtDelete.setString(1, nomLots);
-		stmtDelete.executeUpdate();
+		if(exist(nomLot))
+		{
+			TupleLot l = getLot(nomLot);
+			cx.getConnection().remove(l);
+		}
 	}
 	
-	public int getNbMaxMembre(String nomLot) throws SQLException
+	public int getNbMaxMembre(String nomLot)
 	{
-		stmtGetNbMaxMembre.setString(1, nomLot);
-		ResultSet rs = stmtGetNbMaxMembre.executeQuery();
-		rs.next();
-		int nbMaxMembre = rs.getInt(1);
-		rs.close();
-		return nbMaxMembre;
+		if(exist(nomLot))
+		{
+			TupleLot l = getLot(nomLot);
+			return l.getNbMaxMembre();
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
+	private TupleLot getLot(String nomLot)
+	{
+		stmtExist.setParameter("nomLot", nomLot);
+		List<TupleLot> lot = stmtExist.getResultList();
+		if(!lot.isEmpty())
+		{
+			return lot.get(0);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 }

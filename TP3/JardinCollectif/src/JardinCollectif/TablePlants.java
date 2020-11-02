@@ -1,33 +1,35 @@
 package JardinCollectif;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.TypedQuery;
 
 public class TablePlants {
 	
-	private PreparedStatement stmtInsert;
-	private PreparedStatement stmtDelete;
-	private PreparedStatement stmtPlanteCultiver;
-	private PreparedStatement stmtLotCultiver;
-	private PreparedStatement stmtPretRecolte;
-	private PreparedStatement stmtExistLotPlantes;
+//	private PreparedStatement stmtPlanteCultiver;
+//	private PreparedStatement stmtLotCultiver;
+//	private PreparedStatement stmtPretRecolte;
+//	private PreparedStatement stmtExistLotPlantes;
+	
+	private TypedQuery<TuplePlants> stmtExist;
+	private TypedQuery<TuplePlants> stmtPlanteCultiver;
+	private TypedQuery<TuplePlants> stmtLotCultiver;
 	private Connexion cx;
 	
-	public TablePlants(Connexion cx) throws SQLException
+	public TablePlants(Connexion cx)
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plants(nomlots, nomplante, dateplantaison, nbplants) VALUES " + 
-				"(?, ?, ?, ?);");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
-		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT nomplante FROM jardincollectif.plants WHERE nomplante = ?;");
-		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.plants WHERE nomlots = ?;");
-		stmtPretRecolte = cx.getConnection().prepareStatement("SELECT ((CURRENT_DATE - dateplantaison)>= p.tempsculture)"+
-		" FROM jardincollectif.plants pl JOIN jardincollectif.plante p on pl.nomplante = p.nomplante "+
-		"where nomlots =? AND pl.nomplante =?;");
-		stmtExistLotPlantes = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
-
+//		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT plant.nomPlante FROM TuplePlant plant WHERE plant.nomPlante = :");
+//		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.plants WHERE nomlots = ?;");
+//		stmtPretRecolte = cx.getConnection().prepareStatement("SELECT ((CURRENT_DATE - dateplantaison)>= p.tempsculture)"+
+//		" FROM jardincollectif.plants pl JOIN jardincollectif.plante p on pl.nomplante = p.nomplante "+
+//		"where nomlots =? AND pl.nomplante =?;");
+//		stmtExistLotPlantes = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
+		
+		stmtExist = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot AND plants.m_nomPlante = :nomPlante", TuplePlants.class);
+		stmtPlanteCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomPlante = :nomPlante", TuplePlants.class);
+		stmtLotCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot", TuplePlants.class);
 	}
 	
 	public Connexion getConnexion()
@@ -35,58 +37,59 @@ public class TablePlants {
 		return cx;
 	}
 	
-	public void ajouterPlants(String nomLots, String nomPlante, Date datePlantaison ,int nbPlants) throws SQLException
+	public void ajouterPlants(String nomLot, String nomPlante, Date datePlantaison ,int nbPlants)
 	{
-		stmtInsert.setString(1, nomLots);
-		stmtInsert.setString(2, nomPlante);
-		stmtInsert.setDate(3, datePlantaison);
-		stmtInsert.setInt(4, nbPlants);
-		stmtInsert.executeUpdate();
+		TuplePlants plants = new TuplePlants(nomLot, nomPlante, datePlantaison, nbPlants);
+		cx.getConnection().persist(plants);		
 	}
 	
-	public void supprimer(String nomLots, String nomPlante) throws SQLException
+	public void supprimer(String nomLot, String nomPlante)
 	{
-		stmtDelete.setString(1, nomLots);
-		stmtDelete.setString(2, nomPlante);
-		stmtDelete.executeUpdate();
+		if(existLotPlante(nomLot, nomPlante))
+		{
+			TuplePlants plants = getPlants(nomLot, nomPlante);
+			cx.getConnection().remove(plants);
+		}
 	}
 
-	public boolean planteEstCultiver(String nomPlante) throws SQLException
+	public boolean planteEstCultiver(String nomPlante)
 	{
-		stmtPlanteCultiver.setString(1, nomPlante);
-		ResultSet rs = stmtPlanteCultiver.executeQuery();
-		boolean estCultiver = rs.next();
-		rs.close();
-		return estCultiver;
+		stmtPlanteCultiver.setParameter("nomPlante", nomPlante);
+		return !stmtPlanteCultiver.getResultList().isEmpty();
 	}
 	
-	public boolean LotEstEnCulture(String nomLot) throws SQLException
+	public boolean LotEstEnCulture(String nomLot)
 	{
-		stmtLotCultiver.setString(1, nomLot);
-		ResultSet rs = stmtLotCultiver.executeQuery();
-		boolean estEnCulture = rs.next();
-		rs.close();
-		return estEnCulture;
+		stmtLotCultiver.setParameter("nomLot", nomLot);
+		return !stmtLotCultiver.getResultList().isEmpty();
 	}
 	
-	public boolean RecolteReady(String nomLots, String nomPlante) throws SQLException
+	public boolean RecolteReady(String nomLot, String nomPlante) throws SQLException
 	{
-		stmtPretRecolte.setString(1,nomLots);
-		stmtPretRecolte.setString(2,nomPlante);
-		ResultSet rs = stmtPretRecolte.executeQuery();
-		rs.next();
-		boolean ready = rs.getBoolean(1);
-		rs.close();
-		return ready;
+		TuplePlants plants = getPlants(nomLot, nomPlante);
+		
+		
 	}
 	
-	public boolean existLotPlante(String nomLot, String nomPlante) throws SQLException
+	public boolean existLotPlante(String nomLot, String nomPlante)
 	{
-		stmtExistLotPlantes.setString(1, nomLot);
-		stmtExistLotPlantes.setString(2, nomPlante);
-		ResultSet rs = stmtExistLotPlantes.executeQuery();
-		boolean existe = rs.next();
-		rs.close();
-		return existe;
+		stmtExist.setParameter("nomLot", nomLot);
+		stmtExist.setParameter("nomPlante", nomPlante);
+		return !stmtExist.getResultList().isEmpty();
+	}
+	
+	public TuplePlants getPlants(String nomLot, String nomPlante)
+	{
+		stmtExist.setParameter("nomLot", nomLot);
+		stmtExist.setParameter("nomPlante", nomPlante);
+		List<TuplePlants> plants = stmtExist.getResultList();
+		if(!plants.isEmpty())
+		{
+			return plants.get(0);
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

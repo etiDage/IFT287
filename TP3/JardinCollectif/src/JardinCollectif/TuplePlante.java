@@ -1,9 +1,8 @@
 package JardinCollectif;
-import java.sql.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Date;
+
+import javax.persistence.*;
 
 @Entity
 public class TuplePlante {
@@ -11,10 +10,9 @@ public class TuplePlante {
 	@Id
     @GeneratedValue
     private long m_id;
-	
 	private String m_nomPlante;
 	private int m_tempCulture;
-	
+		
 	public TuplePlante()
     {
     }

@@ -1,6 +1,7 @@
 package JardinCollectif;
 
-import java.sql.*;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ public class TuplePlants {
 		private String m_nomPlante;
 		private Date m_datePlantation;
 		private int m_nbPlants;
+		
 		
 		public TuplePlants()
 	    {

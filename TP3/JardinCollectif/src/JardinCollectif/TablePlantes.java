@@ -1,22 +1,17 @@
 package JardinCollectif;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.TypedQuery;
 
 public class TablePlantes {
-	private PreparedStatement stmtInsert;
-	private PreparedStatement stmtExist;
-	private PreparedStatement stmtDelete;
+	private TypedQuery<TuplePlante> stmtExist;
 	private Connexion cx;
 
-	public TablePlantes(Connexion cx) throws SQLException
+	public TablePlantes(Connexion cx)
 	{
 		this.cx = cx;
-		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.plante(nomplante, tempsculture) VALUES " + 
-				"(?, ?);");
-		stmtExist = cx.getConnection().prepareStatement("SELECT nomplante FROM jardincollectif.plante WHERE nomplante = ?");
-		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.plante WHERE nomplante = ?");
+		stmtExist = cx.getConnection().createQuery("select p from TuplePlante p where p.m_nomPlante = :nomPlante", TuplePlante.class);
 	}
 	
 	public Connexion getConnexion()
@@ -24,26 +19,39 @@ public class TablePlantes {
 		return cx;
 	}
 	
-	public boolean exist(String nomPlante) throws SQLException
+	public boolean exist(String nomPlante)
 	{
-		stmtExist.setString(1, nomPlante);
-		ResultSet rs = stmtExist.executeQuery();
-		boolean existe = rs.next();
-		rs.close();
-		return existe;
+		stmtExist.setParameter("nomPlante", nomPlante);
+		return !stmtExist.getResultList().isEmpty();
 	}
 	
-	public void ajouterPlante(String nomPlante, int tempsCulture) throws SQLException
+	public void ajouterPlante(String nomPlante, int tempsCulture)
 	{
-		stmtInsert.setString(1, nomPlante);
-		stmtInsert.setInt(2, tempsCulture);
-		stmtInsert.executeUpdate();
+		TuplePlante p = new TuplePlante(nomPlante, tempsCulture);
+		cx.getConnection().persist(p);
 	}
 	
-	public void supprimer(String nomPlante) throws SQLException
+	public void supprimer(String nomPlante)
 	{
-		stmtDelete.setString(1, nomPlante);
-		stmtDelete.executeUpdate();
+		if(exist(nomPlante))
+		{
+			TuplePlante p = getPlante(nomPlante);
+			cx.getConnection().remove(p);
+		}
+	}
+	
+	private TuplePlante getPlante(String nomPlante)
+	{
+		stmtExist.setParameter("nomPlante", nomPlante);
+		List<TuplePlante> plante = stmtExist.getResultList();
+		if(!plante.isEmpty())
+		{
+			return plante.get(0);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 }
