@@ -18,6 +18,7 @@ public class GestionPlante {
 	{
 		try
 		{
+			cx.demarreTransaction();
 			if(tablePlantes.exist(nomPlante))
 			{
 				throw new IFT287Exception("La plante " + nomPlante + " est deja dans la liste de membres.");
@@ -39,6 +40,7 @@ public class GestionPlante {
 	{
 		try
 		{
+			cx.demarreTransaction();
 			if(tablePlants.planteEstCultiver(nomPlante))
 			{
 				throw new IFT287Exception("La plante que vous tentez de supprimer est presentement en culture, donc impossible de la supprimer.");
