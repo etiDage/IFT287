@@ -80,11 +80,11 @@ public class GestionLot {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " n'existe pas dans la liste de lot");
 			}
-			if(tableLots.exist(noMembre, nomLot))
+			if(tableLots.existeDemande(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Une demande existe deja pour le membre " + noMembre + " au lot " + nomLot);
 			}
-			tableLots.ajouterDemandes(noMembre, nomLot);
+			tableLots.ajouterDemande(noMembre, nomLot);
 			
 			cx.commit();
 		}
@@ -100,7 +100,7 @@ public class GestionLot {
 		try
 		{
 			cx.demarreTransaction();
-			if(!tableLots.existDemande(noMembre, nomLot))
+			if(!tableLots.existeDemande(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
 			}
@@ -108,12 +108,11 @@ public class GestionLot {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " est a son nombre maximal de membre");
 			}
-			if(tableLots.existAssignation(noMembre, nomLot))
+			if(tableLots.estAssigner(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Le membre " + noMembre + " est deja assigner au lot " + nomLot);
 			}
-			tableLots.ajouterAssignations(noMembre, nomLot);
-			tableLots.supprimerDemande(noMembre, nomLot);
+			tableLots.accepterDemande(noMembre, nomLot);
 			
 			cx.commit();
 		}
