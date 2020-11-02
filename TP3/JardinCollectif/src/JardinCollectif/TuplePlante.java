@@ -1,9 +1,19 @@
 package JardinCollectif;
 import java.sql.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class TuplePlante {
-	private String nomPlante;
-	private int tempCulture;
+	
+	@Id
+    @GeneratedValue
+    private long m_id;
+	
+	private String m_nomPlante;
+	private int m_tempCulture;
 	
 	public TuplePlante()
     {
@@ -11,26 +21,17 @@ public class TuplePlante {
 	
 	public TuplePlante(String nomPlante, int tempCulture)
     {
-        this.setNomPlante(nomPlante);
-        this.setTmpCulture(tempCulture);
+		m_nomPlante= nomPlante;
+		m_tempCulture= tempCulture;
     }
 
-	private void setTmpCulture(int tempCulture) {
-		this.tempCulture= tempCulture;
-		
-	}
 	public int getTmpCulture()
     {
-        return tempCulture;
+        return m_tempCulture;
     }
-
-	private void setNomPlante(String nomPlante) {
-		this.nomPlante= nomPlante;
-		
-	}
 	public String getNomPlante()
     {
-        return nomPlante;
+        return m_nomPlante;
     }
 
 }

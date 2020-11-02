@@ -2,11 +2,19 @@ package JardinCollectif;
 
 import java.sql.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class TupleLot {
-
-	private String nomLot;
-	private int nbMaxMembre;
+	
+    @Id
+    @GeneratedValue
+    private long m_id;
+    
+	private String m_nomLot;
+	private int m_nbMaxMembre;
 	
 	public TupleLot()
     {
@@ -14,25 +22,17 @@ public class TupleLot {
 	
 	public TupleLot(String nomLot, int nbMaxMembre)
     {
-        this.setNomLot(nomLot);
-        this.setNbMaxMembre(nbMaxMembre);
+		m_nomLot= nomLot;
+		m_nbMaxMembre= nbMaxMembre;
     }
 
-	private void setNbMaxMembre(int nbMaxMembre) {
-		this.nbMaxMembre = nbMaxMembre;
-		
-	}
+
     public int getNbMaxMembre()
     {
-        return nbMaxMembre;
+        return m_nbMaxMembre;
     }
-
-	private void setNomLot(String nomLot) {
-		this.nomLot = nomLot;
-		
-	}
     public String getNomLot()
     {
-        return nomLot;
+        return m_nomLot;
     }
 }
