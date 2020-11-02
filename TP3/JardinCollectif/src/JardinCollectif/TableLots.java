@@ -118,5 +118,10 @@ public class TableLots {
 		TupleLot lot = getLot(nomLot);
 		return lot.estAssigner(noMembre);
 	}
-
+    public int getNbMembreLot(String nomLot) {
+    	TupleLot lot = getLot(nomLot);
+    	return lot.getNbMembreLot(nomLot);
+    }
 }
+
+

@@ -88,4 +88,7 @@ public class TupleLot {
     {
     	return demandes.contains(noMembre);
     }
+    public int getNbMembreLot(String nomLot) {
+    	return assignations.size();
+    }
 }
