@@ -1,10 +1,6 @@
 package JardinCollectif;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import java.util.List;
 
@@ -20,11 +16,11 @@ public class TupleLot {
 	private String m_nomLot;
 	private int m_nbMaxMembre;
 	
-	@OneToMany(mappedBy = "m_noMembre")
-	private List<TupleMembre> demandes;
+	//@OneToMany(mappedBy = "m_noMembre")
+	private List<Integer> demandes;
 	
-	@OneToMany(mappedBy = "m_noMembre")
-	private List<TupleMembre> assignations;
+	//@OneToMany(mappedBy = "m_noMembre")
+	private List<Integer> assignations;
 	
 	
 	public TupleLot()
@@ -48,13 +44,43 @@ public class TupleLot {
         return m_nomLot;
     }
     
-    public List<TupleMembre> getDemandes()
+    public List<Integer> getDemandes()
     {
     	return demandes;
     }
     
-    public List<TupleMembre> getAssignations()
+    public List<Integer> getAssignations()
     {
     	return assignations;
+    }
+    
+    public void assigner(int noMembre)
+    {
+    	assignations.add(noMembre);
+    }
+    
+    public void retirer(int noMembre)
+    {
+    	assignations.remove(noMembre);
+    }
+    
+    public void ajouterDemande(int noMembre)
+    {
+    	demandes.add(noMembre);
+    }
+    
+    public void retirerDemande(int noMembre)
+    {
+    	demandes.remove(noMembre);
+    }
+    
+    public boolean estAssigner(int noMembre)
+    {
+    	return assignations.contains(noMembre);
+    }
+    
+    public int nbAssignations()
+    {
+    	return assignations.size();
     }
 }

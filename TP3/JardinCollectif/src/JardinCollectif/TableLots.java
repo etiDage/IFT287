@@ -66,5 +66,12 @@ public class TableLots {
 			return null;
 		}
 	}
+	
+	public boolean estAssigner(int noMembre)
+	{
+		
+	}
+	
+	
 
 }
