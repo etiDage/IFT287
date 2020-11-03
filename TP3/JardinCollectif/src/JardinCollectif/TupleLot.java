@@ -2,6 +2,7 @@ package JardinCollectif;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -31,6 +32,8 @@ public class TupleLot {
     {
 		m_nomLot= nomLot;
 		m_nbMaxMembre= nbMaxMembre;
+		demandes = new ArrayList<Integer>();
+		assignations = new ArrayList<Integer>();
     }
 
 

@@ -40,7 +40,7 @@ public class GestionInterrogation {
 		
 		for(TupleMembre membre : membres)
 		{
-			System.out.println(membre.getNoMembre() + " " + membre.getPrenom() + " " + membre.getPrenom());
+			System.out.println(membre.getNoMembre() + " " + membre.getPrenom() + " " + membre.getNom());
 		}
 		
 		cx.commit();
@@ -72,9 +72,12 @@ public class GestionInterrogation {
 		for(TupleLot lot : lots)
 		{
 			System.out.print(lot.getNomLot());
-			for(Integer noMembre : lot.getAssignations())
+			if(lot.getAssignations() != null)
 			{
-				System.out.print(" " + noMembre);
+				for(Integer noMembre : lot.getAssignations())
+				{
+					System.out.print(" " + noMembre);
+				}				
 			}
 			System.out.print("\n");
 		}

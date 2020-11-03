@@ -13,7 +13,7 @@ public class TableLots {
 	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
-		stmtExist = cx.getConnection().createQuery("select l from TupleLot l where l.nom = :nomLot", TupleLot.class);
+		stmtExist = cx.getConnection().createQuery("select l from TupleLot l where l.m_nomLot = :nomLot", TupleLot.class);
 		stmtSelectAll = cx.getConnection().createQuery("select l from TupleLot l" , TupleLot.class);
 	}
 	
