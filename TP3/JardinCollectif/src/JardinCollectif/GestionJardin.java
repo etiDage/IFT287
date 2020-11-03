@@ -4,8 +4,6 @@ import java.sql.SQLException;
 
 public class GestionJardin {
 	private Connexion cx;
-	private TableAssignations tableAssignations;
-	private TableDemandes tableDemandes;
 	private TableLots tableLots;
 	private TableMembres tableMembres;
 	private TablePlantes tablePlantes;
@@ -20,18 +18,16 @@ public class GestionJardin {
 	public GestionJardin(String serveur, String bd, String user, String pass) throws IFT287Exception, SQLException 
 	{
 		cx = new Connexion(serveur, bd, user, pass);
-		tableAssignations = new TableAssignations(cx);
-		tableDemandes = new TableDemandes(cx);
 		tableLots = new TableLots(cx);
 		tableMembres = new TableMembres(cx);
 		tablePlantes = new TablePlantes(cx);
 		tablePlants = new TablePlants(cx);
-		setGestionLot(new GestionLot(cx, tableLots, tableAssignations, tablePlants, tableDemandes));
+		setGestionLot(new GestionLot(cx, tableLots, tableMembres, tablePlants));
 		setGestionInterrogation(new GestionInterrogation(cx));
-		setGestionMembre(new GestionMembre(cx, tableMembres, tableAssignations, tableDemandes));
+		setGestionMembre(new GestionMembre(cx, tableMembres, tableLots));
 		setGestionPlante(new GestionPlante(cx, tablePlantes, tablePlants));
-		setGestionDemandeAssignation(new GestionDemandeAssignation(cx, tableDemandes, tableAssignations, tableMembres, tableLots));
-		setGestionPlants(new GestionPlants(cx,tablePlants, tableLots, tablePlantes, tableAssignations));
+		setGestionDemandeAssignation(new GestionDemandeAssignation(cx, tableMembres, tableLots));
+		setGestionPlants(new GestionPlants(cx,tablePlants, tableLots, tablePlantes));
 	}
 	
     public void fermer() throws SQLException

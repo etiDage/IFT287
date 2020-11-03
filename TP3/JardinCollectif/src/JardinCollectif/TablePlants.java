@@ -20,6 +20,7 @@ public class TablePlants {
 	private TypedQuery<TuplePlants> stmtExist;
 	private TypedQuery<TuplePlants> stmtPlanteCultiver;
 	private TypedQuery<TuplePlants> stmtLotCultiver;
+	private TypedQuery<TuplePlants> stmtSelectAll;
 	private Connexion cx;
 	
 	public TablePlants(Connexion cx)
@@ -35,6 +36,7 @@ public class TablePlants {
 		stmtExist = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot AND plants.m_nomPlante = :nomPlante", TuplePlants.class);
 		stmtPlanteCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomPlante = :nomPlante", TuplePlants.class);
 		stmtLotCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot", TuplePlants.class);
+		stmtSelectAll = cx.getConnection().createQuery("select plants from TuplePlants plants", TuplePlants.class);
 	}
 	
 	public Connexion getConnexion()
@@ -110,5 +112,25 @@ public class TablePlants {
 		{
 			return null;
 		}
+	}
+	
+	public int getNbPlantsEnCulture(String nomPlante) // Retourne le nombre de plants d'une espece parmis tout les lots ( Pour gestion interrogation)
+	{
+		List<TuplePlants> plants = stmtSelectAll.getResultList();
+		int planteCpt = 0;
+		for(TuplePlants plant : plants)
+		{
+			if(plant.getNomPlante() == nomPlante)
+			{
+				planteCpt += plant.getNbPlants();
+			}
+		}
+		return planteCpt;
+	}
+	
+	
+	public List<TuplePlants> getAllPlants() // Pour affichage dans gestion Interrogation
+	{
+		return stmtSelectAll.getResultList();
 	}
 }

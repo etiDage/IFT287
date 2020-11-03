@@ -140,6 +140,11 @@ public class TableLots {
     	TupleLot lot = getLot(nomLot);
     	return lot.getNbMembreLot(nomLot);
     }
+    
+    public List<TupleLot> getAllLot()	// Pour gestionInterrogation
+    {
+    	return stmtSelectAll.getResultList();
+    }
 }
 
 

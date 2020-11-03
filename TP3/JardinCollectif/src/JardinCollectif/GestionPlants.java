@@ -8,7 +8,7 @@ public class GestionPlants {
 	private TableLots tableLots;
 	private TablePlantes tablePlantes;
 	
-	public GestionPlants(Connexion cx, TablePlants tablePlants, TableLots tableLots, TablePlantes tablePlantes, TableAssignations tableAssignations) throws IFT287Exception
+	public GestionPlants(Connexion cx, TablePlants tablePlants, TableLots tableLots, TablePlantes tablePlantes) throws IFT287Exception
 	{
 		this.cx = cx;
         if (tablePlants.getConnexion() != tableLots.getConnexion())

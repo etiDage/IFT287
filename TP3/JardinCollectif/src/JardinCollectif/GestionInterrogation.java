@@ -1,83 +1,89 @@
 package JardinCollectif;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.*;
 
 public class GestionInterrogation {
-	private PreparedStatement stmtMembres; //Pour afficher la liste de membres
-	private PreparedStatement stmtPlante; // Pour afficher la liste de plantes
-	private PreparedStatement stmtLots;		// Pour afficher la liste de lots
-	private PreparedStatement stmtPlantsParLots; // Pour afficher les plants d'un lot
+	private TableMembres tableMembres;
+	private TableLots tableLots;
+	private TablePlantes tablePlantes;
+	private TablePlants tablePlants;
 	private Connexion cx;
 	
-	public GestionInterrogation(Connexion cx) throws SQLException
+	public GestionInterrogation(Connexion cx, TableMembres tableMembres, TableLots tableLots, TablePlantes tablePlantes, TablePlants tablePlants) throws IFT287Exception
 	{
 		this.cx = cx;
-		stmtMembres = cx.getConnection().prepareStatement("SELECT noMembre, prenom, nom FROM jardincollectif.membres");
-		stmtPlante = cx.getConnection().prepareStatement("SELECT p1.nomplante, p1.tempsculture, COALESCE(p.nbplants, 0) AS NombreDePlants " + 
-				"FROM jardincollectif.plante p1 LEFT JOIN jardincollectif.plants p on p1.nomplante = p.nomplante;");
-		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, COALESCE(m1.nomembre, -1), COALESCE(m1.prenom, ' '), COALESCE(m1.nom, ' ')" + 
-				"FROM  jardincollectif.lots lots LEFT JOIN jardincollectif.assignation assign ON lots.nomlots = assign.nomlots LEFT JOIN jardincollectif.membres m1 ON assign.nomembre = m1.nomembre " + 
-				"ORDER BY assign.nomlots;");
-		stmtPlantsParLots = cx.getConnection().prepareStatement("SELECT l1.nomlots, p.nomplante, p.dateplantaison, (p.dateplantaison + pe.tempsculture) AS daterecolte " + 
-				"FROM jardincollectif.lots l1 LEFT JOIN jardincollectif.plants p ON l1.nomlots = p.nomlots " + 
-				"    LEFT JOIN jardincollectif.plante pe ON p.nomplante = pe.nomplante " + 
-				"WHERE l1.nomlots = ?");
+        if (tableLots.getConnexion() != tableMembres.getConnexion())
+            throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
+        if (tablePlants.getConnexion() != tableMembres.getConnexion())
+            throw new IFT287Exception("Les instances de TablePlants et de TableMembres n'utilisent pas la même connexion au serveur");
+        if (tablePlantes.getConnexion() != tablePlants.getConnexion())
+            throw new IFT287Exception("Les instances de TablePlantes et de TablePlants n'utilisent pas la même connexion au serveur");
+		
+        this.tableMembres = tableMembres;
+        this.tableLots = tableLots;
+        this.tablePlantes = tablePlantes;
+        this.tablePlants = tablePlants;
 	}
 	
-	public void afficherMembres() throws SQLException
+	public void afficherMembres() // Affiche la liste de membres
 	{
-		ResultSet rs = stmtMembres.executeQuery();
+		cx.demarreTransaction();
+		
+		List<TupleMembre> membres = tableMembres.getAllMembres();
 		
 		System.out.println("\nnoMembre prenom nom");
-		while(rs.next())
+		
+		for(TupleMembre membre : membres)
 		{
-			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
+			System.out.println(membre.getNoMembre() + " " + membre.getPrenom() + " " + membre.getPrenom());
 		}
 		
 		cx.commit();
 	}
 	
-	public void afficherPlantes() throws SQLException
+	public void afficherPlantes() // Affiche la liste de plantes avec le nombre de plants presentement cultiver
 	{
-		ResultSet rs = stmtPlante.executeQuery();
+		cx.demarreTransaction();
+		
+		List<TuplePlante> plantes = tablePlantes.getAllPlantes();
 		
 		System.out.println("\nNomPlante TempsCulture NombreDePlants");
-		while(rs.next())
+		
+		for(TuplePlante plante : plantes)
 		{
-			System.out.println(rs.getString(1) + " " + rs.getInt(2) + " jours "+ rs.getInt(3) + " plants");
+			System.out.println(plante.getNomPlante() + " " + plante.getTmpCulture() + " jours "+ tablePlants.getNbPlantsEnCulture(plante.getNomPlante()) + " plants");
 		}
 		
 		cx.commit();
 	}
 	
-	public void afficherLots() throws SQLException
+	public void afficherLots()
 	{
-		ResultSet rs = stmtLots.executeQuery();
+		cx.demarreTransaction();
 		
-		System.out.println("\nNomLots noMembre prenom nom");
-		while(rs.next())
+		List<TupleLot> lots = tableLots.getAllLot();
+		
+		System.out.println("\nNomLots noMembre");
+		for(TupleLot lot : lots)
 		{
-			String nomembre;
-			if(rs.getInt(2) == -1)
+			System.out.print(lot.getNomLot());
+			for(Integer noMembre : lot.getAssignations())
 			{
-				nomembre = "";
+				System.out.print(" " + noMembre);
 			}
-			else
-			{
-				nomembre = String.valueOf(rs.getInt(2));
-			}
-			System.out.println(rs.getString(1) + " " + nomembre + " " + rs.getString(3) + " " + rs.getString(4));
+			System.out.print("\n");
 		}
 		
 		cx.commit();
 	}
 	
-	public void afficherPlantsLot(String nomLot) throws SQLException
+	public void afficherPlantsLot(String nomLot)
 	{
-		stmtPlantsParLots.setString(1, nomLot);
-		ResultSet rs = stmtPlantsParLots.executeQuery();
+		cx.demarreTransaction();
+		
+		List<TuplePlants>
 		
 		System.out.println("\nNomLots NomPlante DatePlantaison DateRecolte");
 		while(rs.next())
@@ -88,4 +94,5 @@ public class GestionInterrogation {
 		cx.commit();
 
 	}
+	
 }

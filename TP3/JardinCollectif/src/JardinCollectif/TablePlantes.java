@@ -6,12 +6,14 @@ import javax.persistence.TypedQuery;
 
 public class TablePlantes {
 	private TypedQuery<TuplePlante> stmtExist;
+	private TypedQuery<TuplePlante> stmtSelectAll;
 	private Connexion cx;
 
 	public TablePlantes(Connexion cx)
 	{
 		this.cx = cx;
 		stmtExist = cx.getConnection().createQuery("select p from TuplePlante p where p.m_nomPlante = :nomPlante", TuplePlante.class);
+		stmtSelectAll = cx.getConnection().createQuery("select p from TuplePlante p", TuplePlante.class);
 	}
 	
 	public Connexion getConnexion()
@@ -58,6 +60,11 @@ public class TablePlantes {
 	{
 		TuplePlante plantes = getPlante(nomPlante);
 		return plantes.getTmpCulture();
+	}
+	
+	public List<TuplePlante> getAllPlantes()
+	{
+		return stmtSelectAll.getResultList();
 	}
 
 }

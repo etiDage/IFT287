@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 public class TableMembres {
 
 	private TypedQuery<TupleMembre> stmtExist;
+	private TypedQuery<TupleMembre> stmtSelectAll;
 	private Connexion cx;
 	
 	
@@ -15,6 +16,7 @@ public class TableMembres {
 	{
 		this.cx = cx;
         stmtExist = cx.getConnection().createQuery("select m from TupleMembre m where m.m_noMembre = :noMembre", TupleMembre.class);
+        stmtSelectAll = cx.getConnection().createQuery("select m from TupleMembre m", TupleMembre.class);
 //		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.membres(nomembre, prenom, nom, motdepasse, admin) VALUES " + 
 //				"(?, ?, ?, ?, TRUE);");
 //		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.membres WHERE nomembre = ?");
@@ -67,5 +69,10 @@ public class TableMembres {
 		{
 			return null; // Ce membre n'existe pas
 		}
+	}
+	
+	public List<TupleMembre> getAllMembres()
+	{
+		return stmtSelectAll.getResultList();
 	}
 }
