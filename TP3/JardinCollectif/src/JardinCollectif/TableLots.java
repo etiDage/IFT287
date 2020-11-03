@@ -82,6 +82,22 @@ public class TableLots {
 		return false;
 	}
 	
+	public void supprimerMembre(int noMembre)
+	{
+		List<TupleLot> lots = stmtSelectAll.getResultList();
+		for(TupleLot lot : lots)
+		{
+			if(lot.estAssigner(noMembre))
+			{
+				lot.retirer(noMembre);
+			}
+			if(lot.existeDemande(noMembre))
+			{
+				lot.retirerDemande(noMembre);
+			}
+		}
+	}
+	
 	public void ajouterDemande(int noMembre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);

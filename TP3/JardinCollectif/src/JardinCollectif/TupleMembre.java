@@ -61,4 +61,8 @@ public class TupleMembre {
         return m_noMembre;
     }
 
+    public void setAdmin()
+    {
+    	m_admin = true;
+    }
 }

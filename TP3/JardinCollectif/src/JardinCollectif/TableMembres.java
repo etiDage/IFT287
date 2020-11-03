@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 public class TableMembres {
 
 	private TypedQuery<TupleMembre> stmtExist;
-	private TypedQuery<TupleMembre> stmtSetAdmin;
 	private Connexion cx;
 	
 	
@@ -16,7 +15,6 @@ public class TableMembres {
 	{
 		this.cx = cx;
         stmtExist = cx.getConnection().createQuery("select m from TupleMembre m where m.m_noMembre = :noMembre", TupleMembre.class);
-        stmtSetAdmin = cx.getConnection().createQuery("update TupleMembre set m_admin = TRUE where noMembre = :noMembre", TupleMembre.class);
 //		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.membres(nomembre, prenom, nom, motdepasse, admin) VALUES " + 
 //				"(?, ?, ?, ?, TRUE);");
 //		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.membres WHERE nomembre = ?");
@@ -37,7 +35,7 @@ public class TableMembres {
 	
 	public void inscrire(int noMembre, String prenom, String nom, String motdepasse) 
 	{
-		TupleMembre m = new TupleMembre(noMembre, prenom, nom, motdepasse, true);
+		TupleMembre m = new TupleMembre(noMembre, prenom, nom, motdepasse, false);
 		cx.getConnection().persist(m);
 	}
 	
@@ -52,8 +50,8 @@ public class TableMembres {
 	
 	public void setAdmin(int noMembre)
 	{
-		stmtSetAdmin.setParameter("noMembre", noMembre);
-		stmtSetAdmin.executeUpdate();
+		TupleMembre membre = getMembre(noMembre);
+		membre.setAdmin();
 	}
 	
 	private TupleMembre getMembre(int noMembre)

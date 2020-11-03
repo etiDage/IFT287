@@ -1,6 +1,6 @@
 package JardinCollectif;
 
-import java.sql.SQLException;
+
 
 public class GestionMembre {
 	private Connexion cx;
@@ -38,18 +38,17 @@ public class GestionMembre {
 		}
 	}
 	
-	public void supprimerMembre(int nomembre) throws Exception
+	public void supprimerMembre(int noMembre) throws Exception
 	{
 		try
 		{
 			cx.demarreTransaction();
-			if(tableLots.nbMinMembreParLot(nomembre) <= 1)
+			if(tableLots.seulSurUnLot(noMembre))
 			{
 				throw new IFT287Exception("Le membre que vous tentez de supprimer est seul sur un lot, donc impossible de le supprimer");
 			}
-			tableLots.supprimerParNoMembre(nomembre);
-			tableLots.supprimerParNoMembre(nomembre);
-			tableMembres.supprimer(nomembre);
+			tableLots.supprimerMembre(noMembre);
+			tableMembres.supprimer(noMembre);
 			cx.commit();
 		}
 		catch(Exception e)

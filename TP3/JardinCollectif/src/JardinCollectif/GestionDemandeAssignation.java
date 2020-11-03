@@ -4,24 +4,16 @@ import java.sql.SQLException;
 
 public class GestionDemandeAssignation {
 	private Connexion cx;
-	private TableDemandes tableDemandes;
-	private TableAssignations tableAssignations;
 	private TableMembres tableMembres;
 	private TableLots tableLots;
 	
 	
-	public GestionDemandeAssignation(Connexion cx, TableDemandes tableDemandes, TableAssignations tableAssignations, 
+	public GestionDemandeAssignation(Connexion cx, 
 			TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
 	{
 		this.cx = cx;
-        if (tableDemandes.getConnexion() != tableAssignations.getConnexion())
-            throw new IFT287Exception("Les instances de TableDemandes et de TableAssignations n'utilisent pas la même connexion au serveur");
-        if (tableDemandes.getConnexion() != tableMembres.getConnexion())
-            throw new IFT287Exception("Les instances de TableDemandes et de TableMembres n'utilisent pas la même connexion au serveur");
-        if (tableDemandes.getConnexion() != tableLots.getConnexion())
-            throw new IFT287Exception("Les instances de TableDemandes et de TableLots n'utilisent pas la même connexion au serveur");
-        this.tableDemandes = tableDemandes;
-        this.tableAssignations = tableAssignations;
+        if (tableLots.getConnexion() != tableMembres.getConnexion())
+            throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
         this.tableMembres = tableMembres;
         this.tableLots = tableLots;
 	}
@@ -38,7 +30,7 @@ public class GestionDemandeAssignation {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " n'existe pas dans la liste de lot");
 			}
-			if(tableDemandes.exist(noMembre, nomLot))
+			if(tableLots.existDemande(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Une demande existe deja pour le membre " + noMembre + " au lot " + nomLot);
 			}
