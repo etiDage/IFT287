@@ -53,5 +53,11 @@ public class TablePlantes {
 			return null;
 		}
 	}
+	
+	public int getTempsDeCulture(String nomPlante)
+	{
+		TuplePlante plantes = getPlante(nomPlante);
+		return plantes.getTmpCulture();
+	}
 
 }

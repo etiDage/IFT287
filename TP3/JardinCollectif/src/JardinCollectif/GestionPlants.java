@@ -7,27 +7,25 @@ public class GestionPlants {
 	private TablePlants tablePlants;
 	private TableLots tableLots;
 	private TablePlantes tablePlantes;
-	private TableAssignations tableAssignations;
 	
 	public GestionPlants(Connexion cx, TablePlants tablePlants, TableLots tableLots, TablePlantes tablePlantes, TableAssignations tableAssignations) throws IFT287Exception
 	{
 		this.cx = cx;
-        if (tablePlants.getConnexion() != tableAssignations.getConnexion())
-            throw new IFT287Exception("Les instances de TablePlants et de TableAssignations n'utilisent pas la même connexion au serveur");
         if (tablePlants.getConnexion() != tableLots.getConnexion())
-            throw new IFT287Exception("Les instances de TablePlants et de TableAssignations n'utilisent pas la même connexion au serveur");
+            throw new IFT287Exception("Les instances de TablePlants et de TableLots n'utilisent pas la même connexion au serveur");
         if (tablePlants.getConnexion() != tablePlantes.getConnexion())
-            throw new IFT287Exception("Les instances de TablePlants et de TableAssignations n'utilisent pas la même connexion au serveur");
+            throw new IFT287Exception("Les instances de TablePlants et de TablePlantes n'utilisent pas la même connexion au serveur");
         this.tablePlants = tablePlants;
         this.tableLots = tableLots;
         this.tablePlantes = tablePlantes;
-        this.tableAssignations = tableAssignations;
 	}
 	
 	public void planterPlante(String nomPlante, String nomLot, int noMembre, int nbExemplaires, Date datePlantaison) throws Exception
 	{
 		try
 		{
+			cx.demarreTransaction();
+			
 			if(!tableLots.exist(nomLot))
 			{
 				throw new IFT287Exception("Lot " +nomLot+" est inexistant");
@@ -36,7 +34,7 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Plante " + nomPlante + " est inexistante");
 			}
-			if(!tableAssignations.exist(noMembre, nomLot))
+			if(!tableLots.estAssigner(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Le membre " + noMembre + " est pas assign� au lot " + nomLot);
 			}
@@ -45,7 +43,8 @@ public class GestionPlants {
 				throw new IFT287Exception("il y a d�j� des " + nomPlante +"plant� dans le lot "+ nomLot +"Plant� par "+ noMembre);
 			}
 			
-			// Ajout du membre a la table
+			
+			// on plante la plante
 			tablePlants.ajouterPlants(nomLot, nomPlante, datePlantaison, nbExemplaires);
 			
 			cx.commit();
@@ -62,6 +61,8 @@ public class GestionPlants {
 	{
 		try
 		{
+			cx.demarreTransaction();
+			
 			if(!tableLots.exist(nomLot))
 			{
 				throw new IFT287Exception("Lot " +nomLot+" est inexistant");
@@ -70,7 +71,7 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Plante " +nomPlante+" est inexistante");
 			}
-			if(!tableAssignations.exist(noMembre, nomLot))
+			if(!tableLots.estAssigner(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Ce membre("+noMembre+") ne travaille pas dans ce lot "+ nomLot);
 			}
@@ -78,12 +79,13 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Ce lot("+nomLot+") n'a pas de "+ nomPlante);
 			}
-			if(!tablePlants.RecolteReady(nomLot, nomPlante))
+			if(tablePlants.getNbJourEnCulture(nomLot, nomPlante) >= tablePlantes.getTempsDeCulture(nomPlante))
 			{
-				throw new IFT287Exception("Plante "+nomPlante +" Pas pr�t pour la r�colte");
+				throw new IFT287Exception("Les plantes ne sont pas pretes ");
 			}
 			
-			tablePlants.supprimer(nomPlante, nomLot);
+			// On recolte les plants
+			tablePlants.supprimer(nomLot, nomPlante);
 			cx.commit();
 		}
 		catch(Exception e)

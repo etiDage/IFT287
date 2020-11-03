@@ -1,11 +1,14 @@
 package JardinCollectif;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class TablePlants {
 	
@@ -65,7 +68,28 @@ public class TablePlants {
 		stmtLotCultiver.setParameter("nomLot", nomLot);
 		return !stmtLotCultiver.getResultList().isEmpty();
 	}
+	
+	
+	public int getNbJourEnCulture(String nomLot, String nomPlante) throws ParseException
+	{
+		TuplePlants plants = getPlants(nomLot, nomPlante);
 		
+		long millis = System.currentTimeMillis();
+		Date currentDate = new Date(millis);	// Get the current date in YYYY-MM-DD format
+		
+		String strCurDate = currentDate.toString();		
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
+		java.util.Date date = df.parse(strCurDate);
+		
+		java.util.Date datePlantaison = df.parse(plants.getDatePlantation().toString());
+		
+		final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
+		
+		return (int) ((date.getTime() - datePlantaison.getTime()) / DAY_IN_MILLIS);	
+	}
+	
 	public boolean existLotPlante(String nomLot, String nomPlante)
 	{
 		stmtExist.setParameter("nomLot", nomLot);
