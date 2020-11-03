@@ -1,5 +1,8 @@
 package JardinCollectif;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.*;
@@ -79,20 +82,31 @@ public class GestionInterrogation {
 		cx.commit();
 	}
 	
-	public void afficherPlantsLot(String nomLot)
+	public void afficherPlantsLot(String nomLot) throws ParseException
 	{
 		cx.demarreTransaction();
 		
-		List<TuplePlants>
+		List<TuplePlants> plants = tablePlants.getAllPlants();
 		
 		System.out.println("\nNomLots NomPlante DatePlantaison DateRecolte");
-		while(rs.next())
+		for(TuplePlants plant : plants)
 		{
-			System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getDate(3) + " " + rs.getDate(4));
+			System.out.println(plant.getNomLot() + " " + plant.getNomPlante() + " " + plant.getDatePlantation() + " " + getDateRecolte(plant.getDatePlantation().toString(), tablePlantes.getTempsDeCulture(plant.getNomPlante())));
 		}
 		
 		cx.commit();
 
+	}
+	
+	
+	public String getDateRecolte(String datePlantaison, int nbJour) throws ParseException
+	{
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = df.parse(datePlantaison);		// Converti la string en date
+		java.util.Calendar cal = GregorianCalendar.getInstance();
+		cal.setTime(date);
+		cal.add(GregorianCalendar.DAY_OF_MONTH, nbJour); 
+		return df.format(cal.getTime());
 	}
 	
 }
