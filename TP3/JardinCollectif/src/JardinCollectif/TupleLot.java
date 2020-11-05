@@ -74,7 +74,8 @@ public class TupleLot {
     
     public void retirerDemande(int noMembre)
     {
-    	demandes.remove(noMembre);
+    	int pos = demandes.indexOf(noMembre);
+    	demandes.remove(pos);
     }
     
     public boolean estAssigner(int noMembre)

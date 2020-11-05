@@ -1,0 +1,87 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2020-11-04 09:43:34 #1 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' is opened by 20871@etienne-Inspiron-7570
+
+[2020-11-04 09:43:34 #2 store] 
+Configuration path: ?
+
+[2020-11-04 09:43:34 #3 type.registry] 
+New type JardinCollectif.TupleLot
+
+[2020-11-04 09:43:34 #4 type] 
+Type JardinCollectif.TupleLot is not enhanced.
+
+[2020-11-04 09:43:34 #5 type.registry] 
+New type JardinCollectif.TupleMembre
+
+[2020-11-04 09:43:34 #6 type] 
+Type JardinCollectif.TupleMembre is not enhanced.
+
+[2020-11-04 09:43:34 #7 type.registry] 
+New type JardinCollectif.TuplePlante
+
+[2020-11-04 09:43:34 #8 type] 
+Type JardinCollectif.TuplePlante is not enhanced.
+
+[2020-11-04 09:43:34 #9 type.registry] 
+New type JardinCollectif.TuplePlants
+
+[2020-11-04 09:43:34 #10 type] 
+Type JardinCollectif.TuplePlants is not enhanced.
+
+[2020-11-04 09:45:29 #11 type.registry] 
+New type java.util.ArrayList<java.lang.Object>
+
+[2020-11-04 09:45:29 #12 type.registry] 
+New type java.util.ArrayList<java.lang.Integer>
+
+[2020-11-04 16:01:08 #13 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' is closed by 20871@etienne-Inspiron-7570
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2020-11-04 16:07:44 #1 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' has been recovered (tr. 1-12)
+
+[2020-11-04 16:07:45 #2 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' is opened by 34000@etienne-Inspiron-7570
+
+[2020-11-04 16:07:45 #3 store] 
+Configuration path: ?
+
+[2020-11-04 16:07:45 #4 type] 
+Type JardinCollectif.TupleLot is not enhanced.
+
+[2020-11-04 16:07:45 #5 type] 
+Type JardinCollectif.TupleMembre is not enhanced.
+
+[2020-11-04 16:07:45 #6 type] 
+Type JardinCollectif.TuplePlante is not enhanced.
+
+[2020-11-04 16:07:45 #7 type] 
+Type JardinCollectif.TuplePlants is not enhanced.
+
+[2020-11-04 16:09:07 #8 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' is closed by 34000@etienne-Inspiron-7570
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2020-11-04 16:17:17 #1 store] 
+Database '/home/etienne/Desktop/IFT287/IFT287/TP3/JardinCollectif/jardin.odb' is opened by 35351@etienne-Inspiron-7570
+
+[2020-11-04 16:17:17 #2 store] 
+Configuration path: ?
+
+[2020-11-04 16:17:17 #3 type] 
+Type JardinCollectif.TupleLot is not enhanced.
+
+[2020-11-04 16:17:17 #4 type] 
+Type JardinCollectif.TupleMembre is not enhanced.
+
+[2020-11-04 16:17:17 #5 type] 
+Type JardinCollectif.TuplePlante is not enhanced.
+
+[2020-11-04 16:17:17 #6 type] 
+Type JardinCollectif.TuplePlants is not enhanced.
+
