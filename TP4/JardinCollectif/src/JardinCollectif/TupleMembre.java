@@ -1,6 +1,6 @@
 package JardinCollectif;
 
-import javax.persistence.*;
+import org.bson.Document;
 
 /**
  * Permet de représenter un membre.
@@ -14,12 +14,7 @@ import javax.persistence.*;
  * </pre>
  */
 
-@Entity
 public class TupleMembre {
-	
-	@Id
-	@GeneratedValue
-	private long m_id;
 	
 	private int m_noMembre;
 	private String m_prenom;
@@ -30,6 +25,15 @@ public class TupleMembre {
 	public TupleMembre()
     {
     }
+	
+	public TupleMembre(Document d)
+	{
+		m_noMembre = d.getInteger("noMembre");
+		m_prenom = d.getString("prenom");
+		m_nom = d.getString("nom");
+		m_motDePasse = d.getString("motDePasse");
+		m_admin = d.getBoolean("admin");
+	}
 	
 	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, boolean admin)
     {
@@ -63,5 +67,20 @@ public class TupleMembre {
     public void setAdmin()
     {
     	m_admin = true;
+    }
+    
+    public String toString()
+    {
+    	StringBuffer s = new StringBuffer(getNoMembre() + " " + getPrenom() + " " + getNom());
+    	return s.toString();
+    }
+    
+    public Document toDocument()
+    {
+    	return new Document().append("noMembre", m_noMembre)
+    						 .append("prenom", m_prenom)
+    						 .append("nom", m_nom)
+    						 .append("motDePasse", m_motDePasse)
+    						 .append("admin", m_admin);
     }
 }
