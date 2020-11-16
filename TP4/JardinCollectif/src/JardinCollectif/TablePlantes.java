@@ -1,19 +1,22 @@
 package JardinCollectif;
 
 import java.util.List;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.inc;
 
-import javax.persistence.TypedQuery;
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+
 
 public class TablePlantes {
-	private TypedQuery<TuplePlante> stmtExist;
-	private TypedQuery<TuplePlante> stmtSelectAll;
+	private MongoCollection<Document> plantesCollection;
 	private Connexion cx;
 
 	public TablePlantes(Connexion cx)
 	{
 		this.cx = cx;
-		stmtExist = cx.getConnection().createQuery("select p from TuplePlante p where p.m_nomPlante = :nomPlante", TuplePlante.class);
-		stmtSelectAll = cx.getConnection().createQuery("select p from TuplePlante p", TuplePlante.class);
+		plantesCollection = cx.getDatabase().getCollection("plantes");
 	}
 	
 	public Connexion getConnexion()
@@ -23,23 +26,18 @@ public class TablePlantes {
 	
 	public boolean exist(String nomPlante)
 	{
-		stmtExist.setParameter("nomPlante", nomPlante);
-		return !stmtExist.getResultList().isEmpty();
+		return plantesCollection.find(eq("nomPlante", nomPlante)).first() != null;
 	}
 	
 	public void ajouterPlante(String nomPlante, int tempsCulture)
 	{
-		TuplePlante p = new TuplePlante(nomPlante, tempsCulture);
-		cx.getConnection().persist(p);
+		TuplePlante plante = new TuplePlante(nomPlante, tempsCulture);
+		plantesCollection.insertOne(plante.toDocument());
 	}
 	
 	public void supprimer(String nomPlante)
 	{
-		if(exist(nomPlante))
-		{
-			TuplePlante p = getPlante(nomPlante);
-			cx.getConnection().remove(p);
-		}
+		plantesCollection.deleteOne(eq("nomPlante", nomPlante));
 	}
 	
 	private TuplePlante getPlante(String nomPlante)
