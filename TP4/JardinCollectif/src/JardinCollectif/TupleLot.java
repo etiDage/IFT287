@@ -3,17 +3,12 @@ package JardinCollectif;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.bson.Document;
 
-import javax.persistence.*;
-
-@Entity
 public class TupleLot {
-	
-    @Id
-    @GeneratedValue
-    private long m_id;
-    
+	    
 	private String m_nomLot;
 	private int m_nbMaxMembre;
 	
@@ -27,6 +22,14 @@ public class TupleLot {
 	public TupleLot()
     {
     }
+	
+	public TupleLot(Document d)
+	{
+		m_nomLot = d.getString("nomLot");
+		m_nbMaxMembre = d.getInteger("nbMaxMembre");
+		demandes = stringToList(d.getString("demandes"));
+		assignations = stringToList(d.getString("assignations"));
+	}
 	
 	public TupleLot(String nomLot, int nbMaxMembre)
     {
@@ -95,5 +98,36 @@ public class TupleLot {
     }
     public int getNbMembreLot(String nomLot) {
     	return assignations.size();
+    }
+    
+    private String listToString(List<Integer> list)
+    {
+    	StringBuffer s = new StringBuffer();
+    	for(int i : list)
+    	{
+    		s.append(i + ",");
+    	}
+    	return s.toString();
+    }
+    
+    private List<Integer> stringToList(String list)
+    {
+    	List<String> stringList = Arrays.asList(list.split(","));
+    	List<Integer> intList = new ArrayList<Integer>();
+    	
+    	for(String s : stringList)
+    	{
+    		intList.add(Integer.valueOf(s));
+    	}
+    	
+    	return intList;
+    }
+    
+    public Document toDocument()
+    {
+    	return new Document().append("nomLot", m_nomLot)
+    						 .append("nbMaxMembre", m_nbMaxMembre)
+    						 .append("demandes", listToString(demandes))
+    						 .append("assignations", listToString(assignations));
     }
 }

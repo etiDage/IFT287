@@ -1,18 +1,11 @@
 package JardinCollectif;
 
 import java.sql.Date;
+import org.bson.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
 public class TuplePlants {
-	
-    	@Id
-    	@GeneratedValue
-    	private long m_id;
-	
+		
 		private String m_nomLot;
 		private String m_nomPlante;
 		private Date m_datePlantation;
@@ -22,6 +15,14 @@ public class TuplePlants {
 		public TuplePlants()
 	    {
 	    }
+		
+		public TuplePlants(Document d)
+		{
+			m_nomLot = d.getString("nomLot");
+			m_nomPlante = d.getString("nomPlante");
+			m_datePlantation = d.getDate("datePlantaison");
+			m_nbPlants = d.getInteger("nbPlants");
+		}
 		
 		public TuplePlants(String nomLot, String nomPlante, Date datePlantation, int nbPlants)
 	    {
@@ -50,4 +51,12 @@ public class TuplePlants {
 	    {
 	        return m_nbPlants;
 	    }
+		
+		public Document toDocument()
+		{
+			return new Document().append("nomLot", m_nomLot)
+								 .append("nomPlante", m_nomPlante)
+								 .append("datePlantaison", m_datePlantation)
+								 .append("nbPlants", m_nbPlants);
+		}
 }
