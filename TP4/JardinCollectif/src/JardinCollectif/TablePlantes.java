@@ -1,15 +1,17 @@
 package JardinCollectif;
 
+import java.util.ArrayList;
 import java.util.List;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.inc;
 
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 
 public class TablePlantes {
+	
 	private MongoCollection<Document> plantesCollection;
 	private Connexion cx;
 
@@ -54,7 +56,21 @@ public class TablePlantes {
 	
 	public List<TuplePlante> getAllPlantes()
 	{
-		
+		List<TuplePlante> planteListe = new ArrayList<TuplePlante>();
+        MongoCursor<Document> plantes = plantesCollection.find().iterator();
+        try
+        {
+            while (plantes.hasNext())
+            {
+            	TuplePlante plante = new TuplePlante(plantes.next());
+            	planteListe.add(plante);
+            }
+        }
+        finally
+        {
+            plantes.close();
+        }
+        return planteListe;
 	}
 
 }

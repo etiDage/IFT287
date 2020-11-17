@@ -1,22 +1,27 @@
 package JardinCollectif;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.*;
 
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 public class TableMembres {
-
-	private TypedQuery<TupleMembre> stmtExist;
-	private TypedQuery<TupleMembre> stmtSelectAll;
+	
+	private MongoCollection<Document> membresCollection;
 	private Connexion cx;
 	
 	
 	public TableMembres(Connexion cx)
 	{
 		this.cx = cx;
-        stmtExist = cx.getConnection().createQuery("select m from TupleMembre m where m.m_noMembre = :noMembre", TupleMembre.class);
-        stmtSelectAll = cx.getConnection().createQuery("select m from TupleMembre m", TupleMembre.class);
+		membresCollection = cx.getDatabase().getCollection("Membres");
 //		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.membres(nomembre, prenom, nom, motdepasse, admin) VALUES " + 
 //				"(?, ?, ?, ?, TRUE);");
 //		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.membres WHERE nomembre = ?");
@@ -31,48 +36,54 @@ public class TableMembres {
 
 	public boolean exist(int noMembre)
 	{
-		stmtExist.setParameter("noMembre", noMembre);
-        return !stmtExist.getResultList().isEmpty();
+        return membresCollection.find(eq("noMembre", noMembre)).first() != null;
 	}
 	
 	public void inscrire(int noMembre, String prenom, String nom, String motdepasse) 
 	{
-		TupleMembre m = new TupleMembre(noMembre, prenom, nom, motdepasse, false);
-		cx.getConnection().persist(m);
+		TupleMembre membre = new TupleMembre(noMembre, prenom, nom, motdepasse, false);
+		membresCollection.insertOne(membre.toDocument());
 	}
 	
 	public void supprimer(int noMembre)
 	{
-		if(exist(noMembre))
-		{
-			TupleMembre m = getMembre(noMembre);
-			cx.getConnection().remove(m);
-		}
+		membresCollection.deleteOne(eq("noMembre", noMembre));
 	}
 	
 	public void setAdmin(int noMembre)
 	{
-		TupleMembre membre = getMembre(noMembre);
-		membre.setAdmin();
+		membresCollection.updateOne(eq("noMembre", noMembre), set("admin", true));
 	}
 	
 	private TupleMembre getMembre(int noMembre)
 	{
-		stmtExist.setParameter("noMembre", noMembre);
-		List<TupleMembre> membre = stmtExist.getResultList();
-		
-		if(!membre.isEmpty())
+		Document d = membresCollection.find(eq("noMembre", noMembre)).first();
+		if(d != null)
 		{
-			return membre.get(0);
+			return new TupleMembre(d);
 		}
 		else
 		{
-			return null; // Ce membre n'existe pas
-		}
+			return null;
+		}		
 	}
 	
 	public List<TupleMembre> getAllMembres()
 	{
-		return stmtSelectAll.getResultList();
+		List<TupleMembre> membresListe = new ArrayList<TupleMembre>();
+        MongoCursor<Document> membres = membresCollection.find().iterator();
+        try
+        {
+            while (membres.hasNext())
+            {
+            	TupleMembre membre = new TupleMembre(membres.next());
+            	membresListe.add(membre);
+            }
+        }
+        finally
+        {
+            membres.close();
+        }
+        return membresListe;
 	}
 }
