@@ -42,16 +42,8 @@ public class TablePlantes {
 	
 	private TuplePlante getPlante(String nomPlante)
 	{
-		stmtExist.setParameter("nomPlante", nomPlante);
-		List<TuplePlante> plante = stmtExist.getResultList();
-		if(!plante.isEmpty())
-		{
-			return plante.get(0);
-		}
-		else
-		{
-			return null;
-		}
+		TuplePlante plante = new TuplePlante(plantesCollection.find(eq("nomPlante", nomPlante)).first());
+		return plante;
 	}
 	
 	public int getTempsDeCulture(String nomPlante)
@@ -62,7 +54,7 @@ public class TablePlantes {
 	
 	public List<TuplePlante> getAllPlantes()
 	{
-		return stmtSelectAll.getResultList();
+		
 	}
 
 }
