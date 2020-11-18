@@ -1,20 +1,26 @@
 package JardinCollectif;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.*;
+
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 public class TableLots {
 
-	private TypedQuery<TupleLot> stmtExist;
-	private TypedQuery<TupleLot> stmtSelectAll;
+	private MongoCollection<Document> lotsCollection;
 	private Connexion cx;
 	
 	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
-		stmtExist = cx.getConnection().createQuery("select l from TupleLot l where l.m_nomLot = :nomLot", TupleLot.class);
-		stmtSelectAll = cx.getConnection().createQuery("select l from TupleLot l" , TupleLot.class);
+		lotsCollection = cx.getDatabase().getCollection("Lots");
 	}
 	
 	public Connexion getConnexion()
@@ -24,30 +30,27 @@ public class TableLots {
 	
 	public boolean exist(String nomLot)
 	{
-		stmtExist.setParameter("nomLot", nomLot);
-		return !stmtExist.getResultList().isEmpty();
+		return lotsCollection.find(eq("nomLot", nomLot)).first() != null;
 	}
+	
 	public void ajouterLot(String nomLot, int nbMaxMembre)
 	{
-		TupleLot l = new TupleLot(nomLot, nbMaxMembre);
-		cx.getConnection().persist(l);
+		TupleLot lot = new TupleLot(nomLot, nbMaxMembre);
+		lotsCollection.insertOne(lot.toDocument());
 	}
 	
 	public void supprimer(String nomLot)
 	{
-		if(exist(nomLot))
-		{
-			TupleLot l = getLot(nomLot);
-			cx.getConnection().remove(l);
-		}
+		lotsCollection.deleteOne(eq("nomLot", nomLot));
 	}
 	
 	public int getNbMaxMembre(String nomLot)
 	{
-		if(exist(nomLot))
+		Document d = lotsCollection.find(eq("nomLot", nomLot)).first();
+		if(d != null)
 		{
-			TupleLot l = getLot(nomLot);
-			return l.getNbMaxMembre();
+			TupleLot lot = new TupleLot(d);
+			return lot.getNbMaxMembre();
 		}
 		else
 		{
@@ -57,11 +60,10 @@ public class TableLots {
 	
 	private TupleLot getLot(String nomLot)
 	{
-		stmtExist.setParameter("nomLot", nomLot);
-		List<TupleLot> lot = stmtExist.getResultList();
-		if(!lot.isEmpty())
+		Document d = lotsCollection.find(eq("nomLot", nomLot)).first();
+		if(d != null)
 		{
-			return lot.get(0);
+			return new TupleLot(d);
 		}
 		else
 		{
@@ -71,7 +73,7 @@ public class TableLots {
 	
 	public boolean seulSurUnLot(int noMembre)
 	{
-		List<TupleLot> lots = stmtSelectAll.getResultList();
+		List<TupleLot> lots = getAllLot();
 		for(TupleLot lot : lots)
 		{
 			if(lot.estAssigner(noMembre) && lot.nbAssignations() == 1)
@@ -79,12 +81,12 @@ public class TableLots {
 				return true;
 			}
 		}
-		return false;
+		return false;		
 	}
 	
 	public void supprimerMembre(int noMembre)
 	{
-		List<TupleLot> lots = stmtSelectAll.getResultList();
+		List<TupleLot> lots = getAllLot();
 		for(TupleLot lot : lots)
 		{
 			if(lot.estAssigner(noMembre))
@@ -143,7 +145,22 @@ public class TableLots {
     
     public List<TupleLot> getAllLot()	// Pour gestionInterrogation
     {
-    	return stmtSelectAll.getResultList();
+    	List<TupleLot> lotsListe = new ArrayList<TupleLot>();
+        MongoCursor<Document> lots = lotsCollection.find().iterator();
+        try
+        {
+            while (lots.hasNext())
+            {
+            	TupleLot lot = new TupleLot(lots.next());
+            	lotsListe.add(lot);
+            }
+        }
+        finally
+        {
+            lots.close();
+        }
+        return lotsListe;
+
     }
 }
 
