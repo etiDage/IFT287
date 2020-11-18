@@ -2,9 +2,17 @@ package JardinCollectif;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.*;
+
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -12,31 +20,13 @@ import java.text.SimpleDateFormat;
 
 public class TablePlants {
 	
-//	private PreparedStatement stmtPlanteCultiver;
-//	private PreparedStatement stmtLotCultiver;
-//	private PreparedStatement stmtPretRecolte;
-//	private PreparedStatement stmtExistLotPlantes;
-	
-	private TypedQuery<TuplePlants> stmtExist;
-	private TypedQuery<TuplePlants> stmtPlanteCultiver;
-	private TypedQuery<TuplePlants> stmtLotCultiver;
-	private TypedQuery<TuplePlants> stmtSelectAll;
+	private MongoCollection<Document> plantsCollection;
 	private Connexion cx;
 	
 	public TablePlants(Connexion cx)
 	{
 		this.cx = cx;
-//		stmtPlanteCultiver = cx.getConnection().prepareStatement("SELECT plant.nomPlante FROM TuplePlant plant WHERE plant.nomPlante = :");
-//		stmtLotCultiver = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.plants WHERE nomlots = ?;");
-//		stmtPretRecolte = cx.getConnection().prepareStatement("SELECT ((CURRENT_DATE - dateplantaison)>= p.tempsculture)"+
-//		" FROM jardincollectif.plants pl JOIN jardincollectif.plante p on pl.nomplante = p.nomplante "+
-//		"where nomlots =? AND pl.nomplante =?;");
-//		stmtExistLotPlantes = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.plants WHERE nomlots = ? AND nomplante= ?");
-		
-		stmtExist = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot AND plants.m_nomPlante = :nomPlante", TuplePlants.class);
-		stmtPlanteCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomPlante = :nomPlante", TuplePlants.class);
-		stmtLotCultiver = cx.getConnection().createQuery("select plants from TuplePlants plants where plants.m_nomLot = :nomLot", TuplePlants.class);
-		stmtSelectAll = cx.getConnection().createQuery("select plants from TuplePlants plants", TuplePlants.class);
+		plantsCollection = cx.getDatabase().getCollection("Plants");
 	}
 	
 	public Connexion getConnexion()
@@ -46,23 +36,18 @@ public class TablePlants {
 	
 	public void ajouterPlants(String nomLot, String nomPlante, Date datePlantaison ,int nbPlants)
 	{
-		TuplePlants plants = new TuplePlants(nomLot, nomPlante, datePlantaison, nbPlants);
-		cx.getConnection().persist(plants);		
+		TuplePlants plant = new TuplePlants(nomLot, nomPlante, datePlantaison, nbPlants);
+		plantsCollection.insertOne(plant.toDocument());
 	}
 	
 	public void supprimer(String nomLot, String nomPlante)
 	{
-		if(existLotPlante(nomLot, nomPlante))
-		{
-			TuplePlants plants = getPlants(nomLot, nomPlante);
-			cx.getConnection().remove(plants);
-		}
+		plantsCollection.deleteOne(combine(eq("nomLot", nomLot), eq("nomPlante", nomPlante)));
 	}
 
 	public boolean planteEstCultiver(String nomPlante)
 	{
-		stmtPlanteCultiver.setParameter("nomPlante", nomPlante);
-		return !stmtPlanteCultiver.getResultList().isEmpty();
+		return plantsCollection.find(eq("nomPlante")).first() != null;
 	}
 	
 	public boolean LotEstEnCulture(String nomLot)

@@ -20,7 +20,7 @@ public class TuplePlants {
 		{
 			m_nomLot = d.getString("nomLot");
 			m_nomPlante = d.getString("nomPlante");
-			m_datePlantation = d.getDate("datePlantaison");
+			m_datePlantation = new Date(d.getDate("datePlantaison").getTime());
 			m_nbPlants = d.getInteger("nbPlants");
 		}
 		
