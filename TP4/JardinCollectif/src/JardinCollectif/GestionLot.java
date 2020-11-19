@@ -3,15 +3,13 @@ package JardinCollectif;
 import java.sql.SQLException;
 
 public class GestionLot {
-	private Connexion cx;
 	private TableLots tableLots;
 	private TableMembres tableMembres;
 	private TablePlants tablePlants;
 	
 	
-	public GestionLot(Connexion cx, TableLots tableLots, TableMembres tableMembres, TablePlants tablePlants) throws IFT287Exception
+	public GestionLot(TableLots tableLots, TableMembres tableMembres, TablePlants tablePlants) throws IFT287Exception
 	{
-		this.cx = cx;
         if (tableLots.getConnexion() != tableMembres.getConnexion())
             throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
         if (tablePlants.getConnexion() != tableMembres.getConnexion())
@@ -27,7 +25,6 @@ public class GestionLot {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(tableLots.exist(nomLot))
 			{
@@ -36,11 +33,9 @@ public class GestionLot {
 			// Ajout du membre a la table
 			tableLots.ajouterLot(nomLot, nbMaxMembre);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
@@ -50,18 +45,14 @@ public class GestionLot {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			if(tablePlants.LotEstEnCulture(nomLot))
 			{
 				throw new IFT287Exception("Le lot que vous tentez de supprimer a encore des palntes non-cultiver, donc impossible de le supprimer");
 			}
 			tableLots.supprimer(nomLot);
-			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
@@ -71,7 +62,7 @@ public class GestionLot {
 	{
 		try
 		{
-			cx.demarreTransaction();
+
 			if(!tableMembres.exist(noMembre))
 			{
 				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
@@ -86,11 +77,9 @@ public class GestionLot {
 			}
 			tableLots.ajouterDemande(noMembre, nomLot);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 	}
@@ -99,7 +88,6 @@ public class GestionLot {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			if(!tableLots.existeDemande(noMembre, nomLot))
 			{
 				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
@@ -114,11 +102,9 @@ public class GestionLot {
 			}
 			tableLots.accepterDemande(noMembre, nomLot);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
@@ -128,14 +114,11 @@ public class GestionLot {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			tableLots.supprimerDemande(noMembre, nomLot);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
