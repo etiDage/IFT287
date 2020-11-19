@@ -3,14 +3,12 @@ package JardinCollectif;
 import java.sql.Date;
 
 public class GestionPlants {
-	private Connexion cx;
 	private TablePlants tablePlants;
 	private TableLots tableLots;
 	private TablePlantes tablePlantes;
 	
-	public GestionPlants(Connexion cx, TablePlants tablePlants, TableLots tableLots, TablePlantes tablePlantes) throws IFT287Exception
+	public GestionPlants(TablePlants tablePlants, TableLots tableLots, TablePlantes tablePlantes) throws IFT287Exception
 	{
-		this.cx = cx;
         if (tablePlants.getConnexion() != tableLots.getConnexion())
             throw new IFT287Exception("Les instances de TablePlants et de TableLots n'utilisent pas la même connexion au serveur");
         if (tablePlants.getConnexion() != tablePlantes.getConnexion())
@@ -24,7 +22,6 @@ public class GestionPlants {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(!tableLots.exist(nomLot))
 			{
@@ -47,11 +44,9 @@ public class GestionPlants {
 			// on plante la plante
 			tablePlants.ajouterPlants(nomLot, nomPlante, datePlantaison, nbExemplaires);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
@@ -61,7 +56,6 @@ public class GestionPlants {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(!tableLots.exist(nomLot))
 			{
@@ -86,11 +80,9 @@ public class GestionPlants {
 			
 			// On recolte les plants
 			tablePlants.supprimer(nomLot, nomPlante);
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 	}
