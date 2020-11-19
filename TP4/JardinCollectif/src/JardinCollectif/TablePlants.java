@@ -52,8 +52,7 @@ public class TablePlants {
 	
 	public boolean LotEstEnCulture(String nomLot)
 	{
-		stmtLotCultiver.setParameter("nomLot", nomLot);
-		return !stmtLotCultiver.getResultList().isEmpty();
+		return plantsCollection.find(eq("nomLot", nomLot)).first() != null;
 	}
 	
 	
@@ -81,19 +80,15 @@ public class TablePlants {
 	
 	public boolean existLotPlante(String nomLot, String nomPlante)
 	{
-		stmtExist.setParameter("nomLot", nomLot);
-		stmtExist.setParameter("nomPlante", nomPlante);
-		return !stmtExist.getResultList().isEmpty();
+		return plantsCollection.find(combine(eq("nomLot", nomLot), eq("nomPlante", nomPlante))).first() != null;
 	}
 	
 	public TuplePlants getPlants(String nomLot, String nomPlante)
 	{
-		stmtExist.setParameter("nomLot", nomLot);
-		stmtExist.setParameter("nomPlante", nomPlante);
-		List<TuplePlants> plants = stmtExist.getResultList();
-		if(!plants.isEmpty())
+		Document d = plantsCollection.find(combine(eq("nomLot", nomLot), eq("nomPlante", nomPlante))).first();
+		if(d != null)
 		{
-			return plants.get(0);
+			return new TuplePlants(d);
 		}
 		else
 		{
@@ -103,7 +98,7 @@ public class TablePlants {
 	
 	public int getNbPlantsEnCulture(String nomPlante) // Retourne le nombre de plants d'une espece parmis tout les lots ( Pour gestion interrogation)
 	{
-		List<TuplePlants> plants = stmtSelectAll.getResultList();
+		List<TuplePlants> plants = getAllPlants();
 		int planteCpt = 0;
 		for(TuplePlants plant : plants)
 		{
@@ -118,6 +113,21 @@ public class TablePlants {
 	
 	public List<TuplePlants> getAllPlants() // Pour affichage dans gestion Interrogation
 	{
-		return stmtSelectAll.getResultList();
+		List<TuplePlants> plantsListe = new ArrayList<TuplePlants>();
+        MongoCursor<Document> plants = plantsCollection.find().iterator();
+        try
+        {
+            while (plants.hasNext())
+            {
+            	TuplePlants plant = new TuplePlants(plants.next());
+            	plantsListe.add(plant);
+            }
+        }
+        finally
+        {
+            plants.close();
+        }
+        return plantsListe;
+
 	}
 }
