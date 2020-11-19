@@ -3,14 +3,14 @@ package JardinCollectif;
 
 
 public class GestionMembre {
-	private Connexion cx;
+
 	private TableMembres tableMembres;
 	private TableLots tableLots;
 	
 	
-	public GestionMembre(Connexion cx, TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
+	public GestionMembre(TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
 	{
-		this.cx = cx;
+
         if (tableMembres.getConnexion() != tableLots.getConnexion())
             throw new IFT287Exception("Les instances de TableMembres et de TableLots n'utilisent pas la même connexion au serveur");
         this.tableMembres = tableMembres;
@@ -21,7 +21,6 @@ public class GestionMembre {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			if(tableMembres.exist(nomembre))
 			{
 				throw new IFT287Exception("Le membres " + nomembre + " est deja dans la liste de membres.");
@@ -29,11 +28,9 @@ public class GestionMembre {
 			// Ajout du membre a la table
 			tableMembres.inscrire(nomembre, prenom, nom, motDePasse);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 	}
@@ -42,18 +39,15 @@ public class GestionMembre {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			if(tableLots.seulSurUnLot(noMembre))
 			{
 				throw new IFT287Exception("Le membre que vous tentez de supprimer est seul sur un lot, donc impossible de le supprimer");
 			}
 			tableLots.supprimerMembre(noMembre);
 			tableMembres.supprimer(noMembre);
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 	}
@@ -62,18 +56,15 @@ public class GestionMembre {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			if(!tableMembres.exist(nomembre))
 			{
 				throw new IFT287Exception("Le membre " + nomembre + " n'est pas present dans la liste de membre.");
 			}
 			tableMembres.setAdmin(nomembre);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 	}

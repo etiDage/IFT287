@@ -2,15 +2,13 @@ package JardinCollectif;
 
 
 public class GestionDemandeAssignation {
-	private Connexion cx;
 	private TableMembres tableMembres;
 	private TableLots tableLots;
 	
 	
-	public GestionDemandeAssignation(Connexion cx, 
+	public GestionDemandeAssignation(
 			TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
 	{
-		this.cx = cx;
         if (tableLots.getConnexion() != tableMembres.getConnexion())
             throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
         this.tableMembres = tableMembres;
@@ -21,7 +19,6 @@ public class GestionDemandeAssignation {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(!tableMembres.exist(noMembre))
 			{
@@ -38,11 +35,10 @@ public class GestionDemandeAssignation {
 			
 			tableLots.ajouterDemande(noMembre, nomLot);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
+
 			throw e;
 		}
 	}
@@ -51,7 +47,6 @@ public class GestionDemandeAssignation {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(!tableLots.existeDemande(noMembre, nomLot))
 			{
@@ -66,11 +61,10 @@ public class GestionDemandeAssignation {
 				throw new IFT287Exception("Le membre " + noMembre + " est deja assigner au lot " + nomLot);
 			}
 			tableLots.accepterDemande(noMembre, nomLot);
-			cx.commit();
+
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
@@ -80,7 +74,6 @@ public class GestionDemandeAssignation {
 	{
 		try
 		{
-			cx.demarreTransaction();
 			
 			if(!tableLots.existeDemande(noMembre, nomLot))
 			{
@@ -89,11 +82,9 @@ public class GestionDemandeAssignation {
 			
 			tableLots.supprimerDemande(noMembre, nomLot);
 			
-			cx.commit();
 		}
 		catch(Exception e)
 		{
-			cx.rollback();
 			throw e;
 		}
 
