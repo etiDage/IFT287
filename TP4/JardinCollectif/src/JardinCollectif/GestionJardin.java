@@ -27,7 +27,7 @@ public class GestionJardin {
 		setGestionMembre(new GestionMembre(tableMembres, tableLots));
 		setGestionPlante(new GestionPlante(tablePlantes, tablePlants));
 		setGestionDemandeAssignation(new GestionDemandeAssignation(tableMembres, tableLots));
-		setGestionPlants(new GestionPlants(cx,tablePlants, tableLots, tablePlantes));
+		setGestionPlants(new GestionPlants(tablePlants, tableLots, tablePlantes));
 	}
 	
     public void fermer() throws SQLException
