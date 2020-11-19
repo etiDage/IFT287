@@ -5,18 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.persistence.*;
-
 public class GestionInterrogation {
 	private TableMembres tableMembres;
 	private TableLots tableLots;
 	private TablePlantes tablePlantes;
 	private TablePlants tablePlants;
-	private Connexion cx;
 	
-	public GestionInterrogation(Connexion cx, TableMembres tableMembres, TableLots tableLots, TablePlantes tablePlantes, TablePlants tablePlants) throws IFT287Exception
+	public GestionInterrogation(TableMembres tableMembres, TableLots tableLots, TablePlantes tablePlantes, TablePlants tablePlants) throws IFT287Exception
 	{
-		this.cx = cx;
+
         if (tableLots.getConnexion() != tableMembres.getConnexion())
             throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
         if (tablePlants.getConnexion() != tableMembres.getConnexion())
@@ -32,7 +29,6 @@ public class GestionInterrogation {
 	
 	public void afficherMembres() // Affiche la liste de membres
 	{
-		cx.demarreTransaction();
 		
 		List<TupleMembre> membres = tableMembres.getAllMembres();
 		
@@ -43,12 +39,10 @@ public class GestionInterrogation {
 			System.out.println(membre.getNoMembre() + " " + membre.getPrenom() + " " + membre.getNom());
 		}
 		
-		cx.commit();
 	}
 	
 	public void afficherPlantes() // Affiche la liste de plantes avec le nombre de plants presentement cultiver
 	{
-		cx.demarreTransaction();
 		
 		List<TuplePlante> plantes = tablePlantes.getAllPlantes();
 		
@@ -59,12 +53,10 @@ public class GestionInterrogation {
 			System.out.println(plante.getNomPlante() + " " + plante.getTmpCulture() + " jours "+ tablePlants.getNbPlantsEnCulture(plante.getNomPlante()) + " plants");
 		}
 		
-		cx.commit();
 	}
 	
 	public void afficherLots()
 	{
-		cx.demarreTransaction();
 		
 		List<TupleLot> lots = tableLots.getAllLot();
 		
@@ -82,12 +74,10 @@ public class GestionInterrogation {
 			System.out.print("\n");
 		}
 		
-		cx.commit();
 	}
 	
 	public void afficherPlantsLot(String nomLot) throws ParseException
 	{
-		cx.demarreTransaction();
 		
 		List<TuplePlants> plants = tablePlants.getAllPlants();
 		
@@ -100,7 +90,6 @@ public class GestionInterrogation {
 			}
 		}
 		
-		cx.commit();
 
 	}
 	
