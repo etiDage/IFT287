@@ -6,8 +6,7 @@ public class GestionDemandeAssignation {
 	private TableLots tableLots;
 	
 	
-	public GestionDemandeAssignation(
-			TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
+	public GestionDemandeAssignation(TableMembres tableMembres, TableLots tableLots) throws IFT287Exception
 	{
         if (tableLots.getConnexion() != tableMembres.getConnexion())
             throw new IFT287Exception("Les instances de TableLots et de TableMembres n'utilisent pas la même connexion au serveur");
@@ -28,12 +27,15 @@ public class GestionDemandeAssignation {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " n'existe pas dans la liste de lot");
 			}
-			if(tableLots.existeDemande(noMembre, nomLot))
+			
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+			
+			if(tableLots.existeDemande(membre, nomLot))
 			{
 				throw new IFT287Exception("Une demande existe deja pour le membre " + noMembre + " au lot " + nomLot);
 			}
 			
-			tableLots.ajouterDemande(noMembre, nomLot);
+			tableLots.ajouterDemande(membre, nomLot);
 			
 		}
 		catch(Exception e)
@@ -47,8 +49,14 @@ public class GestionDemandeAssignation {
 	{
 		try
 		{
+			if(!tableMembres.exist(noMembre))
+			{
+				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
+			}
 			
-			if(!tableLots.existeDemande(noMembre, nomLot))
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+
+			if(!tableLots.existeDemande(membre, nomLot))
 			{
 				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
 			}
@@ -56,11 +64,11 @@ public class GestionDemandeAssignation {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " est a son nombre maximal de membre");
 			}
-			if(tableLots.estAssigner(noMembre, nomLot))
+			if(tableLots.estAssigner(membre, nomLot))
 			{
 				throw new IFT287Exception("Le membre " + noMembre + " est deja assigner au lot " + nomLot);
 			}
-			tableLots.accepterDemande(noMembre, nomLot);
+			tableLots.accepterDemande(membre, nomLot);
 
 		}
 		catch(Exception e)
@@ -74,13 +82,19 @@ public class GestionDemandeAssignation {
 	{
 		try
 		{
+			if(!tableMembres.exist(noMembre))
+			{
+				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
+			}
 			
-			if(!tableLots.existeDemande(noMembre, nomLot))
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+
+			if(!tableLots.existeDemande(membre, nomLot))
 			{
 				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
 			}
 			
-			tableLots.supprimerDemande(noMembre, nomLot);
+			tableLots.supprimerDemande(membre, nomLot);
 			
 		}
 		catch(Exception e)

@@ -71,11 +71,14 @@ public class GestionLot {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " n'existe pas dans la liste de lot");
 			}
-			if(tableLots.existeDemande(noMembre, nomLot))
+			
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+			
+			if(tableLots.existeDemande(membre, nomLot))
 			{
 				throw new IFT287Exception("Une demande existe deja pour le membre " + noMembre + " au lot " + nomLot);
 			}
-			tableLots.ajouterDemande(noMembre, nomLot);
+			tableLots.ajouterDemande(membre, nomLot);
 			
 		}
 		catch(Exception e)
@@ -88,7 +91,14 @@ public class GestionLot {
 	{
 		try
 		{
-			if(!tableLots.existeDemande(noMembre, nomLot))
+			if(!tableMembres.exist(noMembre))
+			{
+				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
+			}
+
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+
+			if(!tableLots.existeDemande(membre, nomLot))
 			{
 				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
 			}
@@ -96,11 +106,11 @@ public class GestionLot {
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " est a son nombre maximal de membre");
 			}
-			if(tableLots.estAssigner(noMembre, nomLot))
+			if(tableLots.estAssigner(membre, nomLot))
 			{
 				throw new IFT287Exception("Le membre " + noMembre + " est deja assigner au lot " + nomLot);
 			}
-			tableLots.accepterDemande(noMembre, nomLot);
+			tableLots.accepterDemande(membre, nomLot);
 			
 		}
 		catch(Exception e)
@@ -110,11 +120,18 @@ public class GestionLot {
 
 	}
 	
-	public void refuserDemande(int noMembre, String nomLot) throws SQLException
+	public void refuserDemande(int noMembre, String nomLot) throws Exception 
 	{
 		try
 		{
-			tableLots.supprimerDemande(noMembre, nomLot);
+			if(!tableMembres.exist(noMembre))
+			{
+				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
+			}
+
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+
+			tableLots.supprimerDemande(membre, nomLot);
 			
 		}
 		catch(Exception e)

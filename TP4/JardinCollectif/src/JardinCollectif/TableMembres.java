@@ -55,7 +55,7 @@ public class TableMembres {
 		membresCollection.updateOne(eq("noMembre", noMembre), set("admin", true));
 	}
 	
-	private TupleMembre getMembre(int noMembre)
+	public TupleMembre getMembre(int noMembre)
 	{
 		Document d = membresCollection.find(eq("noMembre", noMembre)).first();
 		if(d != null)

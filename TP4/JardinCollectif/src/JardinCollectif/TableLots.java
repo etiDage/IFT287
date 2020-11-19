@@ -71,12 +71,12 @@ public class TableLots {
 		}
 	}
 	
-	public boolean seulSurUnLot(int noMembre)
+	public boolean seulSurUnLot(TupleMembre membre)
 	{
 		List<TupleLot> lots = getAllLot();
 		for(TupleLot lot : lots)
 		{
-			if(lot.estAssigner(noMembre) && lot.nbAssignations() == 1)
+			if(lot.estAssigner(membre) && lot.nbAssignations() == 1)
 			{
 				return true;
 			}
@@ -84,57 +84,57 @@ public class TableLots {
 		return false;		
 	}
 	
-	public void supprimerMembre(int noMembre)
+	public void supprimerMembre(TupleMembre membre)
 	{
 		List<TupleLot> lots = getAllLot();
 		for(TupleLot lot : lots)
 		{
-			if(lot.estAssigner(noMembre))
+			if(lot.estAssigner(membre))
 			{
-				lot.retirer(noMembre);
+				lot.retirer(membre);
 			}
-			if(lot.existeDemande(noMembre))
+			if(lot.existeDemande(membre))
 			{
-				lot.retirerDemande(noMembre);
+				lot.retirerDemande(membre);
 			}
 		}
 	}
 	
-	public void ajouterDemande(int noMembre, String nomLot)
+	public void ajouterDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		lot.ajouterDemande(noMembre);
+		lot.ajouterDemande(membre);
 	}
 	
-	public void supprimerDemande(int noMembre, String nomLot)
+	public void supprimerDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		lot.retirerDemande(noMembre);
+		lot.retirerDemande(membre);
 	}
 	
-	public void accepterDemande(int noMembre, String nomLot)
+	public void accepterDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		lot.retirerDemande(noMembre);
-		lot.assigner(noMembre);
+		lot.retirerDemande(membre);
+		lot.assigner(membre);
 	}
 	
-	public void retirerAssignation(int noMembre, String nomLot)
+	public void retirerAssignation(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		lot.retirer(noMembre);
+		lot.retirer(membre);
 	}
 	
-	public boolean existeDemande(int noMembre, String nomLot)
+	public boolean existeDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		return lot.existeDemande(noMembre);
+		return lot.existeDemande(membre);
 	}
 	
-	public boolean estAssigner(int noMembre, String nomLot)
+	public boolean estAssigner(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		return lot.estAssigner(noMembre);
+		return lot.estAssigner(membre);
 	}
 	
     public int getNbMembreLot(String nomLot) 

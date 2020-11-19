@@ -39,11 +39,18 @@ public class GestionMembre {
 	{
 		try
 		{
-			if(tableLots.seulSurUnLot(noMembre))
+			if(!tableMembres.exist(noMembre))
+			{
+				throw new IFT287Exception("Le membre " + noMembre + " n'est pas present dans la liste de membre.");
+			}
+			
+			TupleMembre membre = tableMembres.getMembre(noMembre);
+
+			if(tableLots.seulSurUnLot(membre))
 			{
 				throw new IFT287Exception("Le membre que vous tentez de supprimer est seul sur un lot, donc impossible de le supprimer");
 			}
-			tableLots.supprimerMembre(noMembre);
+			tableLots.supprimerMembre(membre);
 			tableMembres.supprimer(noMembre);
 		}
 		catch(Exception e)

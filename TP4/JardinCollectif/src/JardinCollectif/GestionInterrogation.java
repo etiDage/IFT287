@@ -66,9 +66,9 @@ public class GestionInterrogation {
 			System.out.print(lot.getNomLot());
 			if(lot.getAssignations() != null)
 			{
-				for(Integer noMembre : lot.getAssignations())
+				for(TupleMembre membre : lot.getAssignations())
 				{
-					System.out.print(" " + noMembre);
+					System.out.print(" " + membre.getNoMembre());
 				}				
 			}
 			System.out.print("\n");
