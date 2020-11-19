@@ -25,7 +25,7 @@ public class TupleMembre {
 	public TupleMembre()
     {
     }
-	
+		
 	public TupleMembre(Document d)
 	{
 		m_noMembre = d.getInteger("noMembre");
@@ -67,12 +67,6 @@ public class TupleMembre {
     public void setAdmin()
     {
     	m_admin = true;
-    }
-    
-    public String toString()
-    {
-    	StringBuffer s = new StringBuffer(getNoMembre() + " " + getPrenom() + " " + getNom());
-    	return s.toString();
     }
     
     public Document toDocument()
