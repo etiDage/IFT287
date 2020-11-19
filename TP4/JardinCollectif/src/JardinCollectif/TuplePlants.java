@@ -6,8 +6,8 @@ import org.bson.Document;
 
 public class TuplePlants {
 		
-		private String m_nomLot;
-		private String m_nomPlante;
+		private TupleLot m_lot;
+		private TuplePlante m_plante;
 		private Date m_datePlantation;
 		private int m_nbPlants;
 		
@@ -18,28 +18,28 @@ public class TuplePlants {
 		
 		public TuplePlants(Document d)
 		{
-			m_nomLot = d.getString("nomLot");
-			m_nomPlante = d.getString("nomPlante");
+			m_lot = new TupleLot(d.getString("nomLot"), d.getInteger("nbMaxMembre"));
+			m_plante = new TuplePlante(d.getString("nomPlante"), d.getInteger("tempsCulture"));
 			m_datePlantation = new Date(d.getDate("datePlantaison").getTime());
 			m_nbPlants = d.getInteger("nbPlants");
 		}
 		
-		public TuplePlants(String nomLot, String nomPlante, Date datePlantation, int nbPlants)
+		public TuplePlants(TupleLot lot, TuplePlante plante, Date datePlantation, int nbPlants)
 	    {
-			m_nomLot= nomLot;
-			m_nomPlante= nomPlante;
+			m_lot= lot;
+			m_plante= plante;
 			m_datePlantation= datePlantation;
 			m_nbPlants= nbPlants;
 	    }
 		
 		public String getNomLot()
 	    {
-	        return m_nomLot;
+	        return m_lot.getNomLot();
 	    }
 
 		public String getNomPlante()
 	    {
-	        return m_nomPlante;
+	        return m_plante.getNomPlante();
 	    }
 
 		public Date getDatePlantation()
@@ -54,8 +54,10 @@ public class TuplePlants {
 		
 		public Document toDocument()
 		{
-			return new Document().append("nomLot", m_nomLot)
-								 .append("nomPlante", m_nomPlante)
+			return new Document().append("nomLot", m_lot.getNomLot())
+								 .append("nbMaxMembre", m_lot.getNbMaxMembre())
+								 .append("nomPlante", m_plante.getNomPlante())
+								 .append("tempsCulture", m_plante.getTmpCulture())
 								 .append("datePlantaison", m_datePlantation)
 								 .append("nbPlants", m_nbPlants);
 		}

@@ -13,30 +13,31 @@ public class TupleLot {
 	private int m_nbMaxMembre;
 	
 	//@OneToMany(mappedBy = "m_noMembre")
-	private List<Integer> demandes;
+	private List<TupleMembre> demandes;
 	
 	//@OneToMany(mappedBy = "m_noMembre")
-	private List<Integer> assignations;
+	private List<TupleMembre> assignations;
 	
 	
 	public TupleLot()
     {
     }
 	
+	@SuppressWarnings("unchecked")
 	public TupleLot(Document d)
 	{
 		m_nomLot = d.getString("nomLot");
 		m_nbMaxMembre = d.getInteger("nbMaxMembre");
-		demandes = stringToList(d.getString("demandes"));
-		assignations = stringToList(d.getString("assignations"));
+		demandes = documentToList((List<Document>) d.get("demandes"));
+		assignations = documentToList((List<Document>) d.get("assignations"));
 	}
 	
 	public TupleLot(String nomLot, int nbMaxMembre)
     {
 		m_nomLot= nomLot;
 		m_nbMaxMembre= nbMaxMembre;
-		demandes = new ArrayList<Integer>();
-		assignations = new ArrayList<Integer>();
+		demandes = new ArrayList<TupleMembre>();
+		assignations = new ArrayList<TupleMembre>();
     }
 
 
@@ -50,41 +51,41 @@ public class TupleLot {
         return m_nomLot;
     }
     
-    public List<Integer> getDemandes()
+    public List<TupleMembre> getDemandes()
     {
     	return demandes;
     }
     
-    public List<Integer> getAssignations()
+    public List<TupleMembre> getAssignations()
     {
     	return assignations;
     }
     
-    public void assigner(int noMembre)
+    public void assigner(TupleMembre membre)
     {
-    	assignations.add(noMembre);
+    	assignations.add(membre);
     }
     
-    public void retirer(int noMembre)
+    public void retirer(TupleMembre membre)
     {
-    	int pos = assignations.indexOf(noMembre);
+    	int pos = assignations.indexOf(membre);
     	assignations.remove(pos);
     }
     
-    public void ajouterDemande(int noMembre)
+    public void ajouterDemande(TupleMembre membre)
     {
-    	demandes.add(noMembre);
+    	demandes.add(membre);
     }
     
-    public void retirerDemande(int noMembre)
+    public void retirerDemande(TupleMembre membre)
     {
-    	int pos = demandes.indexOf(noMembre);
+    	int pos = demandes.indexOf(membre);
     	demandes.remove(pos);
     }
     
-    public boolean estAssigner(int noMembre)
+    public boolean estAssigner(TupleMembre membre)
     {
-    	return assignations.contains(noMembre);
+    	return assignations.contains(membre);
     }
     
     public int nbAssignations()
@@ -92,42 +93,43 @@ public class TupleLot {
     	return assignations.size();
     }
     
-    public boolean existeDemande(int noMembre)
+    public boolean existeDemande(TupleMembre membre)
     {
-    	return demandes.contains(noMembre);
+    	return demandes.contains(membre);
     }
+    
     public int getNbMembreLot(String nomLot) {
     	return assignations.size();
     }
     
-    private String listToString(List<Integer> list)
+    private List<Document> listToDocument(List<TupleMembre> list)
     {
-    	StringBuffer s = new StringBuffer();
-    	for(int i : list)
+    	List<Document> l = new ArrayList<Document>();
+    	for(TupleMembre m : list)
     	{
-    		s.append(i + ",");
+    		l.add(m.toDocument());
     	}
-    	return s.toString();
+    	return l;
     }
     
-    private List<Integer> stringToList(String list)
+    private List<TupleMembre> documentToList(List<Document> list)
     {
-    	List<String> stringList = Arrays.asList(list.split(","));
-    	List<Integer> intList = new ArrayList<Integer>();
+    	List<TupleMembre> membres = new ArrayList<TupleMembre>();
     	
-    	for(String s : stringList)
+    	for(Document d : list)
     	{
-    		intList.add(Integer.valueOf(s));
+    		TupleMembre membre = new TupleMembre(d);
+    		membres.add(membre);
     	}
     	
-    	return intList;
+    	return membres;
     }
     
     public Document toDocument()
     {
     	return new Document().append("nomLot", m_nomLot)
     						 .append("nbMaxMembre", m_nbMaxMembre)
-    						 .append("demandes", listToString(demandes))
-    						 .append("assignations", listToString(assignations));
+    						 .append("demandes", listToDocument(demandes))
+    						 .append("assignations", listToDocument(assignations));
     }
 }
