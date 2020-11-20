@@ -24,13 +24,11 @@ public class TupleLot {
 	@SuppressWarnings("unchecked")
 	public TupleLot(Document d)
 	{
-		System.out.println(d);
 		m_nomLot = d.getString("nomLot");
 		m_nbMaxMembre = d.getInteger("nbMaxMembre");
-		demandes = new ArrayList<TupleMembre>();
-		assignations = new ArrayList<TupleMembre>();		
-		demandes = documentToList((List<Document>) d.get("demandes"));
-		assignations = documentToList((List<Document>) d.get("assignations"));
+		System.out.println(d.get("demandes"));
+		demandes = documentToList((List<Document>)d.get("demandes"));
+		assignations = documentToList((List<Document>)d.get("assignations"));
 	}
 	
 	public TupleLot(String nomLot, int nbMaxMembre)
@@ -69,23 +67,17 @@ public class TupleLot {
     
     public void retirer(TupleMembre membre)
     {
-    	int pos = assignations.indexOf(membre);
-    	assignations.remove(pos);
+    	assignations.remove(membre);
     }
     
     public void ajouterDemande(TupleMembre membre)
     {
     	demandes.add(membre);
-    	for(TupleMembre m: demandes)
-    	{
-    		System.out.println(m.getNom());
-    	}
     }
     
     public void retirerDemande(TupleMembre membre)
     {
-    	int pos = demandes.indexOf(membre);
-    	demandes.remove(pos);
+    	demandes.remove(membre);
     }
     
     public boolean estAssigner(TupleMembre membre)
@@ -115,6 +107,7 @@ public class TupleLot {
     		l.add(m.toDocument());
     	}
     	return l;
+   	
     }
     
     private List<TupleMembre> documentToList(List<Document> list)
@@ -128,6 +121,7 @@ public class TupleLot {
     	}
     	
     	return membres;
+  
     }
     
     public List<Document> demandesToDocument()
@@ -145,8 +139,8 @@ public class TupleLot {
     {
     	return new Document().append("nomLot", m_nomLot)
     						 .append("nbMaxMembre", m_nbMaxMembre)
-    						 .append("demandes", listToDocument(demandes))
-    						 .append("assignations", listToDocument(assignations));
+    						 .append("demandes", demandesToDocument())
+    						 .append("assignations", assignationsToDocument());
 		
     }
 }

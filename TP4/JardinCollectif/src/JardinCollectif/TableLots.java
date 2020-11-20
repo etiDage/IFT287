@@ -91,11 +91,11 @@ public class TableLots {
 		{
 			if(lot.estAssigner(membre))
 			{
-				lot.retirer(membre);
+				retirerAssignation(membre, lot.getNomLot());
 			}
 			if(lot.existeDemande(membre))
 			{
-				lot.retirerDemande(membre);
+				supprimerDemande(membre, lot.getNomLot());
 			}
 		}
 		
@@ -105,7 +105,7 @@ public class TableLots {
 	{
 		TupleLot lot = getLot(nomLot);
 		lot.ajouterDemande(membre);
-		
+		System.out.println(lot.toDocument());
 		lotsCollection.updateOne(eq("nomLot", nomLot), set("demandes", lot.demandesToDocument()));
 	}
 	
@@ -122,7 +122,7 @@ public class TableLots {
 		TupleLot lot = getLot(nomLot);
 		supprimerDemande(membre, nomLot);
 		lot.assigner(membre);
-		
+		System.out.println(lot.toDocument());
 		lotsCollection.updateOne(eq("nomLot", nomLot), set("assignations", lot.assignationsToDocument()));
 	}
 	

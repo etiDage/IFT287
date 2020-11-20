@@ -1,5 +1,8 @@
 package JardinCollectif;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bson.Document;
 
 /**
@@ -34,7 +37,7 @@ public class TupleMembre {
 		m_motDePasse = d.getString("motDePasse");
 		m_admin = d.getBoolean("admin");
 	}
-	
+		
 	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, boolean admin)
     {
 		m_noMembre= noMembre;
@@ -77,7 +80,7 @@ public class TupleMembre {
     						 .append("motDePasse", m_motDePasse)
     						 .append("admin", m_admin);
     }
-    
+        
     @Override
     public boolean equals(Object o)
     {
