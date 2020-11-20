@@ -21,7 +21,7 @@ public class TableMembres {
 	public TableMembres(Connexion cx)
 	{
 		this.cx = cx;
-		membresCollection = cx.getDatabase().getCollection("Membres");
+		membresCollection = cx.getDatabase().getCollection("TableMembres");
 //		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.membres(nomembre, prenom, nom, motdepasse, admin) VALUES " + 
 //				"(?, ?, ?, ?, TRUE);");
 //		stmtExist = cx.getConnection().prepareStatement("SELECT nomembre FROM jardincollectif.membres WHERE nomembre = ?");

@@ -20,7 +20,7 @@ public class TableLots {
 	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
-		lotsCollection = cx.getDatabase().getCollection("Lots");
+		lotsCollection = cx.getDatabase().getCollection("TableLots");
 	}
 	
 	public Connexion getConnexion()
@@ -98,31 +98,40 @@ public class TableLots {
 				lot.retirerDemande(membre);
 			}
 		}
+		
 	}
 	
 	public void ajouterDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
 		lot.ajouterDemande(membre);
+		
+		lotsCollection.updateOne(eq("nomLot", nomLot), set("demandes", lot.demandesToDocument()));
 	}
 	
 	public void supprimerDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
 		lot.retirerDemande(membre);
+		
+		lotsCollection.updateOne(eq("nomLot", nomLot), set("demandes", lot.demandesToDocument()));
 	}
 	
 	public void accepterDemande(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
-		lot.retirerDemande(membre);
+		supprimerDemande(membre, nomLot);
 		lot.assigner(membre);
+		
+		lotsCollection.updateOne(eq("nomLot", nomLot), set("assignations", lot.assignationsToDocument()));
 	}
 	
 	public void retirerAssignation(TupleMembre membre, String nomLot)
 	{
 		TupleLot lot = getLot(nomLot);
 		lot.retirer(membre);
+		
+		lotsCollection.updateOne(eq("nomLot", nomLot), set("assignations", lot.assignationsToDocument()));
 	}
 	
 	public boolean existeDemande(TupleMembre membre, String nomLot)

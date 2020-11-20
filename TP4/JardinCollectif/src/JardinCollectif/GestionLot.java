@@ -1,6 +1,5 @@
 package JardinCollectif;
 
-import java.sql.SQLException;
 
 public class GestionLot {
 	private TableLots tableLots;

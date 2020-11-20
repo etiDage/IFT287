@@ -18,7 +18,7 @@ public class TablePlantes {
 	public TablePlantes(Connexion cx)
 	{
 		this.cx = cx;
-		plantesCollection = cx.getDatabase().getCollection("plantes");
+		plantesCollection = cx.getDatabase().getCollection("TablePlantes");
 	}
 	
 	public Connexion getConnexion()

@@ -77,4 +77,22 @@ public class TupleMembre {
     						 .append("motDePasse", m_motDePasse)
     						 .append("admin", m_admin);
     }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+    	if (o == this)
+    	{
+    		return true;
+    	}
+    	
+    	if(!(o instanceof TupleMembre))
+    	{
+    		return false;
+    	}
+    	
+    	TupleMembre m = (TupleMembre) o;
+    	
+    	return this.getNoMembre() == m.getNoMembre();
+    }
 }
