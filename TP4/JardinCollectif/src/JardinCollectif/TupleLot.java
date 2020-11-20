@@ -26,7 +26,6 @@ public class TupleLot {
 	{
 		m_nomLot = d.getString("nomLot");
 		m_nbMaxMembre = d.getInteger("nbMaxMembre");
-		System.out.println(d.get("demandes"));
 		demandes = documentToList((List<Document>)d.get("demandes"));
 		assignations = documentToList((List<Document>)d.get("assignations"));
 	}
@@ -131,7 +130,7 @@ public class TupleLot {
      
     public List<Document> assignationsToDocument()
     {
-    	return listToDocument(demandes);
+    	return listToDocument(assignations);
     }
 
     
@@ -141,6 +140,5 @@ public class TupleLot {
     						 .append("nbMaxMembre", m_nbMaxMembre)
     						 .append("demandes", demandesToDocument())
     						 .append("assignations", assignationsToDocument());
-		
     }
 }

@@ -20,7 +20,7 @@ public class TableLots {
 	public TableLots(Connexion cx)
 	{
 		this.cx = cx;
-		lotsCollection = cx.getDatabase().getCollection("TableLots");
+		lotsCollection = cx.getDatabase().getCollection("Tablelots");
 	}
 	
 	public Connexion getConnexion()
@@ -103,35 +103,23 @@ public class TableLots {
 	
 	public void ajouterDemande(TupleMembre membre, String nomLot)
 	{
-		TupleLot lot = getLot(nomLot);
-		lot.ajouterDemande(membre);
-		System.out.println(lot.toDocument());
-		lotsCollection.updateOne(eq("nomLot", nomLot), set("demandes", lot.demandesToDocument()));
+		lotsCollection.updateOne(eq("nomLot", nomLot), push("demandes", membre.toDocument()));
 	}
 	
 	public void supprimerDemande(TupleMembre membre, String nomLot)
 	{
-		TupleLot lot = getLot(nomLot);
-		lot.retirerDemande(membre);
-		
-		lotsCollection.updateOne(eq("nomLot", nomLot), set("demandes", lot.demandesToDocument()));
+		lotsCollection.updateOne(eq("nomLot", nomLot), pull("demandes", membre.toDocument()));
 	}
 	
 	public void accepterDemande(TupleMembre membre, String nomLot)
 	{
-		TupleLot lot = getLot(nomLot);
 		supprimerDemande(membre, nomLot);
-		lot.assigner(membre);
-		System.out.println(lot.toDocument());
-		lotsCollection.updateOne(eq("nomLot", nomLot), set("assignations", lot.assignationsToDocument()));
+		lotsCollection.updateOne(eq("nomLot", nomLot), push("assignations", membre.toDocument()));
 	}
 	
 	public void retirerAssignation(TupleMembre membre, String nomLot)
 	{
-		TupleLot lot = getLot(nomLot);
-		lot.retirer(membre);
-		
-		lotsCollection.updateOne(eq("nomLot", nomLot), set("assignations", lot.assignationsToDocument()));
+		lotsCollection.updateOne(eq("nomLot", nomLot), pull("assignations", membre.toDocument()));
 	}
 	
 	public boolean existeDemande(TupleMembre membre, String nomLot)

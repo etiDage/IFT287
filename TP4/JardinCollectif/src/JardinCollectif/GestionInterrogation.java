@@ -66,7 +66,6 @@ public class GestionInterrogation {
 			System.out.print(lot.getNomLot());
 			if(lot.getAssignations() != null)
 			{
-				System.out.println(lot.toDocument());
 				for(TupleMembre membre : lot.getAssignations())
 				{
 					System.out.print(" " + membre.getNoMembre() + " " + membre.getPrenom() + " " + membre.getNom());
