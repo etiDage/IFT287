@@ -58,7 +58,7 @@ public class TableLots {
 		}
 	}
 	
-	private TupleLot getLot(String nomLot)
+	public TupleLot getLot(String nomLot)
 	{
 		Document d = lotsCollection.find(eq("nomLot", nomLot)).first();
 		if(d != null)

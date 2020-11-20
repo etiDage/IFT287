@@ -34,9 +34,9 @@ public class TablePlants {
 		return cx;
 	}
 	
-	public void ajouterPlants(String nomLot, String nomPlante, Date datePlantaison ,int nbPlants)
+	public void ajouterPlants(TupleLot lot, TuplePlante plante, Date datePlantaison ,int nbPlants)
 	{
-		TuplePlants plant = new TuplePlants(nomLot, nomPlante, datePlantaison, nbPlants);
+		TuplePlants plant = new TuplePlants(lot, plante, datePlantaison, nbPlants);
 		plantsCollection.insertOne(plant.toDocument());
 	}
 	

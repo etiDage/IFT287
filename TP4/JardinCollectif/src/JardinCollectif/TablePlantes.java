@@ -42,7 +42,7 @@ public class TablePlantes {
 		plantesCollection.deleteOne(eq("nomPlante", nomPlante));
 	}
 	
-	private TuplePlante getPlante(String nomPlante)
+	public TuplePlante getPlante(String nomPlante)
 	{
 		TuplePlante plante = new TuplePlante(plantesCollection.find(eq("nomPlante", nomPlante)).first());
 		return plante;
