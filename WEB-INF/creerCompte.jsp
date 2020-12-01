@@ -38,10 +38,10 @@
 			    <% if(session.getAttribute("admin") != null)
 			    { %>
 			        <div class="form-group">
-					    <label for="nom">Niveau d'accès</label>
-					    <select class="custom-select" name="acces">
-					    	<option value="0">Administrateur
-					    	<option value="1" selected>Membre ordinaire
+					    <label for="admin">Niveau d'accès</label>
+					    <select class="custom-select" name="admin">
+					    	<option value="true">Administrateur
+					    	<option value="false" selected>Membre ordinaire
 				    	</select>
 			    	</div>
 			    <% 
