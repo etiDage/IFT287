@@ -5,6 +5,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import JardinCollectif.GestionJardin;
 import JardinCollectif.IFT287Exception;
 
 
@@ -89,39 +90,32 @@ public class Accueil extends HttpServlet
                     // lecture des paramètres du formulaire de creerCompte.jsp
                     String userId = request.getParameter("userId");
                     String motDePasse = request.getParameter("motDePasse");
-                    String telephoneS = request.getParameter("telephone");
+                    String prenom = request.getParameter("prenom");
                     String nom = request.getParameter("nom");
 
                     request.setAttribute("userId", userId);
                     request.setAttribute("motDePasse", motDePasse);
-                    request.setAttribute("telephone", telephoneS);
+                    request.setAttribute("prenom", prenom);
                     request.setAttribute("nom", nom);
                     
                     if (userId == null || userId.equals(""))
-                        throw new BiblioException("Vous devez entrer un nom d'utilisateur!");
+                        throw new IFT287Exception("Vous devez entrer un nom d'utilisateur!");
                     if (motDePasse == null || motDePasse.equals(""))
-                        throw new BiblioException("Vous devez entrer un mot de passe!");
-                    if (telephoneS == null || telephoneS.equals(""))
-                        throw new BiblioException("Vous devez entrer un numéro de téléphone!");
+                        throw new IFT287Exception("Vous devez entrer un mot de passe!");
+                    if (prenom == null || prenom.equals(""))
+                        throw new IFT287Exception("Vous devez entrer un prenom!");
                     if (nom == null || nom.equals(""))
-                        throw new BiblioException("Vous devez entrer un nom!");
+                        throw new IFT287Exception("Vous devez entrer un nom!");
 
-                    long telephone = JardinHelper.ConvertirLong(telephoneS, "Le numéro de téléphone");
-
-                    String accesS = request.getParameter("acces");
-                    int acces = 1;
-                    if (accesS != null)
-                        acces = JardinHelper.ConvertirInt(accesS, "Le niveau d'accès");
-
-                    String limitePretS = request.getParameter("limite");
-                    int limitePret = 5;
-                    if (limitePretS != null)
-                        limitePret = JardinHelper.ConvertirInt(limitePretS, "La limite de prêt");
-
-                    GestionBibliotheque biblioUpdate = JardinHelper.getBiblioUpdate(session);
-                    synchronized (biblioUpdate)
+                    String admin = request.getParameter("admin");
+                    if (admin == null || admin.equals(""))
+                    	throw new IFT287Exception("Vous devez indiquer si ce compte est administrateur ou non");
+                    boolean isAdmin = Boolean.valueOf(admin);
+                    
+                    GestionJardin jardinUpdate = JardinHelper.getJardinUpdate(session);
+                    synchronized (jardinUpdate)
                     {
-                        biblioUpdate.getGestionMembre().inscrire(userId, motDePasse, acces, nom, telephone, limitePret);
+                        jardinUpdate.getGestionMembre().inscrire(userId, prenom, nom, motDePasse, admin);
                     }
 
                     // S'il y a déjà un userID dans la session, c'est parce
@@ -129,9 +123,9 @@ public class Accueil extends HttpServlet
                     if (session.getAttribute("userID") == null)
                     {
                         session.setAttribute("userID", userId);
-                        if(acces == 0)
-                            session.setAttribute("admin", acces == 0);
-                        session.setAttribute("etat", new Integer(BiblioConstantes.CONNECTE));
+                        if(isAdmin == true)
+                            session.setAttribute("admin", isAdmin);
+                        session.setAttribute("etat", new Integer(JardinConstantes.CONNECTE));
 
                         System.out.println("Servlet Accueil : POST dispatch vers accueil.jsp");
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
