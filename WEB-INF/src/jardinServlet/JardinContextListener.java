@@ -3,14 +3,13 @@ package jardinServlet;
 import java.util.Enumeration;
 
 import javax.servlet.*;
-import javax.util.*;
 
 public class JardinContextListener implements ServletContextListener {
 	
 	public void contextInitialized(ServletContextEvent sce)
     {
-        System.out.println("Contexte Jardin WEB démarré : " + sce.getServletContext().getServletContextName());
-        System.out.println("Voici les paramètres du contexte tels que définis dans web.xml");
+        System.out.println("Contexte Jardin WEB dï¿½marrï¿½ : " + sce.getServletContext().getServletContextName());
+        System.out.println("Voici les paramï¿½tres du contexte tels que dï¿½finis dans web.xml");
         Enumeration<String> initParams = sce.getServletContext().getInitParameterNames();
         while (initParams.hasMoreElements())
         {
@@ -21,7 +20,7 @@ public class JardinContextListener implements ServletContextListener {
 
     public void contextDestroyed(ServletContextEvent sce)
     {
-        System.out.println("Le contexte de l'application GestionJardin vient d'être détruit.");
+        System.out.println("Le contexte de l'application GestionJardin vient d'ï¿½tre dï¿½truit.");
     }
 
 }
