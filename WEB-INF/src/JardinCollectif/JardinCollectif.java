@@ -124,24 +124,24 @@ public class JardinCollectif
                     String prenom = readString(tokenizer);
                     String nom = readString(tokenizer);
                     String motDePasse = readString(tokenizer);
-                    int noMembre = readInt(tokenizer);
+                    String userId = readString(tokenizer);
                     
                     // Appel de la methode des gestionnaires qui traite la transaction specifique
-                    gestionJardin.getGestionMembre().inscrireMembre(noMembre, prenom, nom, motDePasse);
+                    gestionJardin.getGestionMembre().inscrireMembre(userId, prenom, nom, motDePasse);
                     
                 }
                 else if (command.equals("supprimerMembre"))
                 {
                 	//Lecture des parametres
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionMembre().supprimerMembre(noMembre);
+                	gestionJardin.getGestionMembre().supprimerMembre(userId);
                 }
                 else if (command.equals("promouvoirAdministrateur"))
                 {
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionMembre().promouvoirMembre(noMembre);
+                	gestionJardin.getGestionMembre().promouvoirMembre(userId);
                 }
                 else if (command.equals("ajouterLot"))
                 {
@@ -159,23 +159,23 @@ public class JardinCollectif
                 else if (command.equals("rejoindreLot"))
                 {
                 	String nomLot = readString(tokenizer);
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionDemandeAssignation().rejoindreLot(noMembre, nomLot);
+                	gestionJardin.getGestionDemandeAssignation().rejoindreLot(userId, nomLot);
                 }
                 else if (command.equals("accepterDemande"))
                 {
                 	String nomLot = readString(tokenizer);
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionDemandeAssignation().accepterDemande(noMembre, nomLot);
+                	gestionJardin.getGestionDemandeAssignation().accepterDemande(userId, nomLot);
                 }
                 else if (command.equals("refuserDemande"))
                 {
                 	String nomLot = readString(tokenizer);
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionDemandeAssignation().refuserDemande(noMembre, nomLot);
+                	gestionJardin.getGestionDemandeAssignation().refuserDemande(userId, nomLot);
                 }
                 else if (command.equals("ajouterPlante"))
                 {
@@ -194,19 +194,19 @@ public class JardinCollectif
                 {
                 	String nomPlante = readString(tokenizer);
                 	String nomLot = readString(tokenizer);
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	int nbExemplaires = readInt(tokenizer);
                 	Date datePlantation = readDate(tokenizer);
                 	
-                	gestionJardin.getGestionPlants().planterPlante(nomPlante, nomLot, noMembre, nbExemplaires, datePlantation);
+                	gestionJardin.getGestionPlants().planterPlante(nomPlante, nomLot, userId, nbExemplaires, datePlantation);
                 }
                 else if (command.equals("recolterPlante"))
                 {
                 	String nomPlante = readString(tokenizer);
                 	String nomLot = readString(tokenizer);
-                	int noMembre = readInt(tokenizer);
+                	String userId = readString(tokenizer);
                 	
-                	gestionJardin.getGestionPlants().recolterPlante(nomPlante, nomLot, noMembre);
+                	gestionJardin.getGestionPlants().recolterPlante(nomPlante, nomLot, userId);
                 }
                 else if (command.equals("afficherMembres"))
                 {
@@ -253,18 +253,18 @@ public class JardinCollectif
         System.out.println(" Les dates sont en format yyyy-mm-dd.");
         System.out.println("");
         System.out.println("Les transactions sont:");
-        System.out.println("inscrireMembre <prenom> <nom> <motDePasse> <noMembre>");
-        System.out.println("supprimerMembre <noMembre>");
-        System.out.println("promouvoirAdministrateur <noMembre>");
+        System.out.println("inscrireMembre <prenom> <nom> <motDePasse> <userId>");
+        System.out.println("supprimerMembre <userId>");
+        System.out.println("promouvoirAdministrateur <userId>");
         System.out.println("ajouterLot <nomLot> <nbMaxMembre>");
         System.out.println("supprimerLot <nomLot>");
-        System.out.println("rejoindreLot <nomLot <noMembre>");
-        System.out.println("accepterDemande <nomLot> <noMembre>");
-        System.out.println("refuserDemande <nomLot> <noMembre>");
+        System.out.println("rejoindreLot <nomLot <userId>");
+        System.out.println("accepterDemande <nomLot> <userId>");
+        System.out.println("refuserDemande <nomLot> <userId>");
         System.out.println("ajouterPlante <nomPlante> <tempsDeCulture>");
         System.out.println("retirerPlante <nomPlante>");
-        System.out.println("planterPlante <nomPlante> <nomLot> <noMembre> <nbExemplaires> <datePlantation>");
-        System.out.println("recolterPlante <nomPlante> <nomLot> <noMembre>");
+        System.out.println("planterPlante <nomPlante> <nomLot> <userId> <nbExemplaires> <datePlantation>");
+        System.out.println("recolterPlante <nomPlante> <nomLot> <userId>");
         System.out.println("afficherMembres");
         System.out.println("afficherPlantes");
         System.out.println("afficherLots");

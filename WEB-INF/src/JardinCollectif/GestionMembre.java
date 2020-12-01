@@ -23,15 +23,15 @@ public class GestionMembre {
 		this.tableDemandes = tableDemandes;
 	}
 	
-	public boolean informationsConnexionValide(int noMembre, String motDePasse) throws Exception
+	public boolean informationsConnexionValide(String userId, String motDePasse) throws Exception
 	{
 		try {
-			if(!tableMembres.exist(noMembre))
+			if(!tableMembres.exist(userId))
 			{
-				throw new IFT287Exception("Le membres " + noMembre + " n'est pas dans la liste de membres.");
+				throw new IFT287Exception("Le membres " + userId + " n'est pas dans la liste de membres.");
 			}
 			
-			TupleMembre user = tableMembres.getMembre(noMembre);
+			TupleMembre user = tableMembres.getMembre(userId);
 			if(!user.getMotDePasse().contentEquals(motDePasse))
 			{
 				throw new IFT287Exception("Mauvais mot de passe");
@@ -46,11 +46,11 @@ public class GestionMembre {
 		}
 	}
 	
-	public boolean utilisateurEstAdmin(int noMembre) throws Exception
+	public boolean utilisateurEstAdmin(String userId) throws Exception
 	{
 		try
 		{
-			TupleMembre user = tableMembres.getMembre(noMembre);
+			TupleMembre user = tableMembres.getMembre(userId);
 			if(user == null)
 			{
 				throw new IFT287Exception("L'utilisateur n'existe pas");
@@ -66,16 +66,16 @@ public class GestionMembre {
 	}
 	
 	
-	public void inscrireMembre(int nomembre, String prenom, String nom, String motDePasse) throws Exception
+	public void inscrireMembre(String userId, String prenom, String nom, String motDePasse) throws Exception
 	{
 		try
 		{
-			if(tableMembres.exist(nomembre))
+			if(tableMembres.exist(userId))
 			{
-				throw new IFT287Exception("Le membres " + nomembre + " est deja dans la liste de membres.");
+				throw new IFT287Exception("Le membres " + userId + " est deja dans la liste de membres.");
 			}
 			// Ajout du membre a la table
-			tableMembres.inscrire(nomembre, prenom, nom, motDePasse);
+			tableMembres.inscrire(userId, prenom, nom, motDePasse);
 			
 			cx.commit();
 		}
@@ -86,17 +86,17 @@ public class GestionMembre {
 		}
 	}
 	
-	public void supprimerMembre(int nomembre) throws Exception
+	public void supprimerMembre(String userId) throws Exception
 	{
 		try
 		{
-			if(tableAssignations.nbMinMembreParLot(nomembre) <= 1)
+			if(tableAssignations.nbMinMembreParLot(userId) <= 1)
 			{
 				throw new IFT287Exception("Le membre que vous tentez de supprimer est seul sur un lot, donc impossible de le supprimer");
 			}
-			tableDemandes.supprimerParNoMembre(nomembre);
-			tableAssignations.supprimerParNoMembre(nomembre);
-			tableMembres.supprimer(nomembre);
+			tableDemandes.supprimerParNoMembre(userId);
+			tableAssignations.supprimerParNoMembre(userId);
+			tableMembres.supprimer(userId);
 			cx.commit();
 		}
 		catch(Exception e)
@@ -106,15 +106,15 @@ public class GestionMembre {
 		}
 	}
 	
-	public void promouvoirMembre(int nomembre) throws Exception
+	public void promouvoirMembre(String userId) throws Exception
 	{
 		try
 		{
-			if(!tableMembres.exist(nomembre))
+			if(!tableMembres.exist(userId))
 			{
-				throw new IFT287Exception("Le membre " + nomembre + " n'est pas present dans la liste de membre.");
+				throw new IFT287Exception("Le membre " + userId + " n'est pas present dans la liste de membre.");
 			}
-			tableMembres.setAdmin(nomembre);
+			tableMembres.setAdmin(userId);
 			
 			cx.commit();
 		}

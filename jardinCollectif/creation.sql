@@ -3,7 +3,7 @@ SET search_path  TO JardinCollectif;
 
 
 CREATE TABLE membres(
-noMembre INTEGER NOT NULL,
+noMembre VARCHAR(80) NOT NULL,
 prenom VARCHAR(80) NOT NULL,
 nom VARCHAR(80) NOT NULL,
 motDePasse VARCHAR(80) NOT NULL,

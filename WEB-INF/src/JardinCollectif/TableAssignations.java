@@ -37,9 +37,9 @@ public class TableAssignations {
 		return cx;
 	}
 	
-	public int nbMinMembreParLot(int nomembre) throws SQLException
+	public int nbMinMembreParLot(String userId) throws SQLException
 	{
-		stmtNbMembreLots.setInt(1, nomembre);
+		stmtNbMembreLots.setString(1, userId);
 		ResultSet rs = stmtNbMembreLots.executeQuery();
 		
 		int res;
@@ -55,9 +55,9 @@ public class TableAssignations {
 		return res;
 	}
 	
-	public boolean exist(int noMembre,String nomLots) throws SQLException
+	public boolean exist(String userId,String nomLots) throws SQLException
 	{
-		stmtExist.setInt(1, noMembre);
+		stmtExist.setString(1, userId);
 		stmtExist.setString(2, nomLots);
 		ResultSet rs = stmtExist.executeQuery();
 		boolean existe = rs.next();
@@ -65,16 +65,16 @@ public class TableAssignations {
 		return existe;
 	}
 	
-	public void ajouterAssignations(int noMembre,String nomLots) throws SQLException
+	public void ajouterAssignations(String userId,String nomLots) throws SQLException
 	{
-		stmtInsert.setInt(1, noMembre);
+		stmtInsert.setString(1, userId);
 		stmtInsert.setString(2, nomLots);
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimerParNoMembre(int noMembre) throws SQLException
+	public void supprimerParNoMembre(String userId) throws SQLException
 	{
-		stmtDeleteParNoMembre.setInt(1, noMembre);
+		stmtDeleteParNoMembre.setString(1, userId);
 		stmtDeleteParNoMembre.executeUpdate();
 	}
 	

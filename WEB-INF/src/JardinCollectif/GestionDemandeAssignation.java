@@ -26,23 +26,23 @@ public class GestionDemandeAssignation {
         this.tableLots = tableLots;
 	}
 	
-	public void rejoindreLot(int noMembre, String nomLot) throws Exception
+	public void rejoindreLot(String userId, String nomLot) throws Exception
 	{
 		try
 		{
-			if(!tableMembres.exist(noMembre))
+			if(!tableMembres.exist(userId))
 			{
-				throw new IFT287Exception("Le noMembre " + noMembre + " n'existe pas dans la liste de membre");
+				throw new IFT287Exception("Le noMembre " + userId + " n'existe pas dans la liste de membre");
 			}
 			if(!tableLots.exist(nomLot))
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " n'existe pas dans la liste de lot");
 			}
-			if(tableDemandes.exist(noMembre, nomLot))
+			if(tableDemandes.exist(userId, nomLot))
 			{
-				throw new IFT287Exception("Une demande existe deja pour le membre " + noMembre + " au lot " + nomLot);
+				throw new IFT287Exception("Une demande existe deja pour le membre " + userId + " au lot " + nomLot);
 			}
-			tableDemandes.ajouterDemandes(noMembre, nomLot);
+			tableDemandes.ajouterDemandes(userId, nomLot);
 			
 			cx.commit();
 		}
@@ -53,24 +53,24 @@ public class GestionDemandeAssignation {
 		}
 	}
 	
-	public void accepterDemande(int noMembre, String nomLot) throws Exception
+	public void accepterDemande(String userId, String nomLot) throws Exception
 	{
 		try
 		{
-			if(!tableDemandes.exist(noMembre, nomLot))
+			if(!tableDemandes.exist(userId, nomLot))
 			{
-				throw new IFT287Exception("Aucune demande appartient au noMembre " + noMembre + " et au lot " + nomLot);
+				throw new IFT287Exception("Aucune demande appartient au noMembre " + userId + " et au lot " + nomLot);
 			}
 			if(tableAssignations.getNbMembreLot(nomLot) >= tableLots.getNbMaxMembre(nomLot))
 			{
 				throw new IFT287Exception("Le lot " + nomLot + " est a son nombre maximal de membre");
 			}
-			if(tableAssignations.exist(noMembre, nomLot))
+			if(tableAssignations.exist(userId, nomLot))
 			{
-				throw new IFT287Exception("Le membre " + noMembre + " est deja assigner au lot " + nomLot);
+				throw new IFT287Exception("Le membre " + userId + " est deja assigner au lot " + nomLot);
 			}
-			tableAssignations.ajouterAssignations(noMembre, nomLot);
-			tableDemandes.supprimerDemande(noMembre, nomLot);
+			tableAssignations.ajouterAssignations(userId, nomLot);
+			tableDemandes.supprimerDemande(userId, nomLot);
 			
 			cx.commit();
 		}
@@ -82,11 +82,11 @@ public class GestionDemandeAssignation {
 
 	}
 	
-	public void refuserDemande(int noMembre, String nomLot) throws SQLException
+	public void refuserDemande(String userId, String nomLot) throws SQLException
 	{
 		try
 		{
-			tableDemandes.supprimerDemande(noMembre, nomLot);
+			tableDemandes.supprimerDemande(userId, nomLot);
 			
 			cx.commit();
 		}

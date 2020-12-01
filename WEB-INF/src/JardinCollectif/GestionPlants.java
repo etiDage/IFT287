@@ -24,7 +24,7 @@ public class GestionPlants {
         this.tableAssignations = tableAssignations;
 	}
 	
-	public void planterPlante(String nomPlante, String nomLot, int noMembre, int nbExemplaires, Date datePlantaison) throws Exception
+	public void planterPlante(String nomPlante, String nomLot, String userId, int nbExemplaires, Date datePlantaison) throws Exception
 	{
 		try
 		{
@@ -36,13 +36,13 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Plante " + nomPlante + " est inexistante");
 			}
-			if(!tableAssignations.exist(noMembre, nomLot))
+			if(!tableAssignations.exist(userId, nomLot))
 			{
-				throw new IFT287Exception("Le membre " + noMembre + " est pas assign� au lot " + nomLot);
+				throw new IFT287Exception("Le membre " + userId + " est pas assign� au lot " + nomLot);
 			}
 			if(tablePlants.existLotPlante(nomLot, nomPlante)) 
 			{
-				throw new IFT287Exception("il y a d�j� des " + nomPlante +"plant� dans le lot "+ nomLot +"Plant� par "+ noMembre);
+				throw new IFT287Exception("il y a d�j� des " + nomPlante +"plant� dans le lot "+ nomLot +"Plant� par "+ userId);
 			}
 			
 			// Ajout du membre a la table
@@ -58,7 +58,7 @@ public class GestionPlants {
 
 	}
 	
-	public void recolterPlante(String nomPlante, String nomLot, int noMembre) throws Exception
+	public void recolterPlante(String nomPlante, String nomLot, String userId) throws Exception
 	{
 		try
 		{
@@ -70,9 +70,9 @@ public class GestionPlants {
 			{
 				throw new IFT287Exception("Plante " +nomPlante+" est inexistante");
 			}
-			if(!tableAssignations.exist(noMembre, nomLot))
+			if(!tableAssignations.exist(userId, nomLot))
 			{
-				throw new IFT287Exception("Ce membre("+noMembre+") ne travaille pas dans ce lot "+ nomLot);
+				throw new IFT287Exception("Ce membre("+userId+") ne travaille pas dans ce lot "+ nomLot);
 			}
 			if(!tablePlants.existLotPlante(nomLot, nomPlante))
 			{

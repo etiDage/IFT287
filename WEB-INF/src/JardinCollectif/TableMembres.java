@@ -28,18 +28,18 @@ public class TableMembres {
 		return cx;
 	}
 
-	public boolean exist(int nomembre) throws SQLException
+	public boolean exist(String userId) throws SQLException
 	{
-		stmtExist.setInt(1, nomembre);
+		stmtExist.setString(1, userId);
 		ResultSet rs = stmtExist.executeQuery();
 		boolean existe = rs.next();
 		rs.close();
 		return existe;
 	}
 	
-	public TupleMembre getMembre(int noMembre) throws SQLException
+	public TupleMembre getMembre(String userId) throws SQLException
 	{
-		stmtExist.setInt(1, noMembre);
+		stmtExist.setString(1, userId);
 		ResultSet rs = stmtExist.executeQuery();
 		TupleMembre user = null;
 		if(rs.next())
@@ -49,31 +49,31 @@ public class TableMembres {
 			String motDePasse = rs.getString(4);
 			boolean admin = rs.getBoolean(5);
 			
-			user = new TupleMembre(noMembre, prenom, nom, motDePasse, admin);
+			user = new TupleMembre(userId, prenom, nom, motDePasse, admin);
 			rs.close();
 		}
 		
 		return user;
 	}
 	
-	public void inscrire(int nomembre, String prenom, String nom, String motdepasse) throws SQLException
+	public void inscrire(String userId, String prenom, String nom, String motdepasse) throws SQLException
 	{
-		stmtInsert.setInt(1, nomembre);
+		stmtInsert.setString(1, userId);
 		stmtInsert.setString(2, prenom);
 		stmtInsert.setString(3, nom);
 		stmtInsert.setString(4, motdepasse);
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimer(int nomembre) throws SQLException
+	public void supprimer(String userId) throws SQLException
 	{
-		stmtDelete.setInt(1, nomembre);
+		stmtDelete.setString(1, userId);
 		stmtDelete.executeUpdate();
 	}
 	
-	public void setAdmin(int nomembre) throws SQLException
+	public void setAdmin(String userId) throws SQLException
 	{
-		stmtSetAdmin.setInt(1, nomembre);
+		stmtSetAdmin.setString(1, userId);
 		
 		stmtSetAdmin.executeUpdate();
 	}
