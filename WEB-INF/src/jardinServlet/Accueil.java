@@ -5,6 +5,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import JardinCollectif.IFT287Exception;
+
 
 
 public class Accueil extends HttpServlet 
@@ -47,17 +49,17 @@ public class Accueil extends HttpServlet
                     request.setAttribute("motDePasse", motDePasse);
                                         
                     if (userId == null || userId.equals(""))
-                        throw new BiblioException("Le nom d'utilisateur ne peut pas être nul!");
+                        throw new IFT287Exception("Le nom d'utilisateur ne peut pas être nul!");
                     if (motDePasse == null || motDePasse.equals(""))
-                        throw new BiblioException("Le mot de passe ne peut pas être nul!");
+                        throw new IFT287Exception("Le mot de passe ne peut pas être nul!");
 
-                    if (JardinHelper.getBiblioInterro(session).getGestionMembre().informationsConnexionValide(userId,
+                    if (JardinHelper.getJardinInterro(session).getGestionMembre().informationsConnexionValide(Integer.valueOf(userId),
                             motDePasse))
                     {
                         session.setAttribute("userID", userId);
-                        if(JardinHelper.getBiblioInterro(session).getGestionMembre().utilisateurEstAdministrateur(userId))
+                        if(JardinHelper.getJardinInterro(session).getGestionMembre().utilisateurEstAdmin(Integer.valueOf(userId)))
                             session.setAttribute("admin", true);
-                        session.setAttribute("etat", new Integer(BiblioConstantes.CONNECTE));
+                        session.setAttribute("etat", new Integer(JardinConstantes.CONNECTE));
 
                         System.out.println("Servlet Accueil : POST dispatch vers accueil.jsp");
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
@@ -65,7 +67,7 @@ public class Accueil extends HttpServlet
                     }
                     else
                     {
-                        throw new BiblioException("Les informations de connexion sont erronées.");
+                        throw new IFT287Exception("Les informations de connexion sont erronées.");
                     }
                 }
                 catch (Exception e)

@@ -17,7 +17,7 @@ public class TableMembres {
 	{
 		this.cx = cx;
 		stmtInsert = cx.getConnection().prepareStatement("INSERT INTO jardincollectif.membres(nomembre, prenom, nom, motdepasse, admin) VALUES " + 
-				"(?, ?, ?, ?, TRUE);");
+				"(?, ?, ?, ?, FALSE);");
 		stmtExist = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.membres WHERE nomembre = ?");
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.membres WHERE nomembre = ?");
 		stmtSetAdmin = cx.getConnection().prepareStatement("UPDATE jardincollectif.membres SET admin = TRUE WHERE nomembre = ?");
@@ -39,7 +39,21 @@ public class TableMembres {
 	
 	public TupleMembre getMembre(int noMembre) throws SQLException
 	{
+		stmtExist.setInt(1, noMembre);
+		ResultSet rs = stmtExist.executeQuery();
+		TupleMembre user = null;
+		if(rs.next())
+		{
+			String prenom = rs.getString(2);
+			String nom = rs.getString(3);
+			String motDePasse = rs.getString(4);
+			boolean admin = rs.getBoolean(5);
+			
+			user = new TupleMembre(noMembre, prenom, nom, motDePasse, admin);
+			rs.close();
+		}
 		
+		return user;
 	}
 	
 	public void inscrire(int nomembre, String prenom, String nom, String motdepasse) throws SQLException

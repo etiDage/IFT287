@@ -23,7 +23,7 @@ public class GestionMembre {
 		this.tableDemandes = tableDemandes;
 	}
 	
-	public boolean informationsConnexionValide(int noMembre, String motDePasse)
+	public boolean informationsConnexionValide(int noMembre, String motDePasse) throws Exception
 	{
 		try {
 			if(!tableMembres.exist(noMembre))
@@ -32,8 +32,39 @@ public class GestionMembre {
 			}
 			
 			TupleMembre user = tableMembres.getMembre(noMembre);
+			if(!user.getMotDePasse().contentEquals(motDePasse))
+			{
+				throw new IFT287Exception("Mauvais mot de passe");
+			}
+			cx.commit();
+			return true;
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
 		}
 	}
+	
+	public boolean utilisateurEstAdmin(int noMembre) throws Exception
+	{
+		try
+		{
+			TupleMembre user = tableMembres.getMembre(noMembre);
+			if(user == null)
+			{
+				throw new IFT287Exception("L'utilisateur n'existe pas");
+			}
+			cx.commit();
+			return user.getAdmin();
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
+		}
+	}
+	
 	
 	public void inscrireMembre(int nomembre, String prenom, String nom, String motDePasse) throws Exception
 	{
