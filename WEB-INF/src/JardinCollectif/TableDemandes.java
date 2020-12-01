@@ -30,9 +30,9 @@ public class TableDemandes {
 		return cx;
 	}
 	
-	public boolean exist(int noMembre,String nomLots) throws SQLException
+	public boolean exist(String userId,String nomLots) throws SQLException
 	{
-		stmtExist.setInt(1, noMembre);
+		stmtExist.setString(1, userId);
 		stmtExist.setString(2, nomLots);
 		ResultSet rs = stmtExist.executeQuery();
 		boolean existe = rs.next();
@@ -40,16 +40,16 @@ public class TableDemandes {
 		return existe;
 	}
 	
-	public void ajouterDemandes(int noMembre,String nomLots) throws SQLException
+	public void ajouterDemandes(String userId,String nomLots) throws SQLException
 	{
-		stmtInsert.setInt(1, noMembre);
+		stmtInsert.setString(1, userId);
 		stmtInsert.setString(2, nomLots);
 		stmtInsert.executeUpdate();
 	}
 	
-	public void supprimerParNoMembre(int noMembre) throws SQLException
+	public void supprimerParNoMembre(String userId) throws SQLException
 	{
-		stmtDeleteParNoMembre.setInt(1, noMembre);
+		stmtDeleteParNoMembre.setString(1, userId);
 		stmtDeleteParNoMembre.executeUpdate();
 	}
 	
@@ -59,10 +59,10 @@ public class TableDemandes {
 		stmtDeleteParNoMembre.executeUpdate();
 	}
 	
-	public void supprimerDemande(int noMembre, String nomLot) throws SQLException
+	public void supprimerDemande(String userId, String nomLot) throws SQLException
 	{
 		stmtDelete.setString(1, nomLot);
-		stmtDelete.setInt(2, noMembre);
+		stmtDelete.setString(2, userId);
 		stmtDelete.executeUpdate();
 	}
 

@@ -56,7 +56,7 @@ public class GestionInterrogation {
 	{
 		ResultSet rs = stmtLots.executeQuery();
 		
-		System.out.println("\nNomLots noMembre prenom nom");
+		System.out.println("\nNomLots userId prenom nom");
 		while(rs.next())
 		{
 			String nomembre;

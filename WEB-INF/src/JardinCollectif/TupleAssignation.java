@@ -2,16 +2,16 @@ package JardinCollectif;
 import java.sql.*;
 
 public class TupleAssignation {
-	private int noMembre;
+	private String userId;
 	private String nomLot;
 	
 	public TupleAssignation()
     {
     }
 	
-	public TupleAssignation(int noMembre,String nomLot)
+	public TupleAssignation(String userId,String nomLot)
     {
-        this.setNoMembre(noMembre);
+        this.setNoMembre(userId);
         this.setNomLot(nomLot);
     }
 	
@@ -24,13 +24,13 @@ public class TupleAssignation {
         return nomLot;
     }
 	
-	private void setNoMembre(int noMembre) {
-		this.noMembre= noMembre;
+	private void setNoMembre(String userId) {
+		this.userId= userId;
 		
 	}
-	public int getNoMembre()
+	public String getNoMembre()
     {
-        return noMembre;
+        return userId;
     }
 
 }

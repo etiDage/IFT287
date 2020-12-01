@@ -3,7 +3,7 @@ package JardinCollectif;
 import java.sql.*;
 
 public class TupleMembre {
-	private int noMembre;
+	private String userId;
 	private String prenom;
 	private String nom;
 	private String motDePasse;
@@ -13,9 +13,9 @@ public class TupleMembre {
     {
     }
 	
-	public TupleMembre(int noMembre, String prenom, String nom, String motDePasse, boolean admin)
+	public TupleMembre(String userId, String prenom, String nom, String motDePasse, boolean admin)
     {
-        this.setNoMembre(noMembre);
+        this.setNoMembre(userId);
         this.setPrenom(prenom);
         this.setNom(nom);
         this.setMotDePasse(motDePasse);
@@ -58,13 +58,13 @@ public class TupleMembre {
         return prenom;
     }
 
-	private void setNoMembre(int noMembre) {
-		this.noMembre= noMembre;
+	private void setNoMembre(String userId) {
+		this.userId= userId;
 		
 	}
-    public int getNoMembre()
+    public String getNoMembre()
     {
-        return noMembre;
+        return userId;
     }
 
 }
