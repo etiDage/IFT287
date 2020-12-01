@@ -3,6 +3,8 @@ package JardinCollectif;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableMembres {
 
@@ -10,6 +12,7 @@ public class TableMembres {
 	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
 	private PreparedStatement stmtSetAdmin;
+	private PreparedStatement stmtGetAll;
 	private Connexion cx;
 	
 	
@@ -21,6 +24,7 @@ public class TableMembres {
 		stmtExist = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.membres WHERE nomembre = ?");
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.membres WHERE nomembre = ?");
 		stmtSetAdmin = cx.getConnection().prepareStatement("UPDATE jardincollectif.membres SET admin = TRUE WHERE nomembre = ?");
+		stmtGetAll = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.membres");
 	}
 	
 	public Connexion getConnexion()
@@ -76,5 +80,17 @@ public class TableMembres {
 		stmtSetAdmin.setString(1, userId);
 		
 		stmtSetAdmin.executeUpdate();
+	}
+	
+	public List<TupleMembre> getListMembre() throws SQLException
+	{
+		List<TupleMembre> membresList = new ArrayList<TupleMembre>();
+		ResultSet rs = stmtGetAll.executeQuery();
+		while(rs.next())
+		{
+			membresList.add(new TupleMembre(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5)));
+		}
+		
+		return membresList;
 	}
 }

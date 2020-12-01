@@ -54,11 +54,11 @@ public class Accueil extends HttpServlet
                     if (motDePasse == null || motDePasse.equals(""))
                         throw new IFT287Exception("Le mot de passe ne peut pas être nul!");
 
-                    if (JardinHelper.getJardinInterro(session).getGestionMembre().informationsConnexionValide(Integer.valueOf(userId),
+                    if (JardinHelper.getJardinInterro(session).getGestionMembre().informationsConnexionValide(userId,
                             motDePasse))
                     {
                         session.setAttribute("userID", userId);
-                        if(JardinHelper.getJardinInterro(session).getGestionMembre().utilisateurEstAdmin(Integer.valueOf(userId)))
+                        if(JardinHelper.getJardinInterro(session).getGestionMembre().utilisateurEstAdmin(userId))
                             session.setAttribute("admin", true);
                         session.setAttribute("etat", new Integer(JardinConstantes.CONNECTE));
 
@@ -115,7 +115,7 @@ public class Accueil extends HttpServlet
                     GestionJardin jardinUpdate = JardinHelper.getJardinUpdate(session);
                     synchronized (jardinUpdate)
                     {
-                        jardinUpdate.getGestionMembre().inscrire(userId, prenom, nom, motDePasse, admin);
+                        jardinUpdate.getGestionMembre().inscrireMembre(userId, prenom, nom, motDePasse);
                     }
 
                     // S'il y a déjà un userID dans la session, c'est parce

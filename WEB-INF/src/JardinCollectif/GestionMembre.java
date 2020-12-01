@@ -1,6 +1,7 @@
 package JardinCollectif;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class GestionMembre {
 	private Connexion cx;
@@ -117,6 +118,21 @@ public class GestionMembre {
 			tableMembres.setAdmin(userId);
 			
 			cx.commit();
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
+		}
+	}
+	
+	public List<TupleMembre> getListMembres() throws Exception
+	{
+		try
+		{
+			List<TupleMembre> membres = tableMembres.getListMembre();
+			cx.commit();
+			return membres;
 		}
 		catch(Exception e)
 		{
