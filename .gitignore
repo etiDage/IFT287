@@ -4,3 +4,9 @@ TP5/JardinCollectif/.classpath
 TP5/JardinCollectif/.project
 TP5/JardinCollectif/.settings/*
 
+.classpath
+.cvsignore
+.project
+.tomcatplugin
+
+/bin/
