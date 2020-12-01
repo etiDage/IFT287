@@ -12,6 +12,9 @@ admin BOOLEAN NOT NULL,
 CONSTRAINT membres_cc0 PRIMARY KEY (noMembre)
 );
 
+INSERT INTO JardinCollectif.membres(nomembre, prenom, nom, motdepasse, admin)
+VALUES ('admin','Tournesol','Laplante','admin',TRUE);
+
 CREATE TABLE lots(
     nomLots VARCHAR(255) NOT NULL,
     nbMaxMembre INTEGER NOT NULL,
@@ -31,7 +34,7 @@ CREATE TABLE plante(
 );
 
 CREATE TABLE demandes(
-    noMembre INTEGER NOT NULL,
+    noMembre VARCHAR(80) NOT NULL,
     nomLots VARCHAR(255) NOT NULL,
 
     CONSTRAINT demandes_cc0
@@ -45,7 +48,7 @@ CREATE TABLE demandes(
 );
 
 CREATE TABLE assignation(
-    noMembre INTEGER NOT NULL,
+    noMembre VARCHAR(80) NOT NULL,
     nomLots VARCHAR(255) NOT NULL,
 
     CONSTRAINT assignation_cc0
