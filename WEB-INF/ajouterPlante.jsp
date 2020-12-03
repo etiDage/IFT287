@@ -21,12 +21,12 @@
 
 </head>
 <body>
-    <h1>Syst�me de gestion de biblioth�que</h1>
-    <form action="Plantation" method="POST">
+    <h1>Systeme de gestion de Jardin Collectif</h1>
+    <form action="AjoutPlante" method="POST">
         Nom Plante :<input type="Text" name="nomPlante" 
-        value="<%= (request.getAttribute("nomPlante") !=null) ? request.getAttribute("nomPlante") : "" %> <br>
+        value="<%= (request.getAttribute("nomPlante") !=null) ? request.getAttribute("nomPlante") : "" %>"> <br>
         Temps de culture :<input type="Text" name="tempsDeCulture" 
-        value="<%= (request.getAttribute("tempsDeCulture") !=null) ? request.getAttribute("tempsDeCulture") : "" %> <br>
+        value="<%= (request.getAttribute("tempsDeCulture") !=null) ? request.getAttribute("tempsDeCulture") : "" %>"> <br>
         <br><input type="SUBMIT" name="ajoutePlante" value="Soumettre"><br>
         <br><input type="SUBMIT" name="selectionMembre" value="sélection d'un membre"><br>
     </form>

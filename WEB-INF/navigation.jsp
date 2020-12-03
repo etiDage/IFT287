@@ -10,6 +10,15 @@
 	    }
 	%>
 			<li><a class="nav-item nav-link" href="#">Gérer les lots</a></li>
+	<%
+	    if (session.getAttribute("admin") != null)
+	    {
+	%>
+			<li><a class="nav-item nav-link" href="AjoutPlante">Gérer les plantes</a></li>
+	<%
+	    }
+	%>
+		
 		</ul>
 		</div>
 		<div class="navbar-collapse collapse justify-content-end">

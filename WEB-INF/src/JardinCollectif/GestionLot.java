@@ -1,5 +1,8 @@
 package JardinCollectif;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class GestionLot {
 	private Connexion cx;
 	private TableLots tableLots;
@@ -64,5 +67,10 @@ public class GestionLot {
 			throw e;
 		}
 
+	}
+	
+	public List<TupleLot> getAllLot() throws SQLException
+	{
+		return tableLots.getAllLot();
 	}
 }

@@ -108,10 +108,13 @@ public class Accueil extends HttpServlet
                         throw new IFT287Exception("Vous devez entrer un nom!");
 
                     String admin = request.getParameter("admin");
-                    if (admin == null || admin.equals(""))
-                    	throw new IFT287Exception("Vous devez indiquer si ce compte est administrateur ou non");
-                    boolean isAdmin = Boolean.valueOf(admin);
-                    
+                    boolean isAdmin = false;
+                    if(session.getAttribute("admin") != null)
+                    {
+                        if (admin == null || admin.equals(""))
+                        	throw new IFT287Exception("Vous devez indiquer si ce compte est administrateur ou non");
+                        isAdmin = Boolean.valueOf(admin);                    	
+                    }
                     GestionJardin jardinUpdate = JardinHelper.getJardinUpdate(session);
                     synchronized (jardinUpdate)
                     {

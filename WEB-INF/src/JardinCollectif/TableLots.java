@@ -3,6 +3,8 @@ package JardinCollectif;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableLots {
 
@@ -10,6 +12,7 @@ public class TableLots {
 	private PreparedStatement stmtExist;
 	private PreparedStatement stmtDelete;
 	private PreparedStatement stmtGetNbMaxMembre;
+	private PreparedStatement stmtGetAll;
 	private Connexion cx;
 	
 	public TableLots(Connexion cx) throws SQLException
@@ -20,6 +23,7 @@ public class TableLots {
 		stmtExist = cx.getConnection().prepareStatement("SELECT nomlots FROM jardincollectif.lots WHERE nomlots = ?");
 		stmtDelete = cx.getConnection().prepareStatement("DELETE FROM jardincollectif.lots WHERE nomLots = ?");
 		stmtGetNbMaxMembre = cx.getConnection().prepareStatement("SELECT nbmaxmembre FROM jardincollectif.lots WHERE nomlots = ?;");
+		stmtGetAll = cx.getConnection().prepareStatement("SELECT * FROM jardincollectif.lots");
 	}
 	
 	public Connexion getConnexion()
@@ -58,4 +62,16 @@ public class TableLots {
 		return nbMaxMembre;
 	}
 
+	
+	public List<TupleLot> getAllLot() throws SQLException
+	{
+		ResultSet rs = stmtGetAll.executeQuery();
+		List<TupleLot> list = new ArrayList<TupleLot>();
+		while(rs.next())
+		{
+			list.add(new TupleLot(rs.getString(1), rs.getInt(2)));
+		}
+		rs.close();
+		return list;
+	}
 }
