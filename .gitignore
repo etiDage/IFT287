@@ -9,5 +9,6 @@ TP5/JardinCollectif/.settings/*
 .project
 .tomcatplugin
 WEB-INF/classes/.gitignore
+WEB-INF/classes/*
 work/*
 /bin/
