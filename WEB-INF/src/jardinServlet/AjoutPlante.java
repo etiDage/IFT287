@@ -7,7 +7,6 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import Bibliotheque.BiblioException;
 import JardinCollectif.IFT287Exception;
 import JardinCollectif.GestionJardin;
 
@@ -48,7 +47,7 @@ public class AjoutPlante extends HttpsServlet {
 	                dispatcher.forward(request, response);
 					
 					
-			}catch (BiblioException e)
+			}catch (IFT287Exception e)
             {
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.toString());
