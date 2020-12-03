@@ -54,6 +54,77 @@
                         <% } %>
 				</tbody>
 			</table>
+
+		<h3 class="text-center">Liste des plantes</h3>			
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Nom plante</th>
+						<th scope="col">Temps de culture</th>
+						<th scope="col">Nombre de plants en culture</th>						
+					</tr>
+				</thead>
+				<tbody>
+					<% List<String> affichagePlantes = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerPlantes();
+						for(int i=0; i < affichagePlantes.size(); i=i+3)
+						{
+					%>
+					<tr>
+						<td><%=affichagePlantes.get(i)%></td>
+						<td><%=affichagePlantes.get(i+1)%></td>
+						<td><%=affichagePlantes.get(i+2)%></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+			
+					<h3 class="text-center">Liste des lots</h3>			
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Nom lot</th>
+						<th scope="col">UserId</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% List<String> affichageLots = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerLots();
+						for(int i=0; i < affichageLots.size(); i=i+2)
+						{
+					%>
+					<tr>
+						<td><%=affichageLots.get(i)%></td>
+						<td><%=affichageLots.get(i+1)%></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+			
+			<h3 class="text-center">Liste des plantes par lots</h3>	
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Nom lot</th>
+						<th scope="col">Nom plante</th>
+						<th scope="col">Date Plantaison</th>
+						<th scope="col">Date recolte</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% List<String> affichagePlantsLots = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerPlantsLot();
+						for(int i=0; i < affichagePlantsLots.size(); i=i+4)
+						{
+					%>
+					<tr>
+						<td><%=affichagePlantsLots.get(i)%></td>
+						<td><%=affichagePlantsLots.get(i+1)%></td>
+						<td><%=affichagePlantsLots.get(i+2)%></td>
+						<td><%=affichagePlantsLots.get(i+3)%></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+			
+			
 		</div>
 <%	        
 		    }
