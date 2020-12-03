@@ -22,7 +22,6 @@
 </head>
 <body>
     <h1>Syst�me de gestion de biblioth�que</h1>
-    No de membre : <%= session.getAttribute("userId") %> <br>
     <form action="Plantation" method="POST">
         Nom Plante :<input type="Text" name="nomPlante" 
         value="<%= (request.getAttribute("nomPlante") !=null) ? request.getAttribute("nomPlante") : "" %> <br>
