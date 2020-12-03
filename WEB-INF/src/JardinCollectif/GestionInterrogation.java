@@ -3,6 +3,8 @@ package JardinCollectif;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GestionInterrogation {
 	private PreparedStatement stmtMembres; //Pour afficher la liste de membres
@@ -17,13 +19,12 @@ public class GestionInterrogation {
 		stmtMembres = cx.getConnection().prepareStatement("SELECT noMembre, prenom, nom FROM jardincollectif.membres");
 		stmtPlante = cx.getConnection().prepareStatement("SELECT p1.nomplante, p1.tempsculture, COALESCE(p.nbplants, 0) AS NombreDePlants " + 
 				"FROM jardincollectif.plante p1 LEFT JOIN jardincollectif.plants p on p1.nomplante = p.nomplante;");
-		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, COALESCE(m1.nomembre, -1), COALESCE(m1.prenom, ' '), COALESCE(m1.nom, ' ')" + 
+		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, m1.nomembre " + 
 				"FROM  jardincollectif.lots lots LEFT JOIN jardincollectif.assignation assign ON lots.nomlots = assign.nomlots LEFT JOIN jardincollectif.membres m1 ON assign.nomembre = m1.nomembre " + 
 				"ORDER BY assign.nomlots;");
 		stmtPlantsParLots = cx.getConnection().prepareStatement("SELECT l1.nomlots, p.nomplante, p.dateplantaison, (p.dateplantaison + pe.tempsculture) AS daterecolte " + 
 				"FROM jardincollectif.lots l1 LEFT JOIN jardincollectif.plants p ON l1.nomlots = p.nomlots " + 
-				"    LEFT JOIN jardincollectif.plante pe ON p.nomplante = pe.nomplante " + 
-				"WHERE l1.nomlots = ?");
+				"    LEFT JOIN jardincollectif.plante pe ON p.nomplante = pe.nomplante ");
 	}
 	
 	public void afficherMembres() throws SQLException
@@ -39,24 +40,29 @@ public class GestionInterrogation {
 		cx.commit();
 	}
 	
-	public void afficherPlantes() throws SQLException
+	public List<String> listerPlantes() throws SQLException
 	{
 		ResultSet rs = stmtPlante.executeQuery();
 		
-		System.out.println("\nNomPlante TempsCulture NombreDePlants");
+		List<String> list = new ArrayList<String>();
+		
 		while(rs.next())
 		{
-			System.out.println(rs.getString(1) + " " + rs.getInt(2) + " jours "+ rs.getInt(3) + " plants");
+			list.add(rs.getString(1));
+			list.add(String.valueOf(rs.getInt(2)));
+			list.add(String.valueOf(rs.getInt(3)) + " plants");
 		}
-		
 		cx.commit();
+		
+		return list;
 	}
 	
-	public void afficherLots() throws SQLException
+	public List<String> listerLots() throws SQLException
 	{
 		ResultSet rs = stmtLots.executeQuery();
 		
-		System.out.println("\nNomLots userId prenom nom");
+		List<String> list = new ArrayList<String>();
+				
 		while(rs.next())
 		{
 			String nomembre;
@@ -68,24 +74,28 @@ public class GestionInterrogation {
 			{
 				nomembre = String.valueOf(rs.getInt(2));
 			}
-			System.out.println(rs.getString(1) + " " + nomembre + " " + rs.getString(3) + " " + rs.getString(4));
+			list.add(rs.getString(1));
+			list.add(nomembre);
 		}
 		
 		cx.commit();
+		return list;
 	}
 	
-	public void afficherPlantsLot(String nomLot) throws SQLException
+	public List<String> listerPlantsLot() throws SQLException
 	{
-		stmtPlantsParLots.setString(1, nomLot);
 		ResultSet rs = stmtPlantsParLots.executeQuery();
 		
-		System.out.println("\nNomLots NomPlante DatePlantaison DateRecolte");
+		List<String> list = new ArrayList<String>();
 		while(rs.next())
 		{
-			System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getDate(3) + " " + rs.getDate(4));
+			list.add(rs.getString(1));
+			list.add(rs.getString(2));
+			list.add(rs.getDate(3).toString());
+			list.add(rs.getDate(4).toString());
 		}
 		
 		cx.commit();
-
+		return list;
 	}
 }
