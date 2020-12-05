@@ -18,6 +18,15 @@
 	<%
 	    }
 	%>
+			<li><a class="nav-item nav-link" href="planterPlant">Gérer plants</a></li>
+	<%
+	    if (session.getAttribute("admin") != null)
+	    {
+	%>
+			<li><a class="nav-item nav-link" href="SelectionMembre">Selection membre</a></li>
+	<%
+	    }
+	%>
 		
 		</ul>
 		</div>

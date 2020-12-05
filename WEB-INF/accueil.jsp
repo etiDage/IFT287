@@ -113,6 +113,7 @@
 					<% List<String> affichagePlantsLots = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerPlantsLot();
 						for(int i=0; i < affichagePlantsLots.size(); i=i+4)
 						{
+							
 					%>
 					<tr>
 						<td><%=affichagePlantsLots.get(i)%></td>

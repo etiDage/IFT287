@@ -214,16 +214,16 @@ public class JardinCollectif
                 }
                 else if (command.equals("afficherPlantes"))
                 {
-                	gestionJardin.getGestionInterrogation().afficherPlantes();
+                	//gestionJardin.getGestionInterrogation().afficherPlantes();
                 }
                 else if (command.equals("afficherLots"))
                 {
-                	gestionJardin.getGestionInterrogation().afficherLots();
+                	//gestionJardin.getGestionInterrogation().afficherLots();
                 }
                 else if (command.equals("afficherPlantesLot"))
                 {
                 	String nomLot = readString(tokenizer);
-                	gestionJardin.getGestionInterrogation().afficherPlantsLot(nomLot);
+                	//gestionJardin.getGestionInterrogation().afficherPlantsLot(nomLot);
                 }
                 else if (command.equals("quitter"))
                 {

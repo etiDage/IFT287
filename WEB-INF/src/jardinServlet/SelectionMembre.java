@@ -27,18 +27,21 @@ public class SelectionMembre  extends HttpServlet{
 		 		{
 		 			session.setAttribute("userId",null);
 		 			session.setAttribute("etat",new Integer(JardinConstantes.CONNECTE));
-		 			String userIdParam = request.getParameter("idMembre");
+		 			String userIdParam = request.getParameter("userId");
 		 			request.setAttribute("userId", userIdParam);
-		 			
-		 			int idMembre = -1;
-		 			try {
-		 				idMembre= Integer.parseInt(userIdParam);
-		 				
-		 				session.setAttribute("idMembre",userIdParam);
-		 			}catch (NumberFormatException e)
+		 			if(userIdParam == null)
 	                {
 	                    throw new IFT287Exception("Format de no Membre " + userIdParam + " incorrect.");
 	                }
+					GestionJardin jardinUpdate = (GestionJardin) request.getSession().getAttribute("jardinUpdate");
+					synchronized (jardinUpdate)
+	                {
+						if(!jardinUpdate.getGestionMembre().exist(userIdParam))
+							throw new IFT287Exception("Ce id Membre n'existe pas");
+					}
+					session.setAttribute("userId", userIdParam);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+	                dispatcher.forward(request, response);
 		 		}
 		 		
 		 	}
