@@ -33,7 +33,7 @@ public class AjouterLot extends HttpServlet
 		}
 		else if(request.getParameter("supprimer") != null)
 		{
-			traiterAjoutLot(request, response);
+			traiterSupprimer(request, response);
 		}
         else
         {

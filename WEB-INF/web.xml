@@ -59,6 +59,10 @@
     <servlet-name>SelectionMembre</servlet-name>
     <servlet-class>jardinServlet.SelectionMembre</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>PlanterPlant</servlet-name>
+    <servlet-class>jardinServlet.PlanterPlant</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -87,6 +91,10 @@
   <servlet-mapping>
     <servlet-name>SelectionMembre</servlet-name>
     <url-pattern>/SelectionMembre</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>PlanterPlant</servlet-name>
+    <url-pattern>/PlanterPlant</url-pattern>
   </servlet-mapping>
   
 </web-app>

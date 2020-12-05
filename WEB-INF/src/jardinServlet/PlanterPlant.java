@@ -8,7 +8,6 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import Bibliotheque.BiblioException;
 import JardinCollectif.IFT287Exception;
 import JardinCollectif.GestionJardin;
 
@@ -29,7 +28,7 @@ public class PlanterPlant extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/selectionMembre.jsp");
             dispatcher.forward(request, response);
         }else if (request.getParameter("recolter")!= null) {
-        	traiterRecolter(request.reponse);
+        	traiterRecolter(request, response);
         }
         else
             try
@@ -82,7 +81,7 @@ public class PlanterPlant extends HttpServlet{
             throws ServletException, IOException{
 		try {
 			if(request.getParameter("plantSelectionne") == null) {
-				throw new IFT287Exception("Aucun prêt sélectionné");
+				throw new IFT287Exception("Aucun prï¿½t sï¿½lectionnï¿½");
 			}
 			String info = request.getParameter("plantSelectionne");
 			List<String> infos = Arrays.asList(info.split(","));
