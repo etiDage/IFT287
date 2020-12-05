@@ -51,6 +51,10 @@
     <servlet-name>AjoutPlante</servlet-name>
     <servlet-class>jardinServlet.AjoutPlante</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AjouterLot</servlet-name>
+    <servlet-class>jardinServlet.AjouterLot</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -72,4 +76,9 @@
     <servlet-name>AjoutPlante</servlet-name>
     <url-pattern>/AjoutPlante</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AjouterLot</servlet-name>
+    <url-pattern>/AjouterLot</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

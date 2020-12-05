@@ -21,7 +21,7 @@ public class SelectionMembre  extends HttpServlet{
 		 		if(etat == null)
 		 		{
 		 			RequestDispatcher dispatcher= request.getRequestDispatcher("/login.jsp");
-		 			dispatcher.foward(request, response);
+		 			dispatcher.forward(request, response);
 		 		}
 		 		else 
 		 		{
@@ -42,11 +42,6 @@ public class SelectionMembre  extends HttpServlet{
 		 		}
 		 		
 		 	}
-		 	catch(SQLException e)
-	        {
-	            e.printStackTrace();
-	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
-	        }
 		 	catch(IFT287Exception e)
 	        {
 		 		List<String> listeMessageErreur = new LinkedList<String>();
@@ -55,6 +50,12 @@ public class SelectionMembre  extends HttpServlet{
 	            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/selectionMembre.jsp");
 	            dispatcher.forward(request, response);
 	        }
+		 	catch(Exception e)
+	        {
+	            e.printStackTrace();
+	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+	        }
+
 	    }
 	 
 	    public void doPost(HttpServletRequest request, HttpServletResponse response)

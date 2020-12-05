@@ -9,7 +9,7 @@
 	<%
 	    }
 	%>
-			<li><a class="nav-item nav-link" href="#">Gérer les lots</a></li>
+			<li><a class="nav-item nav-link" href="AjouterLot">Gérer les lots</a></li>
 	<%
 	    if (session.getAttribute("admin") != null)
 	    {
