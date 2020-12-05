@@ -27,7 +27,35 @@
         value="<%= (request.getAttribute("nomLot") !=null) ? request.getAttribute("nomLot") : "" %>"> <br>
         Nombre de membres maximum :<input type="number" name="nbMaxMembre" 
         value="<%= (request.getAttribute("nbMaxMembre") !=null) ? request.getAttribute("nbMaxMembre") : "" %>"> <br>
-        <br><input type="SUBMIT" name="AjouterLot" value="Soumettre"><br>
+        <br><input type="SUBMIT" name="ajouterLot" value="Soumettre"><br>
+    </form>
+    <br/>
+    <br/>
+    <h3>Supprimer un lot</h3>
+    <form action="AjouterLot" method="POST">
+    <table style="border: 1px solid black;">
+    <thead>
+    	<tr style="border: 1px solid black;">
+    		<th>Selection</th>
+    		<th>Nom Lot</th>
+    		<th>Nb max membre</th>
+    	</tr>
+    </thead>
+    	<tbody>
+    	<% List<TupleLot> affichageLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+    		for(TupleLot lot : affichageLots)
+    		{%>
+    		<tr style="border: 1px solid black;">
+    			<td style="border: 1px solid black;"><INPUT TYPE="RADIO"
+          		NAME="lotSelectionne" VALUE="<%= lot.getNomLot() %>"></td>
+          		<td style="border: 1px solid black;"><%= lot.getNomLot() %></td>
+          		<td style="border: 1px solid black;"><%= lot.getNbMaxMembre() %></td>
+    		</tr>
+    		<%} %>
+    	</tbody>
+    </table>	
+    <br/>	
+    <input type="SUBMIT" name="supprimer" value="Supprimer">
     </form>
     </body>
     

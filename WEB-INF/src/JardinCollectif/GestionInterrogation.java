@@ -91,7 +91,6 @@ public class GestionInterrogation {
 		{
 			list.add(rs.getString(1));
 			list.add(rs.getString(2));
-			System.out.println(rs.getString(2));
 			if(rs.getString(2).equals("aucune"))
 			{
 				list.add("aucune");

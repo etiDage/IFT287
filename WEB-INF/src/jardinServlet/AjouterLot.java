@@ -27,47 +27,22 @@ public class AjouterLot extends HttpServlet
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
 			dispatcher.forward(request, response);
 		}
-		else
+		else if(request.getParameter("ajouterLot") != null)
 		{
-			try 
-			{
-				String nomLot = request.getParameter("nomLot");
-				request.setAttribute("nomLot", nomLot);
-				
-				
-				String nbMaxMembre = request.getParameter("nbMaxMembre");
-				int nbMax = -1;
-				try
-				{
-					nbMax = Integer.parseInt(nbMaxMembre);
-				}
-				catch(NumberFormatException e)
-				{
-					throw new IFT287Exception("Format de nbMaxMembre incorrect (nombre seulement)");
-				}
-				GestionJardin jardinUpdate = (GestionJardin) request.getSession().getAttribute("jardinUpdate");
-				synchronized(jardinUpdate)
-				{
-					jardinUpdate.getGestionLot().ajouterLot(nomLot, nbMax);
-				}
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-				dispatcher.forward(request, response);
-			}
-			catch (IFT287Exception e)
-            {
-                List<String> listeMessageErreur = new LinkedList<String>();
-                listeMessageErreur.add(e.toString());
-                request.setAttribute("listeMessageErreur", listeMessageErreur);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
-                dispatcher.forward(request, response);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
-            }
-
+			traiterAjoutLot(request, response);
 		}
+		else if(request.getParameter("supprimer") != null)
+		{
+			traiterAjoutLot(request, response);
+		}
+        else
+        {
+            List<String> listeMessageErreur = new LinkedList<String>();
+            listeMessageErreur.add("Choix non reconnu");
+            request.setAttribute("listeMessageErreur", listeMessageErreur);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            dispatcher.forward(request, response);
+        }
 	}
 	
     @Override
@@ -75,6 +50,78 @@ public class AjouterLot extends HttpServlet
             throws ServletException, IOException
     {
         doGet(request, response);
-    }	
+    }
+    
+    public void traiterAjoutLot(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+		try 
+		{
+			String nomLot = request.getParameter("nomLot");
+			request.setAttribute("nomLot", nomLot);
+			
+			
+			String nbMaxMembre = request.getParameter("nbMaxMembre");
+			int nbMax = -1;
+			try
+			{
+				nbMax = Integer.parseInt(nbMaxMembre);
+			}
+			catch(NumberFormatException e)
+			{
+				throw new IFT287Exception("Format de nbMaxMembre incorrect (nombre seulement)");
+			}
+			GestionJardin jardinUpdate = (GestionJardin) request.getSession().getAttribute("jardinUpdate");
+			synchronized(jardinUpdate)
+			{
+				jardinUpdate.getGestionLot().ajouterLot(nomLot, nbMax);
+			}
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			dispatcher.forward(request, response);
+		}
+		catch (IFT287Exception e)
+        {
+            List<String> listeMessageErreur = new LinkedList<String>();
+            listeMessageErreur.add(e.toString());
+            request.setAttribute("listeMessageErreur", listeMessageErreur);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            dispatcher.forward(request, response);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+        }
 
+    }
+
+    public void traiterSupprimer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	try
+    	{
+    		if(request.getParameter("lotSelectionne") == null)
+    			throw new IFT287Exception("Aucun lot selectionner");
+    		String nomLot = request.getParameter("lotSelectionne");
+    		GestionJardin jardinUpdate = (GestionJardin) request.getSession().getAttribute("jardinUpdate");
+    		synchronized(jardinUpdate)
+    		{
+    			jardinUpdate.getGestionLot().supprimerLot(nomLot);
+    		}
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+    		dispatcher.forward(request, response);
+    	}
+        catch (IFT287Exception e)
+        {
+            List<String> listeMessageErreur = new LinkedList<String>();
+            listeMessageErreur.add(e.toString());
+            request.setAttribute("listeMessageErreur", listeMessageErreur);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            dispatcher.forward(request, response);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+        }
+
+    }
 }
