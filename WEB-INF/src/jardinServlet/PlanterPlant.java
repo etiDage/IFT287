@@ -61,7 +61,7 @@ public class PlanterPlant extends HttpServlet{
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
                 dispatcher.forward(request, response);
             }
-            catch (BiblioException e)
+            catch (IFT287Exception e)
             {
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.toString());
