@@ -28,7 +28,7 @@
     <from action="PlanterPlant" method="POST">
         No de membre :
         Nom de Lot : <select NAME="nomLot">
-            <% List<String> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+            <% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
             for(int i=0; i < nomLots.size(); i++)
             {
             %>
@@ -36,11 +36,11 @@
             <%} %>
         </select> <br>
         Nom de Plante : <select NAME="nomPlante">
-            <% List<String> nomPlantes = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante();
+            <% List<TuplePlante> nomPlantes = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante();
             for(int i=0; i < nomPlantes.size(); i++)
             {
             %>
-            <option value="<%=nomPlantes.get(i).getNomLot()%>"> <%=nomPlantes.get(i).getNomLot()%> </option>
+            <option value="<%=nomPlantes.get(i).getNomPlante()%>"> <%=nomPlantes.get(i).getNomLot()%> </option>
             <%} %>
             </select> <br>
         Nombre d'exemplaire: <input type="TEXT" name="nbExemplaire"
