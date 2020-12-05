@@ -21,11 +21,12 @@
 
 </head>
 <body>
-    <h1>Système de gestion de Jardin</h1>
+    <h1>Système de gestion de Jardin</h1><br>
+    <h2>ajouter un plant</h2><br>
     No de membre : <%= session.getAttribute("userId") %>
     <br>
     <from action="PlanterPlant" method="POST">
-        
+        No de membre :
         Nom de Lot : <select NAME="nomLot">
             <% List<String> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
             for(int i=0; i < nomLots.size(); i++)
@@ -48,8 +49,41 @@
             : "" %>"> <br> <br>
             <INPUT TYPE="SUBMIT" NAME="preter"VALUE="Soumettre">
                 <br> <br>
-            <INPUT TYPE="SUBMIT" NAME="selectionMembre" VALUE="s�lection d'un membre">
-
+            <h2>supprimer un plant</h2><br>
+            <table
+    style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;"
+    border="1" cellspacing="2" cellpadding="2">
+      <tbody>
+    <%-- titre des colonnes --%>
+        <tr>
+        <td style="vertical-align: top;">Sélection<br></td>
+        <td style="vertical-align: top;">Lot<br></td>
+        <td style="vertical-align: top;">Plante<br></td>
+        <td style="vertical-align: top;">Date Plantaison<br></td>
+        <td style="vertical-align: top;">Date recolte<br></td>
+        </tr>
+        <% List<String> affichagePlantsLots = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerPlantsLot();
+            for(int i=0; i < affichagePlantsLots.size(); i=i+4)
+            {
+                if(affichagePlantsLots.get(i+1) != "aucune"){
+                
+        %>
+        <tr>
+        <td style="vertical-align: top;"><INPUT TYPE="RADIO"
+          NAME="plantSelectionne" VALUE="<%= affichagePlantsLots.get(i) %>,<%= affichagePlantsLots.get(i+2)%>"><br></td>
+        <td style="vertical-align: top;"><%= affichagePlantsLots.get(i) %><br></td>
+        <td style="vertical-align: top;"><%= affichagePlantsLots.get(i+1) %><br></td>
+        <td style="vertical-align: top;"><%= affichagePlantsLots.get(i+2) %><br></td>
+        <td style="vertical-align: top;"><%= affichagePlantsLots.get(i+3) %><br></td>
+        </tr>
+<%
+    }
+      }
+%>
+      </tbody>
+    </table>
+    <BR>
+        <INPUT TYPE="SUBMIT" NAME="recolter" VALUE="Recolter">
         </from>
     </body>
     <jsp:include page="/WEB-INF/messageErreur.jsp" />
