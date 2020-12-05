@@ -1,6 +1,7 @@
 package jardinServlet;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.sql.*;
 import java.io.*;
@@ -23,11 +24,12 @@ public class PlanterPlant extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
-        else if (etat.intValue() != JardinConstantes.MEMBRE_SELECTIONNE
-                || request.getParameter("selectionMembre") != null)
+        else if (etat.intValue() != JardinConstantes.MEMBRE_SELECTIONNE)
         {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/selectionMembre.jsp");
             dispatcher.forward(request, response);
+        }else if (request.getParameter("recolter")!= null) {
+        	traiterRecolter(request.reponse);
         }
         else
             try
@@ -75,6 +77,40 @@ public class PlanterPlant extends HttpServlet{
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             }
     }
+	
+	public void traiterRecolter(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+		try {
+			if(request.getParameter("plantSelectionne") == null) {
+				throw new IFT287Exception("Aucun prêt sélectionné");
+			}
+			String info = request.getParameter("plantSelectionne");
+			List<String> infos = Arrays.asList(info.split(","));
+			String nomLot = infos.get(0);
+			String nomPlante = infos.get(1);
+			String userid = (String) request.getSession().getAttribute("userId");
+			
+			GestionJardin jardinUpdate = (GestionJardin) request.getSession()
+                    .getAttribute("jardinUpdate");
+            synchronized (jardinUpdate)
+            {
+            	jardinUpdate.getGestionPlants().recolterPlante(nomPlante, nomLot, userid);
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+            dispatcher.forward(request, response);
+		}
+		catch(IFT287Exception e){
+			List<String> listeMessageErreur = new LinkedList<String>();
+            listeMessageErreur.add(e.toString());
+            request.setAttribute("listeMessageErreur", listeMessageErreur);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+            dispatcher.forward(request, response);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+		}
+	}
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
