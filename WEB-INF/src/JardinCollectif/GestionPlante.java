@@ -1,5 +1,8 @@
 package JardinCollectif;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class GestionPlante {
 	private Connexion cx;
 	private TablePlantes tablePlantes;
@@ -53,5 +56,10 @@ public class GestionPlante {
 			throw e;
 		}
 
+	}
+	
+	public List<TuplePlante> getAllPlante() throws SQLException
+	{
+		return tablePlantes.getAllPlante();
 	}
 }
