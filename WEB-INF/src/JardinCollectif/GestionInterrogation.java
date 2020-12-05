@@ -22,7 +22,7 @@ public class GestionInterrogation {
 		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, m1.nomembre " + 
 				"FROM  jardincollectif.lots lots LEFT JOIN jardincollectif.assignation assign ON lots.nomlots = assign.nomlots LEFT JOIN jardincollectif.membres m1 ON assign.nomembre = m1.nomembre " + 
 				"ORDER BY assign.nomlots;");
-		stmtPlantsParLots = cx.getConnection().prepareStatement("SELECT l1.nomlots, p.nomplante, p.dateplantaison, (p.dateplantaison + pe.tempsculture) AS daterecolte " + 
+		stmtPlantsParLots = cx.getConnection().prepareStatement("SELECT l1.nomlots, COALESCE(p.nomplante, 'aucune'), p.dateplantaison, (p.dateplantaison + pe.tempsculture)  AS daterecolte " + 
 				"FROM jardincollectif.lots l1 LEFT JOIN jardincollectif.plants p ON l1.nomlots = p.nomlots " + 
 				"    LEFT JOIN jardincollectif.plante pe ON p.nomplante = pe.nomplante ");
 	}
@@ -91,8 +91,17 @@ public class GestionInterrogation {
 		{
 			list.add(rs.getString(1));
 			list.add(rs.getString(2));
-			list.add(rs.getDate(3).toString());
-			list.add(rs.getDate(4).toString());
+			System.out.println(rs.getString(2));
+			if(rs.getString(2).equals("aucune"))
+			{
+				list.add("aucune");
+				list.add("aucune");
+			}
+			else
+			{
+				list.add(rs.getDate(3).toString());
+				list.add(rs.getDate(4).toString());				
+			}
 		}
 		
 		cx.commit();

@@ -141,4 +141,20 @@ public class GestionMembre {
 		}
 	}
 	
+	public boolean exist(String userId) throws SQLException
+	{
+		try
+		{
+			boolean exist = tableMembres.exist(userId);		
+			cx.commit();
+			return exist;
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
+		}
+		
+	}
+	
 }

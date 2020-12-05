@@ -55,6 +55,10 @@
     <servlet-name>AjouterLot</servlet-name>
     <servlet-class>jardinServlet.AjouterLot</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SelectionMembre</servlet-name>
+    <servlet-class>jardinServlet.SelectionMembre</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -79,6 +83,10 @@
   <servlet-mapping>
     <servlet-name>AjouterLot</servlet-name>
     <url-pattern>/AjouterLot</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SelectionMembre</servlet-name>
+    <url-pattern>/SelectionMembre</url-pattern>
   </servlet-mapping>
   
 </web-app>
