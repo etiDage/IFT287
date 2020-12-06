@@ -58,7 +58,7 @@
          value="<%= (request.getAttribute("nbExemplaire") !=null) ? 
             request.getAttribute("nbExemplaire") 
             : "" %>"> <br>
-            Date et heure : <input type="date" name="date" value="<%= DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.CANADA_FRENCH).format(new java.util.Date()) %>">
+            Date: <input type="date" name="date">
             <br><br>
             <INPUT TYPE="SUBMIT" NAME="ajouterPlant"VALUE="Soumettre">
                 <br> <br>

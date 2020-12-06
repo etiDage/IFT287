@@ -47,8 +47,9 @@ public class PlanterPlant extends HttpServlet{
                     throw new IFT287Exception("Format de nombre d'exemplaire " + nbExemplaire + " incorrect.");
                 }
                 
-                Date datePlantation = request.getParameter("date");
-                request.setAttribute("date", datePlantation);
+                String datePlantationString = request.getParameter("date");
+                Date datePlantation = Date.valueOf(datePlantationString);
+                request.setAttribute("date", datePlantationString);
                 String userId = (String) request.getSession().getAttribute("userID");
                 GestionJardin jardinUpdate = (GestionJardin) request.getSession()
                         .getAttribute("jardinUpdate");
@@ -86,13 +87,16 @@ public class PlanterPlant extends HttpServlet{
 			String nomPlante = infos.get(1);
 			String userid = (String) request.getSession().getAttribute("userID");
 			
+			System.out.println(info);
+			System.out.println(userid);
+
 			GestionJardin jardinUpdate = (GestionJardin) request.getSession()
                     .getAttribute("jardinUpdate");
             synchronized (jardinUpdate)
             {
             	jardinUpdate.getGestionPlants().recolterPlante(nomPlante, nomLot, userid);
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
             dispatcher.forward(request, response);
 		}
 		catch(IFT287Exception e){

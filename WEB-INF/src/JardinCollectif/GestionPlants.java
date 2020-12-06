@@ -83,7 +83,7 @@ public class GestionPlants {
 				throw new IFT287Exception("Plante "+nomPlante +" Pas pr�t pour la r�colte");
 			}
 			
-			tablePlants.supprimer(nomPlante, nomLot);
+			tablePlants.supprimer(nomLot, nomPlante);
 			cx.commit();
 		}
 		catch(Exception e)
