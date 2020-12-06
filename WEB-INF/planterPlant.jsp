@@ -81,7 +81,7 @@
         %>
         <tr>
         <td style="vertical-align: top;"><INPUT TYPE="RADIO"
-          NAME="plantSelectionne" VALUE="<%= affichagePlantsLots.get(i) %>,<%= affichagePlantsLots.get(i+2)%>"><br></td>
+          NAME="plantSelectionne" VALUE="<%= affichagePlantsLots.get(i) %>,<%= affichagePlantsLots.get(i+1)%>"><br></td>
         <td style="vertical-align: top;"><%= affichagePlantsLots.get(i) %><br></td>
         <td style="vertical-align: top;"><%= affichagePlantsLots.get(i+1) %><br></td>
         <td style="vertical-align: top;"><%= affichagePlantsLots.get(i+2) %><br></td>

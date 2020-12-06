@@ -25,10 +25,6 @@
 		<jsp:include page="/WEB-INF/navigation.jsp" />
 		<h1 class="text-center">Système de gestion de Jardin Collectif</h1>
 
-<%
-		    if (session.getAttribute("admin") != null)
-		    {
-%>
 		<h3 class="text-center">Liste des membres</h3>
 		<div class="col-8 offset-2">
 			<table class="table">
@@ -127,9 +123,6 @@
 			
 			
 		</div>
-<%	        
-		    }
-%>
 
 		<br>
 		<%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>

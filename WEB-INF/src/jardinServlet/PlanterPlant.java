@@ -83,7 +83,7 @@ public class PlanterPlant extends HttpServlet{
 			List<String> infos = Arrays.asList(info.split(","));
 			String nomLot = infos.get(0);
 			String nomPlante = infos.get(1);
-			String userid = (String) request.getSession().getAttribute("userId");
+			String userid = (String) request.getSession().getAttribute("userID");
 			
 			GestionJardin jardinUpdate = (GestionJardin) request.getSession()
                     .getAttribute("jardinUpdate");
