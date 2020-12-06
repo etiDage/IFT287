@@ -19,6 +19,7 @@
 	    }
 	%>
 			<li><a class="nav-item nav-link" href="PlanterPlant">Gérer plants</a></li>
+			<li><a class="nav-item nav-link" href="Demande">Faire demande</a></li>
 		
 		</ul>
 		</div>

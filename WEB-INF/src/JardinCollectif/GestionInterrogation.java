@@ -19,7 +19,7 @@ public class GestionInterrogation {
 		stmtMembres = cx.getConnection().prepareStatement("SELECT noMembre, prenom, nom FROM jardincollectif.membres");
 		stmtPlante = cx.getConnection().prepareStatement("SELECT p1.nomplante, p1.tempsculture, COALESCE(p.nbplants, 0) AS NombreDePlants " + 
 				"FROM jardincollectif.plante p1 LEFT JOIN jardincollectif.plants p on p1.nomplante = p.nomplante;");
-		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, m1.nomembre " + 
+		stmtLots = cx.getConnection().prepareStatement("SELECT lots.nomlots, COALESCE(m1.nomembre, 'aucun') " + 
 				"FROM  jardincollectif.lots lots LEFT JOIN jardincollectif.assignation assign ON lots.nomlots = assign.nomlots LEFT JOIN jardincollectif.membres m1 ON assign.nomembre = m1.nomembre " + 
 				"ORDER BY assign.nomlots;");
 		stmtPlantsParLots = cx.getConnection().prepareStatement("SELECT l1.nomlots, COALESCE(p.nomplante, 'aucune'), p.dateplantaison, (p.dateplantaison + pe.tempsculture)  AS daterecolte " + 
@@ -65,17 +65,8 @@ public class GestionInterrogation {
 				
 		while(rs.next())
 		{
-			String nomembre;
-			if(rs.getInt(2) == -1)
-			{
-				nomembre = "";
-			}
-			else
-			{
-				nomembre = String.valueOf(rs.getInt(2));
-			}
 			list.add(rs.getString(1));
-			list.add(nomembre);
+			list.add(rs.getString(2));
 		}
 		
 		cx.commit();

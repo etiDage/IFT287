@@ -25,7 +25,7 @@
     <h2>faire une demande</h2><br>
     UserId : <%= session.getAttribute("userID") %>
     <br>
-    <form action="demande" method="POST">
+    <form action="Demande" method="POST">
         Nom de Lot : <select NAME="nomLot">
             <% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
             for(int i=0; i < nomLots.size(); i++)
