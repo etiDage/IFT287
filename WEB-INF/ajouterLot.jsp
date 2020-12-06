@@ -33,6 +33,16 @@
     <br/>
     <h3>Supprimer un lot</h3>
     <form action="AjouterLot" method="POST">
+    <% List<TupleLot> affichageLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+    	if(affichageLots.isEmpty())
+    	{
+    	%>
+    	<p>Il n'y a aucun lot</p>
+    	<%} 
+    	else
+    	{%>
+    	
+    	
     <table style="border: 1px solid black;">
     <thead>
     	<tr style="border: 1px solid black;">
@@ -42,7 +52,7 @@
     	</tr>
     </thead>
     	<tbody>
-    	<% List<TupleLot> affichageLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+    	<% 
     		for(TupleLot lot : affichageLots)
     		{%>
     		<tr style="border: 1px solid black;">
@@ -56,7 +66,7 @@
     </table>	
     <br/>	
     <input type="SUBMIT" name="supprimer" value="Supprimer">
-    
+    <%} %>
     </form>
     </body>
     

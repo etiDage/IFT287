@@ -60,7 +60,6 @@ public class Accueil extends HttpServlet
                    
                    request.setAttribute("userId",userId);
                    request.setAttribute("motDePasseSHA",motDePasseSHA);
-                   
 
                     if (JardinHelper.getJardinInterro(session).getGestionMembre().informationsConnexionValide(userId,
                     		motDePasseSHA))
