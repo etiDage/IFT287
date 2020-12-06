@@ -77,7 +77,7 @@ public class PlanterPlant extends HttpServlet{
             throws ServletException, IOException{
 		try {
 			if(request.getParameter("plantSelectionne") == null) {
-				throw new IFT287Exception("Aucun pr�t s�lectionn�");
+				throw new IFT287Exception("Aucun plant s�lectionn�");
 			}
 			String info = request.getParameter("plantSelectionne");
 			List<String> infos = Arrays.asList(info.split(","));
