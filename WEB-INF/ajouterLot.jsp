@@ -56,6 +56,7 @@
     </table>	
     <br/>	
     <input type="SUBMIT" name="supprimer" value="Supprimer">
+    
     </form>
     </body>
     

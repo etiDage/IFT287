@@ -1,6 +1,7 @@
 package JardinCollectif;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class GestionDemandeAssignation {
 	private Connexion cx;
@@ -96,5 +97,20 @@ public class GestionDemandeAssignation {
 			throw e;
 		}
 
+	}
+	
+	public List<TupleDemande> getAllDemandes() throws SQLException
+	{
+		try
+		{
+			List<TupleDemande> demandes = tableDemandes.getAllDemandes();
+			cx.commit();
+			return demandes;
+		}
+		catch(Exception e)
+		{
+			cx.rollback();
+			throw e;
+		}
 	}
 }
