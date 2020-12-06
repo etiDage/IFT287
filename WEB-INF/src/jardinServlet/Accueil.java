@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import JardinCollectif.GestionJardin;
 import JardinCollectif.IFT287Exception;
+import JardinCollectif.Securite;
 
 
 
@@ -53,9 +54,16 @@ public class Accueil extends HttpServlet
                         throw new IFT287Exception("Le nom d'utilisateur ne peut pas être nul!");
                     if (motDePasse == null || motDePasse.equals(""))
                         throw new IFT287Exception("Le mot de passe ne peut pas être nul!");
+                    
+                   byte [] sha = Securite.getSHA(motDePasse);
+                   String motDePasseSHA = Securite.toHexString(sha);
+                   
+                   request.setAttribute("userId",userId);
+                   request.setAttribute("motDePasseSHA",motDePasseSHA);
+                   
 
                     if (JardinHelper.getJardinInterro(session).getGestionMembre().informationsConnexionValide(userId,
-                            motDePasse))
+                    		motDePasseSHA))
                     {
                         session.setAttribute("userID", userId);
                         if(JardinHelper.getJardinInterro(session).getGestionMembre().utilisateurEstAdmin(userId))
@@ -92,9 +100,13 @@ public class Accueil extends HttpServlet
                     String motDePasse = request.getParameter("motDePasse");
                     String prenom = request.getParameter("prenom");
                     String nom = request.getParameter("nom");
+                    
+                    byte[] sha = Securite.getSHA(motDePasse);
+                    String motDePasseSHA = Securite.toHexString(sha);
+                    
 
                     request.setAttribute("userId", userId);
-                    request.setAttribute("motDePasse", motDePasse);
+                    request.setAttribute("motDePasseSHA", motDePasseSHA);
                     request.setAttribute("prenom", prenom);
                     request.setAttribute("nom", nom);
                     
@@ -118,7 +130,7 @@ public class Accueil extends HttpServlet
                     GestionJardin jardinUpdate = JardinHelper.getJardinUpdate(session);
                     synchronized (jardinUpdate)
                     {
-                        jardinUpdate.getGestionMembre().inscrireMembre(userId, prenom, nom, motDePasse);
+                        jardinUpdate.getGestionMembre().inscrireMembre(userId, prenom, nom, motDePasseSHA);
                     }
 
                     // S'il y a déjà un userID dans la session, c'est parce
