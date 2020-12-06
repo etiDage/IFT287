@@ -18,7 +18,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-
+<style>
+	table, th, td {
+		border: 1px solid black;
+	}
+</style>
 </head>
 <body>
     <h1>Système de gestion de Jardin</h1><br>

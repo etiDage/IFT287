@@ -48,7 +48,7 @@ public class GererMembre extends HttpServlet {
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add("Choix non reconnu");
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererMembre.jsp");
             dispatcher.forward(request, response);
         }
 	}
@@ -81,7 +81,7 @@ public class GererMembre extends HttpServlet {
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererMembre.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)
@@ -113,7 +113,7 @@ public class GererMembre extends HttpServlet {
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererMembre.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)
@@ -145,7 +145,7 @@ public class GererMembre extends HttpServlet {
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererMembre.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)
@@ -177,7 +177,7 @@ public class GererMembre extends HttpServlet {
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererMembre.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)
