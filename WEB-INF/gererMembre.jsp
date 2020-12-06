@@ -22,6 +22,7 @@
 </head>
 <body>
     <h1>Système de gestion de Jardin</h1><br>
+    <form action="GererMembre" method="post">
     <h3>Supprimer un membre</h3>
     <table>
     	<thead>
@@ -34,10 +35,10 @@
     	</thead>
     	<tbody>
     	<%
-					    List<TupleMembre> membres = JardinHelper.getJardinInterro(session).getGestionMembre()
-					                .getListMembres();
-					        for (TupleMembre m : membres)
-					        {
+			    List<TupleMembre> membres = JardinHelper.getJardinInterro(session).getGestionMembre()
+			                .getListMembres();
+			        for (TupleMembre m : membres)
+			        {
 %>
 					<tr>
 						<td style="border: 1px solid black;"><INPUT TYPE="RADIO"
@@ -45,11 +46,44 @@
 						<td><%=m.getNoMembre()%></td>
 						<td><%=m.getPrenom()%></td>
 						<td><%=m.getNom()%></td>
-					<tr>
+					</tr>
                         <% } %>
     	
     	</tbody>
     </table>
+    <br>
+    	<input type="SUBMIT" name="promouvoir" value="Promouvoir Admin">
+        <input type="SUBMIT" name="supprimer" value="Supprimer">
+    <br>
+    <br>
+    <h3>Gestion des demandes</h3>
+    <table>
+    	<thead>
+    		<tr>
+    			<th>Selection</th>
+    			<th>UserId</th>
+    			<th>NomLot</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        	<%
+					    List<TupleDemande> demandes = JardinHelper.getJardinInterro(session).getGestionDemandeAssignation().getAllDemandes();
+					        for (TupleDemande d : demandes)
+					        { %>
+			<tr>
+				<td style="border: 1px solid black;"><INPUT TYPE="RADIO"
+          				NAME="demandeSelectionne" VALUE="<%=d.getNoMembre()%>,<%=d.getNomLot()%>"></td>
+          		<td><%= d.getNoMembre()%></td>
+          		<td><%= d.getNomLot()%></td>
+			</tr>
+			<%} %>
+    	</tbody>
+    </table>
+    <br>
+        <input type="SUBMIT" name="accepterDemande" value="Accepter">
+        <input type="SUBMIT" name="refuserDemande" value="Refuser">
+    
+    </form>
 </body>
     <jsp:include page="/WEB-INF/messageErreur.jsp" />
     <BR>

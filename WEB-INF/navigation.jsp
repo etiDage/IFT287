@@ -5,7 +5,7 @@
 	    if (session.getAttribute("admin") != null)
 	    {
 	%>
-			<li><a class="nav-item nav-link" href="#">Gérer les membres</a></li>
+			<li><a class="nav-item nav-link" href="GererMembre">Gérer les membres</a></li>
 	<%
 	    }
 	%>
