@@ -47,7 +47,8 @@ public class PlanterPlant extends HttpServlet{
                     throw new IFT287Exception("Format de nombre d'exemplaire " + nbExemplaire + " incorrect.");
                 }
                 
-                Date datePlantation = new Date(System.currentTimeMillis());
+                Date datePlantation = request.getParameter("date");
+                request.setAttribute("date", datePlantation);
                 String userId = (String) request.getSession().getAttribute("userID");
                 GestionJardin jardinUpdate = (GestionJardin) request.getSession()
                         .getAttribute("jardinUpdate");

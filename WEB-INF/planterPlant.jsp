@@ -57,7 +57,9 @@
         Nombre d'exemplaire: <input type="TEXT" name="nbExemplaire"
          value="<%= (request.getAttribute("nbExemplaire") !=null) ? 
             request.getAttribute("nbExemplaire") 
-            : "" %>"> <br> <br>
+            : "" %>"> <br>
+            Date et heure : <input type="date" name="date" value="<%= DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.CANADA_FRENCH).format(new java.util.Date()) %>">
+            <br><br>
             <INPUT TYPE="SUBMIT" NAME="ajouterPlant"VALUE="Soumettre">
                 <br> <br>
             <h2>Recolter un plant</h2><br>
@@ -101,5 +103,4 @@
     <BR>
         <a href="Logout">Sortir</a>
     <BR>
-    Date et heure : <%= DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.CANADA_FRENCH).format(new java.util.Date()) %>
     </html>
