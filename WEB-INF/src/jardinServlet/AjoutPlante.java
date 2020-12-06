@@ -22,6 +22,8 @@ public class AjoutPlante extends HttpServlet {
 			if(etat ==null) {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
 				dispatcher.forward(request, response);
+			}else if(request.getParameter("retirer")!= null) {
+				traiterRetrait(request, response);
 			}
 			else
 			try
@@ -63,6 +65,35 @@ public class AjoutPlante extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             }
 
+		}
+		public void traiterRetrait(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException{
+			try {
+				if(request.getParameter("planteSelectionne") == null) {
+					throw new IFT287Exception("Aucun plante sélectionné");
+				}
+				String nomPlante =request.getParameter("planteSelectionne");
+				
+				GestionJardin jardinUpdate = (GestionJardin) request.getSession()
+	                    .getAttribute("jardinUpdate");
+				synchronized (jardinUpdate)
+	            {
+	            	jardinUpdate.getGestionPlante().supprimerPlante(nomPlante);
+	            }
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+	            dispatcher.forward(request, response);
+				
+			}catch(IFT287Exception e){
+				List<String> listeMessageErreur = new LinkedList<String>();
+	            listeMessageErreur.add(e.toString());
+	            request.setAttribute("listeMessageErreur", listeMessageErreur);
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterPlante.jsp");
+	            dispatcher.forward(request, response);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+			}
 		}
 	    @Override
 	    public void doPost(HttpServletRequest request, HttpServletResponse response)

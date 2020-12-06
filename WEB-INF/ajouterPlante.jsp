@@ -28,7 +28,35 @@
         Temps de culture :<input type="Text" name="tempsDeCulture" 
         value="<%= (request.getAttribute("tempsDeCulture") !=null) ? request.getAttribute("tempsDeCulture") : "" %>"> <br>
         <br><input type="SUBMIT" name="ajoutePlante" value="Soumettre"><br>
-        <br><input type="SUBMIT" name="selectionMembre" value="sélection d'un membre"><br>
+        <br>
+        <h2>Tableau des plantes</h2><br>
+        <table
+    style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;"
+    border="1" cellspacing="2" cellpadding="2">
+    <tbody>
+        
+        <%-- titre des colonnes --%>
+        <tr>
+        <td style="vertical-align: top;">Sélection<br></td>
+        <td style="vertical-align: top;">nomPlante<br></td>
+        <td style="vertical-align: top;">temp de Culture(en jour)<br></td>
+        </tr>
+        <% List<TuplePlante> nomPlantes = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante();
+            for(int i=0; i < nomPlantes.size(); i++)
+            {  
+            %>
+            <tr>
+                <td style="vertical-align: top;"><INPUT TYPE="RADIO"
+                  NAME="planteSelectionne" VALUE="<%=nomPlantes.get(i).getNomPlante() %>"><br></td>
+                <td style="vertical-align: top;"><%= nomPlantes.get(i).getNomPlante() %><br></td>
+                <td style="vertical-align: top;"><%= nomPlantes.get(i).getTmpCulture() %><br></td>
+                </tr>
+            <%
+      }
+%>
+</tbody>
+</table>
+    <INPUT TYPE="SUBMIT" NAME="retirer" VALUE="Retirer">
     </form>
     </body>
     
