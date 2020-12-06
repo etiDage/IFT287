@@ -23,10 +23,9 @@
 <body>
     <h1>Système de gestion de Jardin</h1><br>
     <h2>ajouter un plant</h2><br>
-    No de membre : <%= session.getAttribute("userId") %>
+    UserId : <%= session.getAttribute("userID") %>
     <br>
-    <from action="PlanterPlant" method="POST">
-        No de membre :
+    <form action="PlanterPlant" method="POST">
         Nom de Lot : <select NAME="nomLot">
             <% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
             for(int i=0; i < nomLots.size(); i++)
@@ -40,16 +39,16 @@
             for(int i=0; i < nomPlantes.size(); i++)
             {
             %>
-            <option value="<%=nomPlantes.get(i).getNomPlante()%>"> <%=nomPlantes.get(i).getNomLot()%> </option>
+            <option value="<%=nomPlantes.get(i).getNomPlante()%>"> <%=nomPlantes.get(i).getNomPlante()%> </option>
             <%} %>
             </select> <br>
         Nombre d'exemplaire: <input type="TEXT" name="nbExemplaire"
          value="<%= (request.getAttribute("nbExemplaire") !=null) ? 
             request.getAttribute("nbExemplaire") 
             : "" %>"> <br> <br>
-            <INPUT TYPE="SUBMIT" NAME="preter"VALUE="Soumettre">
+            <INPUT TYPE="SUBMIT" NAME="ajouterPlant"VALUE="Soumettre">
                 <br> <br>
-            <h2>supprimer un plant</h2><br>
+            <h2>Recolter un plant</h2><br>
             <table
     style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;"
     border="1" cellspacing="2" cellpadding="2">
@@ -65,7 +64,7 @@
         <% List<String> affichagePlantsLots = JardinHelper.getJardinInterro(session).getGestionInterrogation().listerPlantsLot();
             for(int i=0; i < affichagePlantsLots.size(); i=i+4)
             {
-                if(affichagePlantsLots.get(i+1) != "aucune"){
+                if(!affichagePlantsLots.get(i+1).equals("aucune")){
                 
         %>
         <tr>
@@ -84,7 +83,7 @@
     </table>
     <BR>
         <INPUT TYPE="SUBMIT" NAME="recolter" VALUE="Recolter">
-        </from>
+        </form>
     </body>
     <jsp:include page="/WEB-INF/messageErreur.jsp" />
     <BR>

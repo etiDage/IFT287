@@ -18,7 +18,7 @@
 	<%
 	    }
 	%>
-			<li><a class="nav-item nav-link" href="planterPlant">Gérer plants</a></li>
+			<li><a class="nav-item nav-link" href="PlanterPlant">Gérer plants</a></li>
 		
 		</ul>
 		</div>

@@ -23,11 +23,7 @@ public class PlanterPlant extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
-        else if (etat.intValue() != JardinConstantes.MEMBRE_SELECTIONNE)
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/selectionMembre.jsp");
-            dispatcher.forward(request, response);
-        }else if (request.getParameter("recolter")!= null) {
+        else if (request.getParameter("recolter")!= null) {
         	traiterRecolter(request, response);
         }
         else
@@ -40,7 +36,7 @@ public class PlanterPlant extends HttpServlet{
                 String nbExemplaire = request.getParameter("nbExemplaire");
                 request.setAttribute("nbExemplaire", nbExemplaire);
 
-                // conversion du parametre idLivre en entier
+                // conversion du parametre bombre Exemplaire en entier
                 int nb = -1; // inialisation requise par compilateur Java
                 try
                 {
@@ -48,18 +44,18 @@ public class PlanterPlant extends HttpServlet{
                 }
                 catch (NumberFormatException e)
                 {
-                    throw new IFT287Exception("Format de no Livre " + nbExemplaire + " incorrect.");
+                    throw new IFT287Exception("Format de nombre d'exemplaire " + nbExemplaire + " incorrect.");
                 }
                 
                 Date datePlantation = new Date(System.currentTimeMillis());
-                String userid = (String) request.getSession().getAttribute("userId");
+                String userId = (String) request.getSession().getAttribute("userID");
                 GestionJardin jardinUpdate = (GestionJardin) request.getSession()
                         .getAttribute("jardinUpdate");
                 synchronized (jardinUpdate)
                 {
-                	jardinUpdate.getGestionPlants().planterPlante(nomPlante, nomLot, userid, nb, datePlantation);
+                	jardinUpdate.getGestionPlants().planterPlante(nomPlante, nomLot, userId, nb, datePlantation);
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                 dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
