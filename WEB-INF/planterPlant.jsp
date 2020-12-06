@@ -26,12 +26,12 @@
     UserId : <%= session.getAttribute("userID") %>
     <br>
     <form action="PlanterPlant" method="POST">
-        Nom de Lot :<% int nomLotsSize = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot().size();
-            if (nomLotsSize> 0)
+        Nom de Lot :<% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+            if (nomLots.size()> 0)
             {
             %>
          <select NAME="nomLot">
-            <% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
+            <% 
             for(int i=0; i < nomLots.size(); i++)
             {
             %>
@@ -40,12 +40,12 @@
             %>
         </select>
         <%}%> <br>
-       Nom de Plante : <% int nomPlantesSize = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante().size();
-            if (nomPlantesSize> 0)
+       Nom de Plante : <% List<TuplePlante> nomPlantes = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante();
+            if (nomPlantes.size()> 0)
             {
             %>
          <select NAME="nomPlante">
-            <% List<TuplePlante> nomPlantes = JardinHelper.getJardinInterro(session).getGestionPlante().getAllPlante();
+            <% 
             for(int i=0; i < nomPlantes.size(); i++)
             {
             %>
