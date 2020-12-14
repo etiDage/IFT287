@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import JardinCollectif.IFT287Exception;
 import JardinCollectif.GestionJardin;
 
-public class PlanterPlant extends HttpServlet{
+public class GererPlant extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -65,7 +65,7 @@ public class PlanterPlant extends HttpServlet{
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.toString());
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererPlant.jsp");
                 dispatcher.forward(request, response);
             }
             catch (Exception e)
@@ -103,7 +103,7 @@ public class PlanterPlant extends HttpServlet{
 			List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/planterPlant.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererPlant.jsp");
             dispatcher.forward(request, response);
 		}
 		catch(Exception e) {

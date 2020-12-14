@@ -55,9 +55,9 @@ public class GestionLot {
 			{
 				throw new IFT287Exception("Le lot que vous tentez de supprimer a encore des palntes non-cultiver, donc impossible de le supprimer");
 			}
-			tableLots.supprimer(nomLot);
 			tableAssignations.supprimerParNomLots(nomLot);
 			tableDemandes.supprimerParNomLots(nomLot);
+			tableLots.supprimer(nomLot);
 			
 			cx.commit();
 		}

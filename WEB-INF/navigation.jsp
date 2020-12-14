@@ -6,7 +6,7 @@
 	    {
 	%>
 			<li><a class="nav-item nav-link" href="GererMembre">Gérer les membres</a></li>
-			<li><a class="nav-item nav-link" href="AjouterLot">Gérer les lots</a></li>
+			<li><a class="nav-item nav-link" href="GererLot">Gérer les lots</a></li>
 			
 	<%
 	    }
@@ -15,11 +15,11 @@
 	    if (session.getAttribute("admin") != null)
 	    {
 	%>
-			<li><a class="nav-item nav-link" href="AjoutPlante">Gérer les plantes</a></li>
+			<li><a class="nav-item nav-link" href="GererPlante">Gérer les plantes</a></li>
 	<%
 	    }
 	%>
-			<li><a class="nav-item nav-link" href="PlanterPlant">Gérer plants</a></li>
+			<li><a class="nav-item nav-link" href="GererPlant">Gérer plants</a></li>
 			<li><a class="nav-item nav-link" href="Demande">Faire demande</a></li>
 		
 		</ul>

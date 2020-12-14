@@ -22,7 +22,7 @@
 <body>
     <h1>Systeme de gestion de Jardin Collectif</h1>
     <h3>Ajout d'un lot</h3>
-    <form action="AjouterLot" method="POST">
+    <form action="GererLot" method="POST">
         Nom Lot :<input type="Text" name="nomLot" 
         value="<%= (request.getAttribute("nomLot") !=null) ? request.getAttribute("nomLot") : "" %>"> <br>
         Nombre de membres maximum :<input type="number" name="nbMaxMembre" 
@@ -32,7 +32,7 @@
     <br/>
     <br/>
     <h3>Supprimer un lot</h3>
-    <form action="AjouterLot" method="POST">
+    <form action="GererLot" method="POST">
     <% List<TupleLot> affichageLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
     	if(affichageLots.isEmpty())
     	{

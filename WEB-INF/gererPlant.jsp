@@ -25,7 +25,7 @@
     <h2>ajouter un plant</h2><br>
     UserId : <%= session.getAttribute("userID") %>
     <br>
-    <form action="PlanterPlant" method="POST">
+    <form action="GererPlant" method="POST">
         Nom de Lot :<% List<TupleLot> nomLots = JardinHelper.getJardinInterro(session).getGestionLot().getAllLot();
             if (nomLots.size()> 0)
             {

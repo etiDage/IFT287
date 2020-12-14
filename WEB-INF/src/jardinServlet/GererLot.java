@@ -14,7 +14,7 @@ import JardinCollectif.GestionJardin;
 import JardinCollectif.IFT287Exception;
 
 
-public class AjouterLot extends HttpServlet
+public class GererLot extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -40,7 +40,7 @@ public class AjouterLot extends HttpServlet
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add("Choix non reconnu");
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererLot.jsp");
             dispatcher.forward(request, response);
         }
 	}
@@ -83,7 +83,7 @@ public class AjouterLot extends HttpServlet
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererLot.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)
@@ -114,7 +114,7 @@ public class AjouterLot extends HttpServlet
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add(e.toString());
             request.setAttribute("listeMessageErreur", listeMessageErreur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterLot.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererLot.jsp");
             dispatcher.forward(request, response);
         }
         catch (Exception e)

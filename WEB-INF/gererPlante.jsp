@@ -22,7 +22,7 @@
 </head>
 <body>
     <h1>Systeme de gestion de Jardin Collectif</h1>
-    <form action="AjoutPlante" method="POST">
+    <form action="GererPlante" method="POST">
         Nom Plante :<input type="Text" name="nomPlante" 
         value="<%= (request.getAttribute("nomPlante") !=null) ? request.getAttribute("nomPlante") : "" %>"> <br>
         Temps de culture :<input type="Text" name="tempsDeCulture" 

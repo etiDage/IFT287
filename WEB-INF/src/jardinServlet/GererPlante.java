@@ -11,7 +11,7 @@ import JardinCollectif.IFT287Exception;
 import JardinCollectif.GestionJardin;
 
 
-public class AjoutPlante extends HttpServlet {
+public class GererPlante extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 		
 		@Override
@@ -56,7 +56,7 @@ public class AjoutPlante extends HttpServlet {
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.toString());
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterPlante.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererPlante.jsp");
                 dispatcher.forward(request, response);
             }
             catch (Exception e)
@@ -70,7 +70,7 @@ public class AjoutPlante extends HttpServlet {
 	            throws ServletException, IOException{
 			try {
 				if(request.getParameter("planteSelectionne") == null) {
-					throw new IFT287Exception("Aucun plante sélectionné");
+					throw new IFT287Exception("Aucun plante sï¿½lectionnï¿½");
 				}
 				String nomPlante =request.getParameter("planteSelectionne");
 				
@@ -87,7 +87,7 @@ public class AjoutPlante extends HttpServlet {
 				List<String> listeMessageErreur = new LinkedList<String>();
 	            listeMessageErreur.add(e.toString());
 	            request.setAttribute("listeMessageErreur", listeMessageErreur);
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ajouterPlante.jsp");
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/gererPlante.jsp");
 	            dispatcher.forward(request, response);
 			}
 			catch(Exception e) {

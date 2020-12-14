@@ -48,16 +48,16 @@
     <servlet-class>jardinServlet.inscription</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>AjoutPlante</servlet-name>
-    <servlet-class>jardinServlet.AjoutPlante</servlet-class>
+    <servlet-name>GererPlante</servlet-name>
+    <servlet-class>jardinServlet.GererPlante</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>AjouterLot</servlet-name>
-    <servlet-class>jardinServlet.AjouterLot</servlet-class>
+    <servlet-name>GererLot</servlet-name>
+    <servlet-class>jardinServlet.GererLot</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>PlanterPlant</servlet-name>
-    <servlet-class>jardinServlet.PlanterPlant</servlet-class>
+    <servlet-name>GererPlant</servlet-name>
+    <servlet-class>jardinServlet.GererPlant</servlet-class>
   </servlet>
   <servlet>
   <servlet-name>GererMembre</servlet-name>
@@ -85,16 +85,16 @@
     <url-pattern>/Inscription</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>AjoutPlante</servlet-name>
-    <url-pattern>/AjoutPlante</url-pattern>
+    <servlet-name>GererPlante</servlet-name>
+    <url-pattern>/GererPlante</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>AjouterLot</servlet-name>
-    <url-pattern>/AjouterLot</url-pattern>
+    <servlet-name>GererLot</servlet-name>
+    <url-pattern>/GererLot</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>PlanterPlant</servlet-name>
-    <url-pattern>/PlanterPlant</url-pattern>
+    <servlet-name>GererPlant</servlet-name>
+    <url-pattern>/GererPlant</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Demande</servlet-name>
